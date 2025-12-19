@@ -1,16 +1,16 @@
 # Development Log (Newest to Oldest)
 
-## docs: create DEVLOG.md to track project progress
-
-- **DOCS**: Created `docs/DEVLOG.md` to document all git commits and development progress in a professional format.
-- **DOCS**: Added historical log entries for project setup, API integration, and core layout implementation.
-
 ## feat: implement home screen and gate list
 
 - **FEAT**: Implemented `HomeScreen` in `app/(tabs)/index.tsx` to fetch and display the list of star gates.
 - **UI**: Added `GateCard` component to display individual gate summaries.
 - **HOOKS**: Implemented `useGates` (and other queries) in `hooks/useQueries.ts` for data fetching.
 - **TYPES**: Defined TypeScript interfaces in `types/index.ts`.
+
+## docs: create DEVLOG.md to track project progress
+
+- **DOCS**: Created `docs/DEVLOG.md` to document all git commits and development progress in a professional format.
+- **DOCS**: Added historical log entries for project setup, API integration, and core layout implementation.
 
 ## feat: setup root layout and query provider
 
