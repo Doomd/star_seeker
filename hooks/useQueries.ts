@@ -23,7 +23,11 @@ export const useGateDetails = (gateCode: string) => {
 	})
 }
 
-export const useTransportCost = (distance: number, passengers: number, parking: number) => {
+export const useTransportCost = (
+	distance: number,
+	passengers: number,
+	parking: number
+) => {
 	return useQuery({
 		queryKey: ['transport', distance, passengers, parking],
 		queryFn: async () => {

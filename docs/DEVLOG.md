@@ -1,5 +1,10 @@
 # Development Log (Newest to Oldest)
 
+## chore: add prettier configuration
+
+- **CONFIG**: Added `.prettierrc` with semicolon: false, tabs: true, and tabWidth: 2.
+- **STYLE**: Standardized code formatting rules for the project.
+
 ## feat: implement home screen and gate list
 
 - **FEAT**: Implemented `HomeScreen` in `app/(tabs)/index.tsx` to fetch and display the list of star gates.
