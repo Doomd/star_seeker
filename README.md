@@ -54,6 +54,7 @@ This project was built as a solution to the **Star Seeker Technical Challenge**.
     ```
 
 3.  **Run the application:**
+
     ```bash
     pnpm start
     ```
@@ -106,9 +107,12 @@ For global client-state (like Theme preference and Favorites), **Zustand** offer
 
 ---
 
-## 📝 Remaining Work
+## 📝 WORKFLOW
 
-See `docs/TODO.md` for the roadmap of final polish items, including:
+- Work so far: [DEVLOG.md](docs/DEVLOG.md)
+- Remaining work: [TODO.md](docs/TODO.md)
 
-- Unit & Integration Tests
-- Entry Animations
+## Reference Docs
+
+- [CHALLENGE.md](docs/CHALLENGE.md)
+- [API.md](docs/API.md)

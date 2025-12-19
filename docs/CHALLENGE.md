@@ -98,3 +98,7 @@ You are tasked with creating the **Star Seeker React Native app** that integrate
 - **Mobile Focus**: UX polish, performance considerations, offline awareness.
 - **Leadership Signals**: Clear documentation, maintainability, ability to design for a team.
 - **Product Mindset**: Not just working code, but thoughtful user experience.
+
+### Links
+
+- [README.md](README.md)

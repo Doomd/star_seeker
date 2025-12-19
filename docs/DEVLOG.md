@@ -1,5 +1,10 @@
 # Development Log (Newest to Oldest)
 
+## docs: improve documentation navigation
+
+- **DOCS**: Added cross-links to `README.md` in `DEVLOG.md`, `TODO.md`, `API.md`, and `CHALLENGE.md` for better navigation.
+- **DOCS**: Enhanced `README.md` with a "Workflow" and "Reference Docs" section, linking to all key documentation files.
+
 ## fix: improve favorite button interaction
 
 - **FIX**: Resolved event propagation issue on Web where clicking the "Favorite" star also triggered navigation to the gate details; added `e.preventDefault()`.
@@ -133,3 +138,7 @@
 ## challenge start
 
 - **DOCS**: Added `CHALLENGE.md` outlining the project requirements and objectives.
+
+### Links
+
+- [README.md](README.md)

@@ -29,3 +29,7 @@
   - State Management choices.
   - Trade-offs (e.g., caching strategy, NativeWind v4 adoption).
 - [ ] **Clean Up**: Remove any unused files/assets before final zip/push.
+
+### Links
+
+- [README.md](README.md)
