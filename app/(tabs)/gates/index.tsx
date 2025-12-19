@@ -73,7 +73,7 @@ export default function HomeScreen() {
 					data={filteredGates}
 					keyExtractor={(item) => item.code}
 					renderItem={({ item }) => <GateCard gate={item} />}
-					contentContainerStyle={{ paddingBottom: 100 }}
+					className="p-1"
 					showsVerticalScrollIndicator={false}
 					ListEmptyComponent={
 						<Text className="mt-10 text-center text-foreground-muted">

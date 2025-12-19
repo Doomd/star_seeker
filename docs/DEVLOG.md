@@ -1,5 +1,10 @@
 # Development Log (Newest to Oldest)
 
+## fix: resolve web accessibility focus error
+
+- **FIX**: Refactored `GateCard` to separate the main `Link` from the "Favorite" toggle. This resolves a Chrome error ("Blocked aria-hidden on an element because its descendant retained focus") caused by nested interactive elements in the focus tree during navigation.
+- **UI**: Added visual feedback (active state) to the star button on the Gate list.
+
 ## refactor: centralize favorite color constant
 
 - **REFACTOR**: Moved the "Favorite" star color (`#fbbf24`) into `constants/Colors.ts` as `Colors.favorite`.

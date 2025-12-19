@@ -86,7 +86,11 @@ export default function GateDetailsScreen() {
 								style={{ opacity: 0.8 }}
 							/>
 							<View>
-								<Text className="font-mono text-3xl font-bold text-primary">
+								<Text
+									accessibilityRole="header"
+									aria-level={1}
+									className="font-mono text-3xl font-bold text-primary"
+								>
 									{gate.code}
 								</Text>
 								<Text className="text-sm tracking-wider uppercase text-foreground-muted">
