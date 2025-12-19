@@ -1,5 +1,10 @@
 # Development Log (Newest to Oldest)
 
+## refactor: centralize favorite color constant
+
+- **REFACTOR**: Moved the "Favorite" star color (`#fbbf24`) into `constants/Colors.ts` as `Colors.favorite`.
+- **UI**: Updated `GateCard` and `GateDetailsScreen` to use the theme-aware favorite color constant instead of hardcoded hex codes.
+
 ## feat: refine "orbit" branding with star-and-orbit design
 
 - **FEAT**: Redesigned the "orbit" app icon to feature a single central star (circle) with a single orbital ring, moving away from logos that resembled React.

@@ -1,9 +1,6 @@
 // Semantic Color Palette
 // Source of Truth for both Tailwind CSS and React Native styles.
 
-const tintColorLight = '#0a7ea4'
-const tintColorDark = '#fff'
-
 export const Colors = {
 	light: {
 		background: '#ffffff', // white
@@ -18,6 +15,7 @@ export const Colors = {
 			muted: '#475569', // slate-600
 			dim: '#94a3b8', // slate-400
 		},
+		favorite: '#fbbf24', // amber-400
 	},
 	dark: {
 		background: '#020617', // slate-950
@@ -32,10 +30,8 @@ export const Colors = {
 			muted: '#94a3b8', // slate-400
 			dim: '#64748b', // slate-500
 		},
+		favorite: '#fbbf24', // amber-400
 	},
 } as const
 
-// For backward compatibility / current "Dark Mode Only" constraint:
-// We export the Dark theme properties directly so `Colors.background` still works.
-// Later, we will switch usages to `useThemeColor()` or CSS variables.
 export const Theme = Colors.dark

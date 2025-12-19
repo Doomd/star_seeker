@@ -101,7 +101,7 @@ export default function GateDetailsScreen() {
 							<Ionicons
 								name={isFavorite ? 'star' : 'star-outline'}
 								size={32}
-								color={isFavorite ? '#fbbf24' : Colors.foreground.dim}
+								color={isFavorite ? Colors.favorite : Colors.foreground.dim}
 							/>
 						</Pressable>
 					</View>

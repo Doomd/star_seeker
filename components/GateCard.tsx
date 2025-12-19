@@ -43,7 +43,7 @@ export function GateCard({ gate }: GateCardProps) {
 					<Ionicons
 						name={isFavorite ? 'star' : 'star-outline'}
 						size={24}
-						color={isFavorite ? '#fbbf24' : Colors.foreground.dim}
+						color={isFavorite ? Colors.favorite : Colors.foreground.dim}
 					/>
 				</Pressable>
 			</Pressable>
