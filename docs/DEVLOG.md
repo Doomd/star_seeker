@@ -1,5 +1,10 @@
 # Development Log (Newest to Oldest)
 
+## refactor: enforce dark theme in root layout before we implement color modes
+
+- **UI**: Removed `useColorScheme` from `app/_layout.tsx` and forced `DarkTheme` to ensure consistent dark mode across the app, aligning with `constants/Colors.ts`.
+- **UI**: Changed gates icon to `orbit` from `planet` in `app/(tabs)/index.tsx` to better represent the concept of a star gate.
+
 ## chore: update expo packages to recommended versions
 
 - **DEPS**: Updated `expo` (~54.0.30), `expo-router` (~6.0.21), and `expo-splash-screen` (~31.0.13) to resolve console warnings.

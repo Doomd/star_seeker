@@ -1,19 +1,16 @@
-import { Ionicons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Tabs } from 'expo-router'
 import React from 'react'
-import { useColorScheme } from 'react-native'
 import { Theme as Colors } from '@/constants/Colors'
 
 function TabBarIcon(props: {
-	name: React.ComponentProps<typeof Ionicons>['name']
+	name: React.ComponentProps<typeof MaterialCommunityIcons>['name']
 	color: string
 }) {
-	return <Ionicons size={28} style={{ marginBottom: -3 }} {...props} />
+	return <MaterialCommunityIcons size={28} {...props} />
 }
 
 export default function TabLayout() {
-	const colorScheme = useColorScheme()
-
 	return (
 		<Tabs
 			screenOptions={{
@@ -33,9 +30,7 @@ export default function TabLayout() {
 				name="index"
 				options={{
 					title: 'Gates',
-					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="planet-outline" color={color} />
-					),
+					tabBarIcon: ({ color }) => <TabBarIcon name="orbit" color={color} />,
 				}}
 			/>
 		</Tabs>
