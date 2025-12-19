@@ -1,5 +1,10 @@
 # Development Log (Newest to Oldest)
 
+## feat: add calculator and route finder features
+
+- **CALCULATOR**: Ported `app/(tabs)/calculator.tsx` to calculate transport costs, refactored to use semantic theme colors.
+- **NAV**: Added 'Cost' tab to the main layout with `calculator-variant-outline` icon.
+
 ## refactor: enforce dark theme in root layout before we implement color modes
 
 - **UI**: Removed `useColorScheme` from `app/_layout.tsx` and forced `DarkTheme` to ensure consistent dark mode across the app, aligning with `constants/Colors.ts`.

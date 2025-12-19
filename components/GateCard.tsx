@@ -8,7 +8,7 @@ interface GateCardProps {
 
 export function GateCard({ gate }: GateCardProps) {
 	return (
-		<Link href={`/${gate.code}`} asChild>
+		<Link href={`/gates/${gate.code}`} asChild>
 			<Pressable className="mb-3 rounded-xl bg-ui p-4 active:bg-ui-active">
 				<View className="flex-row justify-between items-center mb-2">
 					<Text className="text-xl font-bold text-foreground">{gate.name}</Text>

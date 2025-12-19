@@ -79,7 +79,7 @@ export default function GateDetailsScreen() {
 						gate.links.map((link) => (
 							<TouchableOpacity
 								key={link.code}
-								onPress={() => router.push(`/${link.code}`)}
+								onPress={() => router.push(`/gates/${link.code}`)}
 								className="flex-row items-center justify-between rounded-xl bg-ui p-4 active:bg-ui-active"
 							>
 								<View className="flex-row items-center gap-3">

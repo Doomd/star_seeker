@@ -27,10 +27,19 @@ export default function TabLayout() {
 			}}
 		>
 			<Tabs.Screen
-				name="index"
+				name="gates"
 				options={{
 					title: 'Gates',
 					tabBarIcon: ({ color }) => <TabBarIcon name="orbit" color={color} />,
+				}}
+			/>
+			<Tabs.Screen
+				name="calculator"
+				options={{
+					title: 'Cost',
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="calculator-variant-outline" color={color} />
+					),
 				}}
 			/>
 		</Tabs>
