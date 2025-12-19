@@ -1,7 +1,7 @@
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Tabs } from 'expo-router'
+import { Tabs, useRouter } from 'expo-router'
 import React from 'react'
-import { Theme as Colors } from '@/constants/Colors'
 
 function TabBarIcon(props: {
 	name: React.ComponentProps<typeof MaterialCommunityIcons>['name']
@@ -11,6 +11,9 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+	const Colors = useThemeColor()
+	const router = useRouter()
+
 	return (
 		<Tabs
 			screenOptions={{
@@ -32,6 +35,13 @@ export default function TabLayout() {
 					title: 'Gates',
 					tabBarIcon: ({ color }) => <TabBarIcon name="orbit" color={color} />,
 				}}
+				listeners={{
+					tabPress: (e) => {
+						// Always navigate to the root index of the gates tab
+						e.preventDefault()
+						router.navigate('/(tabs)/gates')
+					},
+				}}
 			/>
 			<Tabs.Screen
 				name="calculator"
@@ -48,6 +58,15 @@ export default function TabLayout() {
 					title: 'Route Finder',
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="map-marker-path" color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="profile"
+				options={{
+					title: 'Profile',
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="account" color={color} />
 					),
 				}}
 			/>

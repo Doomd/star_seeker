@@ -1,6 +1,17 @@
 # Development Log (Newest to Oldest)
 
-## docs: update project documentation
+## feat: implement bonus features (favorites, persistence, theming, offline) & fixes
+
+- **FEAT**: Implemented "Favorites" system with persistent storage using `zustand` and `AsyncStorage` (`store/useUserStore.ts`).
+- **FEAT**: Added "Profile" tab with stats and Color Mode preference (System/Light/Dark).
+- **FEAT**: Implemented Dynamic Theming with `useThemeColor` hook, supporting real-time switching.
+- **FEAT**: Added Offline Mode using `@react-native-community/netinfo` and `OfflineBanner` component; configured TanStack Query `onlineManager`.
+- **UI**: Updated `GateCard` with favorite star toggle and improved layout (centered labels).
+- **UI**: Added "Favorites Only" filter to Gates Index.
+- **FIX**: Resolved Web "Blank Screen" issue by adding CSS reset in `app/global.css`.
+- **FIX**: Resolved Web syntax error by downgrading `zustand` to v4.4.7 (avoiding `import.meta`).
+- **FIX**: Fixed Navigation issue where "Gates" tab didn't reset stack; added `tabPress` listener.
+- **FIX**: Resolved React Hook Rule violation in `HomeScreen`.
 
 - **DOCS**: Added `docs/API.md` to document endpoints and schemas.
 - **DOCS**: Moved `CHALLENGE.md` to `docs/` folder for better organization.

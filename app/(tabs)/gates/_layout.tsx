@@ -1,7 +1,9 @@
-import { Theme as Colors } from '@/constants/Colors'
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { Stack } from 'expo-router'
 
 export default function GatesLayout() {
+	const Colors = useThemeColor()
+
 	return (
 		<Stack
 			screenOptions={{
