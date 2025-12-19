@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## feat: implement gate details screen
+
+- **FEAT**: Implemented dynamic `app/[code].tsx` route to show detailed gate information.
+- **UI**: Created detail view with connection list and navigation to other gates.
+- **NAV**: Configured dynamic Stack Headers to show gate names.
+
 ## chore: add prettier configuration
 
 - **CONFIG**: Added `.prettierrc` with semicolon: false, tabs: true, and tabWidth: 2.
