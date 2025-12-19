@@ -16,7 +16,7 @@ export default function ProfileScreen() {
 
 				<View className="mb-8 overflow-hidden rounded-2xl border border-ui bg-panel">
 					<View className="border-b border-ui p-4">
-						<Text className="text-lg font-bold text-foreground">Stats</Text>
+						<Text className="text-lg font-bold text-foreground">Favorites</Text>
 					</View>
 					<View className="flex-row items-center p-6">
 						<View className="mr-4 rounded-full bg-ui p-3">
@@ -42,8 +42,9 @@ export default function ProfileScreen() {
 						<Text className="mb-3 text-sm font-medium text-foreground-muted">
 							Color Mode
 						</Text>
+
 						<View className="flex-row overflow-hidden rounded-lg border border-ui">
-							{(['system', 'light', 'dark'] as const).map((mode) => (
+							{(['light', 'dark'] as const).map((mode) => (
 								<Pressable
 									key={mode}
 									onPress={() => setColorMode(mode)}

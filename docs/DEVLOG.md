@@ -2,8 +2,16 @@
 
 ## style: polish ui spacing and icons
 
+- **UI**: Renamed "Stats" section to "Favorites" on Profile screen.
 - **UI**: Updated `GateDetails` icon to `orbit` to match tab bar for consistency.
 - **UI**: Adjusted padding in `Calculator` screen for better alignment.
+- **FIX**: Simplified CSS variables to direct hex codes and removed alpha channel support temporarily to debug Native theme switching.
+- **FEAT**: Simplified theme system to "Dark" (default) and "Light" only, removing "System" option for predictability.
+- **FEAT**: Implemented true Light/Dark mode support using CSS variables and NativeWind sync.
+- **REFACTOR**: Updated all screens (`Calculator`, `Routes`, `Gates`) to use dynamic `useThemeColor` hook instead of static constants.
+- **FIX**: Resolved iOS Theme reactivity issue by refactoring from CSS Variables to Utility Composition (using `@apply` with `dark:` variants).
+- **FIX**: Fixed `View` import crash in `_layout.tsx` by aliasing to `RNView` to avoid naming conflicts.
+- **FIX**: Implemented reliable "Force Remount" strategy on root View to ensure theme context propagation.
 - **FIX**: Resolved Web FOUC (Flash of Unstyled Content) by waiting for store hydration before hiding splash screen.
 - **FIX**: Fixed temporary "[code]" title in Gate Details by handling loading state titles gracefully.
 
