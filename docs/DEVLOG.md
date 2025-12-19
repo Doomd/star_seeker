@@ -1,5 +1,10 @@
 # Development Log (Newest to Oldest)
 
+## docs: update project documentation
+
+- **DOCS**: Added `docs/API.md` to document endpoints and schemas.
+- **DOCS**: Moved `CHALLENGE.md` to `docs/` folder for better organization.
+
 ## refactor: restructure routes and fix navigation
 
 - **NAV**: Renamed `app/(tabs)/gates` to `index` and back to `gates` with a root redirect to fix nested screen warnings.
