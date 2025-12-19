@@ -14,7 +14,10 @@ import './global.css'
 import { QueryProvider } from '@/components/QueryProvider'
 import { LogBox, useColorScheme } from 'react-native'
 
-LogBox.ignoreLogs(['props.pointerEvents is deprecated'])
+LogBox.ignoreLogs([
+	'props.pointerEvents is deprecated',
+	'SafeAreaView has been deprecated',
+])
 
 export {
 	// Catch any errors thrown by the Layout component.

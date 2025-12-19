@@ -1,5 +1,9 @@
 # Development Log (Newest to Oldest)
 
+## chore: update expo packages to recommended versions
+
+- **DEPS**: Updated `expo` (~54.0.30), `expo-router` (~6.0.21), and `expo-splash-screen` (~31.0.13) to resolve console warnings.
+
 ## refactor: implement single source of truth for theming
 
 - **THEME**: Created `constants/Colors.ts` (TypeScript) as the Single Source of Truth.
