@@ -1,4 +1,4 @@
-import { Theme as Colors } from '@/constants/Colors'
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
 import { Gate } from '@/types'
 import { Ionicons } from '@expo/vector-icons'
@@ -10,6 +10,7 @@ interface GateCardProps {
 }
 
 export function GateCard({ gate }: GateCardProps) {
+	const Colors = useThemeColor()
 	const { favorites, toggleFavorite } = useUserStore()
 	const isFavorite = favorites.includes(gate.code)
 

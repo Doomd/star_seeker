@@ -1,7 +1,6 @@
 import { GateCard } from '@/components/GateCard'
-import { Theme as Colors } from '@/constants/Colors'
 import { useGates } from '@/hooks/useQueries'
-import { useIsDark } from '@/hooks/useThemeColor'
+import { useIsDark, useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
 import { useState } from 'react'
 import {
@@ -18,6 +17,7 @@ export default function HomeScreen() {
 	const { favorites } = useUserStore()
 	const [showFavorites, setShowFavorites] = useState(false)
 	const isDark = useIsDark()
+	const Colors = useThemeColor()
 	const { data: gates, isLoading, error } = useGates()
 
 	const filteredGates =

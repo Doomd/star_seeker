@@ -1,5 +1,5 @@
-import { Theme as Colors } from '@/constants/Colors'
 import { useCheapestRoute, useGates } from '@/hooks/useQueries'
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { Gate } from '@/types'
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
@@ -20,6 +20,7 @@ export default function RoutesScreen() {
 	const [selectingMode, setSelectingMode] = useState<
 		'source' | 'target' | null
 	>(null)
+	const Colors = useThemeColor()
 
 	const { data: gates } = useGates()
 	const {

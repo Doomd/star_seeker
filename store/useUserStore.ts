@@ -4,10 +4,10 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface UserState {
 	favorites: string[]
-	colorMode: 'system' | 'light' | 'dark'
+	colorMode: 'light' | 'dark'
 	_hasHydrated: boolean
 	toggleFavorite: (code: string) => void
-	setColorMode: (mode: 'system' | 'light' | 'dark') => void
+	setColorMode: (mode: 'light' | 'dark') => void
 	setHasHydrated: (state: boolean) => void
 }
 
@@ -15,7 +15,7 @@ export const useUserStore = create<UserState>()(
 	persist(
 		(set) => ({
 			favorites: [],
-			colorMode: 'system',
+			colorMode: 'dark',
 			_hasHydrated: false,
 			toggleFavorite: (code) =>
 				set((state) => ({

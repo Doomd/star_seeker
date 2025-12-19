@@ -1,5 +1,5 @@
-import { Theme as Colors } from '@/constants/Colors'
 import { useTransportCost } from '@/hooks/useQueries'
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
 import {
@@ -18,6 +18,7 @@ export default function CalculatorScreen() {
 	const [passengers, setPassengers] = useState('2')
 	const [parking, setParking] = useState('3')
 	const { width } = useWindowDimensions()
+	const Colors = useThemeColor()
 
 	const {
 		data: costData,

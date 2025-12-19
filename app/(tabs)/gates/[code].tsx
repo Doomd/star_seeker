@@ -9,9 +9,10 @@ import {
 	View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Theme as Colors } from '@/constants/Colors'
+import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function GateDetailsScreen() {
+	const Colors = useThemeColor()
 	const { code } = useLocalSearchParams<{ code: string }>()
 	const router = useRouter()
 	const { data: gate, isLoading, error, refetch } = useGateDetails(code || '')
