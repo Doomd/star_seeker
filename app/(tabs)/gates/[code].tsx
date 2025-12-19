@@ -21,7 +21,7 @@ export default function GateDetailsScreen() {
 			<View className="flex-1 items-center justify-center bg-background">
 				<Stack.Screen
 					options={{
-						headerTitle: code,
+						headerTitle: code || 'Loading...',
 						headerStyle: { backgroundColor: Colors.panel },
 						headerTintColor: Colors.foreground.DEFAULT,
 					}}

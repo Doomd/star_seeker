@@ -4,6 +4,8 @@
 
 - **UI**: Updated `GateDetails` icon to `orbit` to match tab bar for consistency.
 - **UI**: Adjusted padding in `Calculator` screen for better alignment.
+- **FIX**: Resolved Web FOUC (Flash of Unstyled Content) by waiting for store hydration before hiding splash screen.
+- **FIX**: Fixed temporary "[code]" title in Gate Details by handling loading state titles gracefully.
 
 - **FEAT**: Implemented "Favorites" system with persistent storage using `zustand` and `AsyncStorage` (`store/useUserStore.ts`).
 - **FEAT**: Added "Profile" tab with stats and Color Mode preference (System/Light/Dark).

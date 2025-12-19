@@ -15,6 +15,7 @@ import './global.css'
 import { QueryProvider } from '@/components/QueryProvider'
 import { OfflineBanner } from '@/components/OfflineBanner'
 import { useIsDark, useThemeColor } from '@/hooks/useThemeColor'
+import { useUserStore } from '@/store/useUserStore'
 import { onlineManager } from '@tanstack/react-query'
 import NetInfo from '@react-native-community/netinfo'
 import { LogBox } from 'react-native'
@@ -51,13 +52,15 @@ export default function RootLayout() {
 		if (error) throw error
 	}, [error])
 
+	const hasHydrated = useUserStore((state) => state._hasHydrated)
+
 	useEffect(() => {
-		if (loaded) {
+		if (loaded && hasHydrated) {
 			SplashScreen.hideAsync()
 		}
-	}, [loaded])
+	}, [loaded, hasHydrated])
 
-	if (!loaded) {
+	if (!loaded || !hasHydrated) {
 		return null
 	}
 
