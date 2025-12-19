@@ -1,5 +1,9 @@
 # Development Log (Newest to Oldest)
 
+## style: align calculator cost text
+
+- **UI**: Right-aligned cost and currency text in `app/(tabs)/calculator.tsx` for improved readability of numerical values.
+
 ## docs: improve documentation navigation
 
 - **DOCS**: Added cross-links to `README.md` in `DEVLOG.md`, `TODO.md`, `API.md`, and `CHALLENGE.md` for better navigation.

@@ -295,7 +295,7 @@ export default function CalculatorScreen() {
 															</Text>
 															<View className="flex-1 flex-row items-center justify-end">
 																{showEach && (
-																	<Text className="mr-3 font-mono text-sm font-bold text-foreground-muted">
+																	<Text className="mr-3 font-mono text-sm font-bold text-foreground-muted text-right">
 																		£
 																		{(
 																			(costData.journeyCost +
@@ -305,7 +305,7 @@ export default function CalculatorScreen() {
 																	</Text>
 																)}
 																<Text
-																	className="w-32 font-mono text-xl font-bold text-primary"
+																	className="w-32 font-mono text-xl font-bold text-primary text-right"
 																	numberOfLines={1}
 																	adjustsFontSizeToFit
 																>
