@@ -14,30 +14,46 @@ import { Theme as Colors } from '@/constants/Colors'
 export default function GateDetailsScreen() {
 	const { code } = useLocalSearchParams<{ code: string }>()
 	const router = useRouter()
-	const { data: gate, isLoading, error } = useGateDetails(code || '')
+	const { data: gate, isLoading, error, refetch } = useGateDetails(code || '')
 
-	return (
-		<View className="flex-1 items-center justify-center bg-background">
-			<Stack.Screen
-				options={{
-					headerTitle: code,
-					headerStyle: { backgroundColor: Colors.panel },
-					headerTintColor: Colors.foreground.DEFAULT,
-				}}
-			/>
-			<ActivityIndicator size="large" color="#22d3ee" />
-		</View>
-	)
+	if (isLoading) {
+		return (
+			<View className="flex-1 items-center justify-center bg-background">
+				<Stack.Screen
+					options={{
+						headerTitle: code,
+						headerStyle: { backgroundColor: Colors.panel },
+						headerTintColor: Colors.foreground.DEFAULT,
+					}}
+				/>
+				<ActivityIndicator size="large" color={Colors.primary} />
+			</View>
+		)
+	}
 
 	if (error || !gate) {
 		return (
-			<View className="flex-1 items-center justify-center bg-background p-6">
-				<Stack.Screen options={{ headerShown: false }} />
-				<Text className="mb-2 text-center text-lg text-destructive">
-					Error loading details
+			<View className="flex-1 items-center justify-center bg-background p-4">
+				<Stack.Screen
+					options={{
+						headerTitle: 'Error',
+						headerStyle: { backgroundColor: Colors.panel },
+						headerTintColor: Colors.foreground.DEFAULT,
+					}}
+				/>
+				<Ionicons
+					name="alert-circle-outline"
+					size={48}
+					color={Colors.destructive}
+				/>
+				<Text className="mt-4 text-center text-lg font-bold text-foreground">
+					Failed to load gate details
 				</Text>
-				<TouchableOpacity onPress={() => router.back()}>
-					<Text className="mt-4 text-blue-400">Go Back</Text>
+				<TouchableOpacity
+					className="mt-6 rounded-lg bg-ui px-6 py-3 active:bg-ui-active"
+					onPress={() => refetch()}
+				>
+					<Text className="font-bold text-primary">Retry</Text>
 				</TouchableOpacity>
 			</View>
 		)

@@ -42,6 +42,15 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			<Tabs.Screen
+				name="routes"
+				options={{
+					title: 'Route Finder',
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="map-marker-path" color={color} />
+					),
+				}}
+			/>
 		</Tabs>
 	)
 }

@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## refactor: restructure routes and fix navigation
+
+- **NAV**: Renamed `app/(tabs)/gates` to `index` and back to `gates` with a root redirect to fix nested screen warnings.
+- **NAV**: Updated `GateCard` and Gate Details to use absolute paths (`/gates/[code]`) to prevent 404s.
+- **UI**: Added Error Handling and Retry button to Gate Details screen for better UX during network failures.
+- **FIX**: Resolved startup 404 by adding `app/index.tsx` redirect.
+
 ## fix: ensure back button persistence during loading
 
 - **NAV**: Refactored Gate Details navigation to ensure the back button is always visible, even during loading states.
@@ -10,7 +17,8 @@
 ## feat: add calculator and route finder features
 
 - **CALCULATOR**: Ported `app/(tabs)/calculator.tsx` to calculate transport costs, refactored to use semantic theme colors.
-- **NAV**: Added 'Cost' tab to the main layout with `calculator-variant-outline` icon.
+- **ROUTES**: Ported `app/(tabs)/routes.tsx` to find cheapest routes, refactored to use semantic theme colors.
+- **NAV**: Added 'Cost' and 'Route Finder' tabs to the main layout.
 
 ## refactor: enforce dark theme in root layout before we implement color modes
 
