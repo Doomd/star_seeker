@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## feat: refine "orbit" branding with star-and-orbit design
+
+- **FEAT**: Redesigned the "orbit" app icon to feature a single central star (circle) with a single orbital ring, moving away from logos that resembled React.
+- **CONFIG**: Updated `assets/images/orbit-icon.png` with the new design, ensuring it remains the source of truth for all platform icons.
+- **BRAND**: Finalized the minimalist space aesthetic with glowing cyan (#22d3ee) on deep navy, optimized for mobile and web.
+- **BRAND**: Replaced previous complex 3D render with a high-contrast, glowing vector-style orbit logo.
+
 ## feat: persist calculator settings
 
 - **FEAT**: Calculator inputs (Distance, Passengers, Parking) now persist across app sessions and theme changes using `useUserStore`.
