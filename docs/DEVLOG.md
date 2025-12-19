@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## fix: improve favorite button interaction
+
+- **FIX**: Resolved event propagation issue on Web where clicking the "Favorite" star also triggered navigation to the gate details; added `e.preventDefault()`.
+- **UI**: Refactored `GateCard` layout to significantly increase the "Favorite" button's hit area for easier tapping without affecting the visual layout.
+- **FEAT**: Added functional "Favorite" toggle button to the Gate Details screen (`app/(tabs)/gates/[code].tsx`), replacing the placeholder text.
+
 ## docs: add project readme
 
 - **DOCS**: Created user-friendly `README.md` covering setup, features, and architecture decisions.

@@ -1,21 +1,25 @@
 import { useGateDetails } from '@/hooks/useQueries'
+import { useThemeColor } from '@/hooks/useThemeColor'
+import { useUserStore } from '@/store/useUserStore'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import {
 	ActivityIndicator,
+	Pressable,
 	ScrollView,
 	Text,
 	TouchableOpacity,
 	View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function GateDetailsScreen() {
 	const Colors = useThemeColor()
 	const { code } = useLocalSearchParams<{ code: string }>()
 	const router = useRouter()
 	const { data: gate, isLoading, error, refetch } = useGateDetails(code || '')
+	const { favorites, toggleFavorite } = useUserStore()
+	const isFavorite = gate ? favorites.includes(gate.code) : false
 
 	if (isLoading) {
 		return (
@@ -73,21 +77,33 @@ export default function GateDetailsScreen() {
 
 			<ScrollView className="flex-1 p-4">
 				<View className="mb-6 rounded-2xl border border-ui bg-panel p-6">
-					<View className="flex-row items-start justify-between">
-						<View>
-							<Text className="mb-1 text-sm tracking-wider uppercase text-foreground-muted">
-								Gate Code
-							</Text>
-							<Text className="font-mono text-3xl font-bold text-primary">
-								{gate.code}
-							</Text>
+					<View className="flex-row items-center justify-between">
+						<View className="flex-row items-center justify-start gap-4">
+							<MaterialCommunityIcons
+								name="orbit"
+								size={48}
+								color="#22d3ee"
+								style={{ opacity: 0.8 }}
+							/>
+							<View>
+								<Text className="font-mono text-3xl font-bold text-primary">
+									{gate.code}
+								</Text>
+								<Text className="text-sm tracking-wider uppercase text-foreground-muted">
+									Gate Code
+								</Text>
+							</View>
 						</View>
-						<MaterialCommunityIcons
-							name="orbit"
-							size={48}
-							color="#22d3ee"
-							style={{ opacity: 0.8 }}
-						/>
+						<Pressable
+							onPress={() => toggleFavorite(gate.code)}
+							className="rounded-full p-3 active:bg-ui-active"
+						>
+							<Ionicons
+								name={isFavorite ? 'star' : 'star-outline'}
+								size={32}
+								color={isFavorite ? '#fbbf24' : Colors.foreground.dim}
+							/>
+						</Pressable>
 					</View>
 				</View>
 

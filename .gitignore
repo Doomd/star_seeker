@@ -40,5 +40,5 @@ yarn-error.*
 /ios
 /android
 
-# workspace
-star_seeker.code-workspace
+# LLM Instructions
+AI_CONTEXT.md
