@@ -39,7 +39,7 @@ export default function CalculatorScreen() {
 				</Text>
 
 				<ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-					<View className="mb-8 gap-4 pr-1">
+					<View className="mb-8 gap-4 px-1">
 						<View>
 							<Text className="mb-2 text-foreground-muted">Distance (AU)</Text>
 							<TextInput

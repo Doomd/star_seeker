@@ -1,5 +1,5 @@
 import { useGateDetails } from '@/hooks/useQueries'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import {
 	ActivityIndicator,
@@ -72,7 +72,7 @@ export default function GateDetailsScreen() {
 
 			<ScrollView className="flex-1 p-4">
 				<View className="mb-6 rounded-2xl border border-ui bg-panel p-6">
-					<View className="mb-4 flex-row items-start justify-between">
+					<View className="flex-row items-start justify-between">
 						<View>
 							<Text className="mb-1 text-sm tracking-wider uppercase text-foreground-muted">
 								Gate Code
@@ -81,8 +81,8 @@ export default function GateDetailsScreen() {
 								{gate.code}
 							</Text>
 						</View>
-						<Ionicons
-							name="planet"
+						<MaterialCommunityIcons
+							name="orbit"
 							size={48}
 							color="#22d3ee"
 							style={{ opacity: 0.8 }}

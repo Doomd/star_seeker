@@ -1,6 +1,9 @@
 # Development Log (Newest to Oldest)
 
-## feat: implement bonus features (favorites, persistence, theming, offline) & fixes
+## style: polish ui spacing and icons
+
+- **UI**: Updated `GateDetails` icon to `orbit` to match tab bar for consistency.
+- **UI**: Adjusted padding in `Calculator` screen for better alignment.
 
 - **FEAT**: Implemented "Favorites" system with persistent storage using `zustand` and `AsyncStorage` (`store/useUserStore.ts`).
 - **FEAT**: Added "Profile" tab with stats and Color Mode preference (System/Light/Dark).
