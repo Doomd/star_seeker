@@ -1,5 +1,9 @@
 # Development Log (Newest to Oldest)
 
+## feat: persist calculator settings
+
+- **FEAT**: Calculator inputs (Distance, Passengers, Parking) now persist across app sessions and theme changes using `useUserStore`.
+
 ## style: align calculator cost text
 
 - **UI**: Right-aligned cost and currency text in `app/(tabs)/calculator.tsx` for improved readability of numerical values.

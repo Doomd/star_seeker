@@ -5,9 +5,17 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 interface UserState {
 	favorites: string[]
 	colorMode: 'light' | 'dark'
+	calculatorSettings: {
+		distance: string
+		passengers: string
+		parking: string
+	}
 	_hasHydrated: boolean
 	toggleFavorite: (code: string) => void
 	setColorMode: (mode: 'light' | 'dark') => void
+	setCalculatorSettings: (
+		settings: Partial<UserState['calculatorSettings']>
+	) => void
 	setHasHydrated: (state: boolean) => void
 }
 
@@ -16,6 +24,11 @@ export const useUserStore = create<UserState>()(
 		(set) => ({
 			favorites: [],
 			colorMode: 'dark',
+			calculatorSettings: {
+				distance: '',
+				passengers: '2',
+				parking: '3',
+			},
 			_hasHydrated: false,
 			toggleFavorite: (code) =>
 				set((state) => ({
@@ -24,6 +37,10 @@ export const useUserStore = create<UserState>()(
 						: [...state.favorites, code],
 				})),
 			setColorMode: (mode) => set({ colorMode: mode }),
+			setCalculatorSettings: (settings) =>
+				set((state) => ({
+					calculatorSettings: { ...state.calculatorSettings, ...settings },
+				})),
 			setHasHydrated: (state) => set({ _hasHydrated: state }),
 		}),
 		{

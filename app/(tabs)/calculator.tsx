@@ -1,7 +1,7 @@
 import { useTransportCost } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
+import { useUserStore } from '@/store/useUserStore'
 import { Ionicons } from '@expo/vector-icons'
-import { useState } from 'react'
 import {
 	ActivityIndicator,
 	ScrollView,
@@ -14,9 +14,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function CalculatorScreen() {
-	const [distance, setDistance] = useState('')
-	const [passengers, setPassengers] = useState('2')
-	const [parking, setParking] = useState('3')
+	const { calculatorSettings, setCalculatorSettings } = useUserStore()
+	const { distance, passengers, parking } = calculatorSettings
 	const { width } = useWindowDimensions()
 	const Colors = useThemeColor()
 
@@ -49,7 +48,7 @@ export default function CalculatorScreen() {
 								placeholderTextColor={Colors.foreground.dim}
 								keyboardType="numeric"
 								value={distance}
-								onChangeText={setDistance}
+								onChangeText={(val) => setCalculatorSettings({ distance: val })}
 							/>
 						</View>
 
@@ -62,13 +61,17 @@ export default function CalculatorScreen() {
 									placeholderTextColor={Colors.foreground.dim}
 									keyboardType="numeric"
 									value={passengers}
-									onChangeText={setPassengers}
+									onChangeText={(val) =>
+										setCalculatorSettings({ passengers: val })
+									}
 								/>
 
 								<TouchableOpacity
 									onPress={() => {
 										const current = parseInt(passengers) || 0
-										setPassengers(Math.max(1, current - 1).toString())
+										setCalculatorSettings({
+											passengers: Math.max(1, current - 1).toString(),
+										})
 									}}
 									className="h-14 w-14 items-center justify-center rounded-xl border border-ui bg-ui active:bg-ui-active"
 								>
@@ -82,7 +85,9 @@ export default function CalculatorScreen() {
 								<TouchableOpacity
 									onPress={() => {
 										const current = parseInt(passengers) || 0
-										setPassengers((current + 1).toString())
+										setCalculatorSettings({
+											passengers: (current + 1).toString(),
+										})
 									}}
 									className="h-14 w-14 items-center justify-center rounded-xl border border-ui bg-ui active:bg-ui-active"
 								>
@@ -104,13 +109,17 @@ export default function CalculatorScreen() {
 									placeholderTextColor={Colors.foreground.dim}
 									keyboardType="numeric"
 									value={parking}
-									onChangeText={setParking}
+									onChangeText={(val) =>
+										setCalculatorSettings({ parking: val })
+									}
 								/>
 
 								<TouchableOpacity
 									onPress={() => {
 										const current = parseInt(parking) || 0
-										setParking(Math.max(0, current - 1).toString())
+										setCalculatorSettings({
+											parking: Math.max(0, current - 1).toString(),
+										})
 									}}
 									className="h-14 w-14 items-center justify-center rounded-xl border border-ui bg-ui active:bg-ui-active"
 								>
@@ -124,7 +133,9 @@ export default function CalculatorScreen() {
 								<TouchableOpacity
 									onPress={() => {
 										const current = parseInt(parking) || 0
-										setParking((current + 1).toString())
+										setCalculatorSettings({
+											parking: (current + 1).toString(),
+										})
 									}}
 									className="h-14 w-14 items-center justify-center rounded-xl border border-ui bg-ui active:bg-ui-active"
 								>
