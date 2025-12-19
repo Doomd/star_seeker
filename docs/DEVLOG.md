@@ -1,5 +1,10 @@
 # Development Log (Newest to Oldest)
 
+## feat: connect home screen to api
+
+- **FEAT**: Connected `app/(tabs)/index.tsx` to `useGates` hook to display real data.
+- **UI**: Implemented `FlatList` layout for displaying `GateCard` items.
+
 ## feat: implement gate details screen
 
 - **FEAT**: Implemented dynamic `app/[code].tsx` route to show detailed gate information.
