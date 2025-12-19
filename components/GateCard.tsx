@@ -9,14 +9,14 @@ interface GateCardProps {
 export function GateCard({ gate }: GateCardProps) {
 	return (
 		<Link href={`/${gate.code}`} asChild>
-			<Pressable className="bg-slate-800 p-4 rounded-xl mb-3 active:bg-slate-700">
+			<Pressable className="mb-3 rounded-xl bg-ui p-4 active:bg-ui-active">
 				<View className="flex-row justify-between items-center mb-2">
-					<Text className="text-xl font-bold text-white">{gate.name}</Text>
-					<Text className="text-sm font-mono text-cyan-400 bg-cyan-950 px-2 py-0.5 rounded">
+					<Text className="text-xl font-bold text-foreground">{gate.name}</Text>
+					<Text className="rounded bg-primary-muted px-2 py-0.5 font-mono text-sm text-primary">
 						{gate.code}
 					</Text>
 				</View>
-				<Text className="text-slate-400 text-sm">
+				<Text className="text-sm text-foreground-muted">
 					{gate.links.length} Connections
 				</Text>
 			</Pressable>

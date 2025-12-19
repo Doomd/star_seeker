@@ -9,6 +9,7 @@ import {
 	View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Theme as Colors } from '@/constants/Colors'
 
 export default function GateDetailsScreen() {
 	const { code } = useLocalSearchParams<{ code: string }>()
@@ -17,7 +18,7 @@ export default function GateDetailsScreen() {
 
 	if (isLoading) {
 		return (
-			<View className="flex-1 items-center justify-center bg-slate-950">
+			<View className="flex-1 items-center justify-center bg-background">
 				<Stack.Screen options={{ headerShown: false }} />
 				<ActivityIndicator size="large" color="#22d3ee" />
 			</View>
@@ -26,9 +27,9 @@ export default function GateDetailsScreen() {
 
 	if (error || !gate) {
 		return (
-			<View className="flex-1 items-center justify-center bg-slate-950 p-6">
+			<View className="flex-1 items-center justify-center bg-background p-6">
 				<Stack.Screen options={{ headerShown: false }} />
-				<Text className="mb-2 text-center text-lg text-red-400">
+				<Text className="mb-2 text-center text-lg text-destructive">
 					Error loading details
 				</Text>
 				<TouchableOpacity onPress={() => router.back()}>
@@ -39,25 +40,25 @@ export default function GateDetailsScreen() {
 	}
 
 	return (
-		<SafeAreaView className="flex-1 bg-slate-950">
+		<SafeAreaView className="flex-1 bg-background">
 			{/* Dynamic Header */}
 			<Stack.Screen
 				options={{
 					headerTitle: gate.name,
-					headerStyle: { backgroundColor: '#020617' },
-					headerTintColor: '#fff',
+					headerStyle: { backgroundColor: Colors.panel },
+					headerTintColor: Colors.foreground.DEFAULT,
 					headerBackTitle: 'Gates',
 				}}
 			/>
 
 			<ScrollView className="flex-1 p-4">
-				<View className="mb-6 rounded-2xl border border-slate-800 bg-slate-900 p-6">
+				<View className="mb-6 rounded-2xl border border-ui bg-panel p-6">
 					<View className="mb-4 flex-row items-start justify-between">
 						<View>
-							<Text className="mb-1 text-sm tracking-wider uppercase text-slate-400">
+							<Text className="mb-1 text-sm tracking-wider uppercase text-foreground-muted">
 								Gate Code
 							</Text>
-							<Text className="font-mono text-3xl font-bold text-cyan-400">
+							<Text className="font-mono text-3xl font-bold text-primary">
 								{gate.code}
 							</Text>
 						</View>
@@ -70,14 +71,16 @@ export default function GateDetailsScreen() {
 					</View>
 				</View>
 
-				<Text className="mb-4 text-xl font-bold text-white">Connections</Text>
+				<Text className="mb-4 text-xl font-bold text-foreground">
+					Connections
+				</Text>
 				<View className="gap-3">
 					{gate.links && gate.links.length > 0 ? (
 						gate.links.map((link) => (
 							<TouchableOpacity
 								key={link.code}
 								onPress={() => router.push(`/${link.code}`)}
-								className="flex-row items-center justify-between rounded-xl bg-slate-800 p-4 active:bg-slate-700"
+								className="flex-row items-center justify-between rounded-xl bg-ui p-4 active:bg-ui-active"
 							>
 								<View className="flex-row items-center gap-3">
 									<Ionicons
@@ -86,20 +89,24 @@ export default function GateDetailsScreen() {
 										color="#94a3b8"
 									/>
 									<View>
-										<Text className="font-mono text-lg text-white">
+										<Text className="font-mono text-lg text-foreground">
 											{link.code}
 										</Text>
-										<Text className="text-xs text-slate-500">HYPER JUMP</Text>
+										<Text className="text-xs text-foreground-dim">
+											HYPER JUMP
+										</Text>
 									</View>
 								</View>
 								<View className="flex-row items-center gap-2">
-									<Text className="text-xs text-slate-500">{link.hu} HU</Text>
+									<Text className="text-xs text-foreground-dim">
+										{link.hu} HU
+									</Text>
 									<Ionicons name="chevron-forward" size={20} color="#64748b" />
 								</View>
 							</TouchableOpacity>
 						))
 					) : (
-						<Text className="italic text-slate-500">
+						<Text className="italic text-foreground-dim">
 							No direct connections available.
 						</Text>
 					)}

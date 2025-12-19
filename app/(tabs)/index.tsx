@@ -3,18 +3,18 @@ import { useGates } from '@/hooks/useQueries'
 import {
 	ActivityIndicator,
 	FlatList,
-	SafeAreaView,
 	StatusBar,
 	Text,
 	View,
 } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function HomeScreen() {
 	const { data: gates, isLoading, error } = useGates()
 
 	if (isLoading) {
 		return (
-			<View className="flex-1 items-center justify-center bg-slate-950">
+			<View className="flex-1 items-center justify-center bg-background">
 				<ActivityIndicator size="large" color="#22d3ee" />
 			</View>
 		)
@@ -22,11 +22,11 @@ export default function HomeScreen() {
 
 	if (error) {
 		return (
-			<View className="flex-1 items-center justify-center bg-slate-950 p-6">
-				<Text className="mb-2 text-center text-lg text-red-400">
+			<View className="flex-1 items-center justify-center bg-background p-6">
+				<Text className="mb-2 text-center text-lg text-destructive">
 					Error loading gates
 				</Text>
-				<Text className="text-center text-slate-400">
+				<Text className="text-center text-foreground-muted">
 					{(error as Error).message}
 				</Text>
 			</View>
@@ -34,10 +34,12 @@ export default function HomeScreen() {
 	}
 
 	return (
-		<SafeAreaView className="flex-1 bg-slate-950">
+		<SafeAreaView className="flex-1 bg-background" edges={['top']}>
 			<StatusBar barStyle="light-content" />
 			<View className="flex-1 px-4 py-4">
-				<Text className="mb-6 text-3xl font-bold text-white">Star Gates</Text>
+				<Text className="mb-6 text-3xl font-bold text-foreground">
+					Star Gates
+				</Text>
 				<FlatList
 					data={gates}
 					keyExtractor={(item) => item.code}

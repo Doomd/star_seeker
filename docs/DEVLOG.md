@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## refactor: implement single source of truth for theming
+
+- **THEME**: Created `constants/Colors.ts` (TypeScript) as the Single Source of Truth.
+- **CONFIG**: Migrated `tailwind.config.js` to `tailwind.config.ts` to support modern imports.
+- **UI**: Updated components to utilize named imports for Colors.
+
 ## feat: connect home screen to api
 
 - **FEAT**: Connected `app/(tabs)/index.tsx` to `useGates` hook to display real data.
