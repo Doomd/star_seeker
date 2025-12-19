@@ -12,9 +12,13 @@ export default function GatesLayout() {
 				headerTitleStyle: {
 					fontWeight: 'bold',
 				},
+				headerBackVisible: true,
 			}}
 		>
-			<Stack.Screen name="index" options={{ headerShown: false }} />
+			<Stack.Screen
+				name="index"
+				options={{ headerShown: false, title: 'Gates' }}
+			/>
 		</Stack>
 	)
 }

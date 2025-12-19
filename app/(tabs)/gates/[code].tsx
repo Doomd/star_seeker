@@ -16,14 +16,18 @@ export default function GateDetailsScreen() {
 	const router = useRouter()
 	const { data: gate, isLoading, error } = useGateDetails(code || '')
 
-	if (isLoading) {
-		return (
-			<View className="flex-1 items-center justify-center bg-background">
-				<Stack.Screen options={{ headerShown: false }} />
-				<ActivityIndicator size="large" color="#22d3ee" />
-			</View>
-		)
-	}
+	return (
+		<View className="flex-1 items-center justify-center bg-background">
+			<Stack.Screen
+				options={{
+					headerTitle: code,
+					headerStyle: { backgroundColor: Colors.panel },
+					headerTintColor: Colors.foreground.DEFAULT,
+				}}
+			/>
+			<ActivityIndicator size="large" color="#22d3ee" />
+		</View>
+	)
 
 	if (error || !gate) {
 		return (
@@ -47,7 +51,6 @@ export default function GateDetailsScreen() {
 					headerTitle: gate.name,
 					headerStyle: { backgroundColor: Colors.panel },
 					headerTintColor: Colors.foreground.DEFAULT,
-					headerBackTitle: 'Gates',
 				}}
 			/>
 

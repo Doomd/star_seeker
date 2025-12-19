@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## fix: ensure back button persistence during loading
+
+- **NAV**: Refactored Gate Details navigation to ensure the back button is always visible, even during loading states.
+- **NAV**: Enforced `headerBackVisible: true` globally in the Gates stack to prevent inconsistent hiding.
+- **UI**: Added temporary header title during loading to maintain UI stability.
+- **REFACTOR**: Restructured `app/(tabs)/gates` to use a nested Stack Navigator, keeping the Tab Bar visible on detail screens.
+
 ## feat: add calculator and route finder features
 
 - **CALCULATOR**: Ported `app/(tabs)/calculator.tsx` to calculate transport costs, refactored to use semantic theme colors.
