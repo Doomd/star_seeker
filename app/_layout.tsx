@@ -77,8 +77,6 @@ function RootLayoutNav() {
 
 	// Sync NativeWind with our store
 	useEffect(() => {
-		console.log('UserStore Mode:', colorMode)
-		console.log('NativeWind Active Scheme:', colorScheme)
 		setColorScheme(colorMode)
 	}, [colorMode, setColorScheme, colorScheme])
 

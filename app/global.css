@@ -16,60 +16,60 @@
 @layer components {
 	/* 
     Semantic Theme Classes 
-    Maps semantic names to static Tailwind utilities.
-    Refactored from CSS variables to support reliable Native Dark Mode.
+    Maps semantic names to the palette defined in tailwind.config.ts.
+    This ensures Colors.ts is the single source of truth.
   */
 
 	/* Backgrounds */
 	.bg-background {
-		@apply bg-white dark:bg-slate-950;
+		@apply bg-palette-light-background dark:bg-palette-dark-background;
 	}
 	.bg-panel {
-		@apply bg-slate-100 dark:bg-slate-900;
+		@apply bg-palette-light-panel dark:bg-palette-dark-panel;
 	}
 	.bg-ui {
-		@apply bg-slate-200 dark:bg-slate-800;
+		@apply bg-palette-light-ui dark:bg-palette-dark-ui;
 	}
 	.bg-ui-active {
-		@apply bg-slate-300 dark:bg-slate-700;
+		@apply bg-palette-light-ui-active dark:bg-palette-dark-ui-active;
 	}
 	.bg-primary {
-		@apply bg-cyan-600 dark:bg-cyan-400;
+		@apply bg-palette-light-primary dark:bg-palette-dark-primary;
 	}
 	.bg-primary-muted {
-		@apply bg-cyan-100 dark:bg-cyan-950;
+		@apply bg-palette-light-primary-muted dark:bg-palette-dark-primary-muted;
 	}
 	.bg-destructive {
-		@apply bg-red-500;
+		@apply bg-palette-light-destructive dark:bg-palette-dark-destructive;
 	}
 
 	/* Text Colors */
 	.text-foreground {
-		@apply text-slate-950 dark:text-white;
+		@apply text-palette-light-foreground dark:text-palette-dark-foreground;
 	}
 	.text-foreground-muted {
-		@apply text-slate-500 dark:text-slate-400;
+		@apply text-palette-light-foreground-muted dark:text-palette-dark-foreground-muted;
 	}
 	.text-foreground-dim {
-		@apply text-slate-400 dark:text-slate-500;
+		@apply text-palette-light-foreground-dim dark:text-palette-dark-foreground-dim;
 	}
 	.text-primary {
-		@apply text-cyan-600 dark:text-cyan-400;
+		@apply text-palette-light-primary dark:text-palette-dark-primary;
 	}
 	.text-background {
-		@apply text-white dark:text-slate-950;
+		@apply text-palette-light-background dark:text-palette-dark-background;
 	}
 
 	/* Borders */
 	.border-ui {
-		@apply border-slate-200 dark:border-slate-800;
+		@apply border-palette-light-ui dark:border-palette-dark-ui;
 	}
 
-	/* Derived Utilities for specific contexts found in grep */
+	/* Focus/Active States */
 	.active\:bg-ui-active:active {
-		@apply bg-slate-300 dark:bg-slate-700;
+		@apply bg-palette-light-ui-active dark:bg-palette-dark-ui-active;
 	}
 	.focus\:border-primary:focus {
-		@apply border-cyan-600 dark:border-cyan-400;
+		@apply border-palette-light-primary dark:border-palette-dark-primary;
 	}
 }
