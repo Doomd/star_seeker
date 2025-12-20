@@ -123,3 +123,9 @@ For global client-state (like Theme preference and Favorites), **Zustand** offer
 
 - [CHALLENGE.md](docs/CHALLENGE.md)
 - [API.md](docs/API.md)
+
+---
+
+## ⚠️ Known Issues
+
+- **Terminal Error (`Cannot pipe to a closed stream`)**: When refreshing the web version ("r"), you may see a Node.js stream error. This is a known upstream quirk in the **Expo SDK 54 / React 19** development server and does not affect the application's runtime or production builds.
