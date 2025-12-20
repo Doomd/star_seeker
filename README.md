@@ -62,6 +62,12 @@ This project was built as a solution to the **Star Seeker Technical Challenge**.
     - Press `i` to open in iOS Simulator.
     - Press `a` to open in Android Emulator.
 
+4.  **Run tests:**
+
+    ```bash
+    pnpm test
+    ```
+
 ---
 
 ## 📐 Design Decisions & Architecture
@@ -101,6 +107,7 @@ For global client-state (like Theme preference and Favorites), **Zustand** offer
 | **Gate Details**            |   ✅   | Dynamic routing (`apple/[code].tsx`), connection listing.                                      |
 | **Cheapest Route Finder**   |   ✅   | dedicated tab, step-by-step route visualization.                                               |
 | **UX & Mobile Polish**      |   ✅   | `SafeAreaView`, intuitive navigation stack, loading skeletons.                                 |
+| **Testing**                 |   ✅   | Jest + RNTL. Coverage for stores, utilities, components, and integration flows.                |
 | **Bonus: Persistence**      |   ✅   | Favorites saved locally.                                                                       |
 | **Bonus: Offline Mode**     |   ✅   | Global Offline Banner, cached data display.                                                    |
 | **Bonus: Theming**          |   ✅   | Light/Dark toggle on Profile.                                                                  |

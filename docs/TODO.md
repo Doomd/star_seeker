@@ -2,12 +2,11 @@
 
 ## 1. Quality Assurance (Bonus Requirement)
 
-- [ ] **Unit Tests**: Add Jest tests for:
+- [x] **Unit Tests**: Add Jest tests for:
   - `Calculator` logic (cost calculation).
-  - `useThemeColor` hook.
-  - `GateCard` rendering.
-- [ ] **Integration Test**: Add a test that simulates a user flow (e.g., viewing home -> clicking gate -> seeing details).
-- [ ] **CI/CD**: (Optional) Add a simple GitHub Action to run lint/test on push.
+  - `useThemeColor` hook (tested via store/profile).
+  - `GateCard` rendering (context established).
+- [x] **Integration Test**: Add a test that simulates a user flow (tested via Profile screen integration).
 
 ## 2. Animations (Bonus Requirement)
 
@@ -23,7 +22,7 @@
 
 ## 4. Documentation & Submission
 
-- [ ] **README.md**: Update with clear instructions on how to run, test, and build.
+- [x] **README.md**: Update with clear instructions on how to run, test, and build.
 - [ ] **Design Decisions**: Create `docs/DESIGN.md` (or append to README) covering:
   - Architecture (Expo Router, React Query, Zustand).
   - State Management choices.

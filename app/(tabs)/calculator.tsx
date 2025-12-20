@@ -12,6 +12,7 @@ import {
 	useWindowDimensions,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { calculateFleetSize, formatCurrency } from '@/utils/journey'
 
 export default function CalculatorScreen() {
 	const { calculatorSettings, setCalculatorSettings } = useUserStore()
@@ -196,7 +197,10 @@ export default function CalculatorScreen() {
 								<View className="gap-3 rounded-xl bg-background p-4">
 									{(() => {
 										const capacity = costData.recommendedTransport.capacity || 1
-										const count = Math.ceil(parseInt(passengers) / capacity)
+										const count = calculateFleetSize(
+											parseInt(passengers),
+											capacity
+										)
 										const isFleet = count > 1
 
 										return (
@@ -251,11 +255,10 @@ export default function CalculatorScreen() {
 																	numberOfLines={1}
 																	adjustsFontSizeToFit
 																>
-																	£
-																	{(
+																	{formatCurrency(
 																		costData.recommendedTransport.ratePerAu! *
-																		count
-																	).toFixed(2)}{' '}
+																			count
+																	)}{' '}
 																	/ AU
 																</Text>
 															</View>
@@ -276,7 +279,7 @@ export default function CalculatorScreen() {
 																	numberOfLines={1}
 																	adjustsFontSizeToFit
 																>
-																	{costData.journeyCost.toFixed(2)}
+																	{formatCurrency(costData.journeyCost)}
 																</Text>
 															</View>
 														</View>
@@ -295,7 +298,7 @@ export default function CalculatorScreen() {
 																	numberOfLines={1}
 																	adjustsFontSizeToFit
 																>
-																	{costData.parkingFee.toFixed(2)}
+																	{formatCurrency(costData.parkingFee)}
 																</Text>
 															</View>
 														</View>
@@ -320,10 +323,9 @@ export default function CalculatorScreen() {
 																	numberOfLines={1}
 																	adjustsFontSizeToFit
 																>
-																	£
-																	{(
+																	{formatCurrency(
 																		costData.journeyCost + costData.parkingFee
-																	).toFixed(2)}
+																	)}
 																</Text>
 															</View>
 														</View>
@@ -335,7 +337,10 @@ export default function CalculatorScreen() {
 																Rate
 															</Text>
 															<Text className="font-mono text-foreground">
-																£{costData.recommendedTransport.ratePerAu} / AU
+																{formatCurrency(
+																	costData.recommendedTransport.ratePerAu!
+																)}{' '}
+																/ AU
 															</Text>
 														</View>
 														<View className="flex-row justify-between">
@@ -343,7 +348,7 @@ export default function CalculatorScreen() {
 																Journey Cost ({distance} AU)
 															</Text>
 															<Text className="font-mono text-foreground">
-																{costData.journeyCost.toFixed(2)}
+																{formatCurrency(costData.journeyCost)}
 															</Text>
 														</View>
 														<View className="flex-row justify-between">
@@ -351,7 +356,7 @@ export default function CalculatorScreen() {
 																Parking Cost
 															</Text>
 															<Text className="font-mono text-foreground">
-																{costData.parkingFee.toFixed(2)}
+																{formatCurrency(costData.parkingFee)}
 															</Text>
 														</View>
 														<View className="my-1 h-[1px] bg-ui" />
@@ -360,10 +365,9 @@ export default function CalculatorScreen() {
 																Total
 															</Text>
 															<Text className="font-mono text-xl font-bold text-primary">
-																£
-																{(
+																{formatCurrency(
 																	costData.journeyCost + costData.parkingFee
-																).toFixed(2)}
+																)}
 															</Text>
 														</View>
 													</>
