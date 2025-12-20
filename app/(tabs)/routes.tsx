@@ -76,7 +76,7 @@ export default function RoutesScreen() {
 					Route Finder
 				</Text>
 
-				<View className="mb-8 flex-row items-center justify-between gap-4">
+				<View className="mb-8 flex-row items-center justify-between gap-4 p-1">
 					<TouchableOpacity
 						className="h-32 flex-1 items-center justify-center rounded-xl border border-ui bg-ui p-4"
 						onPress={() => setSelectingMode('source')}
@@ -149,7 +149,7 @@ export default function RoutesScreen() {
 				)}
 
 				{route && !isLoading && (
-					<View className="animate-in fade-in slide-in-from-bottom-4 rounded-2xl border border-ui bg-panel p-6">
+					<View className="animate-in fade-in slide-in-from-bottom-4 rounded-2xl border border-ui bg-panel p-6 m-1">
 						<Text className="mb-4 text-sm tracking-widest uppercase text-foreground-muted">
 							Cheapest Route
 						</Text>

@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## style: polish ui spacing and theme consistency
+
+- **UI**: Applied consistent spacing (`m-1`) to cards in `Profile` and `Routes` screens; adjusted padding for better visual balance.
+- **THEME**: Replaced hardcoded favorite star color with `Colors.favorite` in `ProfileScreen`.
+- **CONFIG**: Updated `.vscode/settings.json` with "Solarized Dark" theme and synchronized indentation settings.
+
 ## fix: resolve web accessibility focus error
 
 - **FIX**: Refactored `GateCard` to separate the main `Link` from the "Favorite" toggle. This resolves a Chrome error ("Blocked aria-hidden on an element because its descendant retained focus") caused by nested interactive elements in the focus tree during navigation.

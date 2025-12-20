@@ -11,16 +11,20 @@ export default function ProfileScreen() {
 	return (
 		<SafeAreaView className="flex-1 bg-background" edges={['top']}>
 			<StatusBar style={colorMode === 'dark' ? 'light' : 'dark'} />
-			<View className="flex-1 px-6 py-6">
+			<View className="flex-1 p-4">
 				<Text className="mb-8 text-3xl font-bold text-foreground">Profile</Text>
 
-				<View className="mb-8 overflow-hidden rounded-2xl border border-ui bg-panel">
+				<View className="overflow-hidden rounded-2xl border border-ui bg-panel m-1 mb-8">
 					<View className="border-b border-ui p-4">
 						<Text className="text-lg font-bold text-foreground">Favorites</Text>
 					</View>
 					<View className="flex-row items-center p-6">
 						<View className="mr-4 rounded-full bg-ui p-3">
-							<MaterialCommunityIcons name="star" size={24} color="#fbbf24" />
+							<MaterialCommunityIcons
+								name="star"
+								size={24}
+								color={Colors.favorite}
+							/>
 						</View>
 						<View>
 							<Text className="text-3xl font-bold text-foreground">
@@ -31,7 +35,7 @@ export default function ProfileScreen() {
 					</View>
 				</View>
 
-				<View className="rounded-2xl border border-ui bg-panel">
+				<View className="rounded-2xl border border-ui bg-panel m-1">
 					<View className="border-b border-ui p-4">
 						<Text className="text-lg font-bold text-foreground">
 							Preferences
