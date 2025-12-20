@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## docs: refine agent guidelines and project context
+
+- **DOCS**: Updated `AGENTS.md` with the latest technical context (SDK 54, Jest testing suite, centralized color management).
+- **DOCS**: Added specific AI workflow guidelines: prioritize `DEVLOG.md` context, maintain `TODO.md`, and favor atomic commits.
+- **CONFIG**: Moved `AGENTS.md` to be tracked by version control (removed from `.gitignore`) to ensure consistent AI collaboration across environments.
+
 ## chore: align test dependencies and update documentation
 
 - **CONFIG**: Downgraded `jest` and `@types/jest` to Expo-recommended versions (~29.7.0) to resolve terminal compatibility warnings.
