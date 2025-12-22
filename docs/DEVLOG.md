@@ -1,5 +1,7 @@
 # Development Log (Newest to Oldest)
 
+# [v0.3.0] Chart Refinements & Layout Standardization
+
 ## feat: implement balanced proportional spacing in JourneyVisualizer
 
 - **LAYOUT**: Enforced a 10% minimum horizontal width for all journey segments. This prevents overcrowding for short jumps (like 8 AU) while maintaining relative scale for major interstellar leaps.
