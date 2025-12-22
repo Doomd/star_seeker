@@ -1,5 +1,15 @@
 # Development Log (Newest to Oldest)
 
+# [v0.3.8] Global Cache Control & 7-Day Memory
+
+## chore: release v0.3.8 - global 7-day cache, maintenance tools, default route finder, and UI polish
+
+- **PERF**: Implemented a global **1-week cache time** (`604,800,000ms`) for all API responses (gates, details, routes).
+- **UX**: Added a "Clear Data Cache" button to the Profile screen for manual cache invalidation and fresh fetches.
+- **UX**: Set **Route Finder** as the default landing page upon app startup.
+- **UI**: Improved **Dark Mode accessibility** by refining contrast for destructive action buttons.
+- **DOCS**: Mandated strict Git-Truth verification in `AGENTS.md` and `WORKFLOW.md` to prevent version drift.
+
 # [v0.3.7] Cinematic Restoration & Layout Standardization
 
 ## feat: restore cinematic "heavy inertia" navigation

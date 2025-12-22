@@ -83,8 +83,8 @@ This file contains critical context, rules, and architectural decisions for any 
 
 Agents MUST maintain strict synchronization between code, documentation, and Git tags:
 
+- **Verifying the "Git-Truth"**: ALWAYS run `git tag --sort=-v:refname | head -n 1` to find the LATEST COMMITTED VERSION before suggesting a bump. NEVER rely on conversation history or uncommitted local files (e.g., `package.json`) as the source of truth for the next version number.
 - **Version Bumping**: Always update `version` in `package.json`, `app.json`, and `docs/DEVLOG.md` simultaneously.
-- **Git History Verification**: BEFORE proposing a bump, always check `git tag --sort=-v:refname` to ensure the new version is incremental relative to the existing history.
 - **DEVLOG Sync**: Update `docs/DEVLOG.md` with a matching version header (e.g., `# [vX.Y.Z]`) BEFORE committing.
 - **Commit & Tag**: Commit releases as `chore: release vX.Y.Z` and immediately tag as `vX.Y.Z`.
 - **Branch Sync**: After pushing to `dev`, ensure `main` is fast-forwarded and tagged correctly.

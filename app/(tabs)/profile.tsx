@@ -4,9 +4,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
 import { Pressable, Text, View } from 'react-native'
 import TabPage from '@/components/ui/TabPage'
+import { useQueryClient } from '@tanstack/react-query'
+import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function ProfileScreen() {
 	const { favorites, colorMode, setColorMode } = useUserStore()
+	const queryClient = useQueryClient()
+	const ColorsNative = useThemeColor()
 
 	return (
 		<TabPage title="Profile">
@@ -60,6 +64,34 @@ export default function ProfileScreen() {
 							</Pressable>
 						))}
 					</View>
+				</View>
+			</View>
+
+			<View className="rounded-2xl border border-ui bg-panel m-1 mt-6">
+				<View className="border-b border-ui p-4">
+					<Text className="text-lg font-bold text-foreground">Maintenance</Text>
+				</View>
+
+				<View className="p-4">
+					<Text className="mb-3 text-sm font-medium text-foreground-muted">
+						API Cache
+					</Text>
+					<Pressable
+						onPress={() => queryClient.invalidateQueries()}
+						className="flex-row items-center justify-center rounded-lg border border-destructive/30 bg-destructive/10 p-4 active:bg-destructive/20"
+					>
+						<MaterialCommunityIcons
+							name="database-refresh-outline"
+							size={20}
+							color={ColorsNative.destructive}
+						/>
+						<Text className="ml-2 font-bold text-destructive">
+							Clear Data Cache
+						</Text>
+					</Pressable>
+					<Text className="mt-2 text-center text-[10px] text-foreground-dim uppercase tracking-tighter">
+						Forces a fresh fetch of all gate and route data
+					</Text>
 				</View>
 			</View>
 

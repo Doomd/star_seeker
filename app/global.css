@@ -59,10 +59,16 @@
 	.text-background {
 		@apply text-palette-light-background dark:text-palette-dark-background;
 	}
+	.text-destructive {
+		@apply text-palette-light-destructive dark:text-palette-dark-destructive;
+	}
 
 	/* Borders */
 	.border-ui {
 		@apply border-palette-light-ui dark:border-palette-dark-ui;
+	}
+	.border-destructive {
+		@apply border-palette-light-destructive dark:border-palette-dark-destructive;
 	}
 
 	/* Focus/Active States */

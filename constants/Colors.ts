@@ -24,7 +24,7 @@ export const Colors = {
 		'ui-active': '#334155', // slate-700
 		primary: '#22d3ee', // cyan-400
 		'primary-muted': '#083344', // cyan-950
-		destructive: '#ef4444', // red-500
+		destructive: '#f87171', // red-400 (brighter for dark mode)
 		foreground: {
 			DEFAULT: '#ffffff',
 			muted: '#94a3b8', // slate-400
