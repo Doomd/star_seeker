@@ -1,8 +1,16 @@
 # Development Log (Newest to Oldest)
 
+# [v0.3.1] Layout Fixes & Stability
+
+## fix: resolve TabPage reference errors and ScrollView style issues
+
+- **BUG**: Fixed `TabPage` reference errors by standardizing the default export and correctly mapping imports across all screens.
+- **CHORE**: Bumped version to `0.3.1` to track layout stability improvements.
+
 # [v0.3.0] Chart Refinements & Layout Standardization
 
-## feat: implement balanced proportional spacing in JourneyVisualizer
+- **LAYOUT**: Created a reusable `TabPage` component to ensure fixed headers and consistent vertical spacing across all application tabs.
+- **REFACTOR**: Migrated `Gates`, `Routes`, and `Calculator` screens to the new layout architecture, resolving scrolling and spacing inconsistencies.
 
 - **LAYOUT**: Enforced a 10% minimum horizontal width for all journey segments. This prevents overcrowding for short jumps (like 8 AU) while maintaining relative scale for major interstellar leaps.
 - **ALGORITHM**: Implemented a redistribution algorithm that floors small segments and apportions remaining width to large segments proportionally.

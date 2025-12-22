@@ -1,6 +1,7 @@
 import { FavoriteButton } from '@/components/FavoriteButton'
 import { JourneyVisualizer } from '@/components/JourneyVisualizer'
 import { HeaderButton } from '@/components/ui/HeaderButton'
+import TabPage from '@/components/ui/TabPage'
 import { useCheapestRoute, useGates } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { Gate } from '@/types'
@@ -76,24 +77,22 @@ export default function RoutesScreen() {
 	)
 
 	return (
-		<SafeAreaView className="flex-1 bg-background flex" edges={['top']}>
-			<ScrollView className="flex-1 p-4" showsVerticalScrollIndicator={false}>
-				<View className="gap-4">
-					<View className="flex-row items-center justify-between">
-						<Text className="text-3xl font-bold text-foreground">
-							Route Finder
-						</Text>
-						{(sourceGate || targetGate) && (
-							<HeaderButton
-								label="Reset"
-								onPress={() => {
-									setSourceGate(null)
-									setTargetGate(null)
-								}}
-							/>
-						)}
-					</View>
-
+		<TabPage
+			title="Route Finder"
+			headerRight={
+				sourceGate || targetGate ? (
+					<HeaderButton
+						label="Reset"
+						onPress={() => {
+							setSourceGate(null)
+							setTargetGate(null)
+						}}
+					/>
+				) : null
+			}
+		>
+			<ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+				<View className="gap-6">
 					<View className="flex-row items-center justify-between gap-4">
 						<TouchableOpacity
 							className="h-32 flex-1 items-center justify-center rounded-xl border border-ui bg-ui p-4"
@@ -251,6 +250,6 @@ export default function RoutesScreen() {
 
 				<GateSelector />
 			</ScrollView>
-		</SafeAreaView>
+		</TabPage>
 	)
 }
