@@ -30,7 +30,7 @@ This file contains critical context, rules, and architectural decisions for any 
   - `global.css`: Global styles and theme definitions.
 - **`/components`**: Reusable UI components.
   - `FavoriteButton.tsx`: Centralized favorite star logic.
-  - `JourneyVisualizer.tsx`: SVG + Reanimated galactic route map.
+  - `JourneyVisualizer.tsx`: SVG + Reanimated galactic route map. Implements balanced proportional scaling (minimum 10% width per leg) and randomized entry points for high-fidelity navigation.
   - **`/ui`**: Atomic UI parts (e.g., `HeaderButton.tsx`).
 - **`/hooks`**: Custom hooks (e.g., `useQueries.ts` for data fetching).
 - **`/store`**: Zustand stores (e.g., `useUserStore.ts`).

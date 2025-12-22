@@ -76,165 +76,178 @@ export default function RoutesScreen() {
 	)
 
 	return (
-		<SafeAreaView className="flex-1 bg-background" edges={['top']}>
+		<SafeAreaView className="flex-1 bg-background flex" edges={['top']}>
 			<ScrollView className="flex-1 p-4" showsVerticalScrollIndicator={false}>
-				<View className="mb-6 flex-row items-center justify-between">
-					<Text className="text-3xl font-bold text-foreground">
-						Route Finder
-					</Text>
-					{(sourceGate || targetGate) && (
-						<HeaderButton
-							label="Reset"
-							onPress={() => {
-								setSourceGate(null)
-								setTargetGate(null)
-							}}
+				<View className="gap-4">
+					<View className="flex-row items-center justify-between">
+						<Text className="text-3xl font-bold text-foreground">
+							Route Finder
+						</Text>
+						{(sourceGate || targetGate) && (
+							<HeaderButton
+								label="Reset"
+								onPress={() => {
+									setSourceGate(null)
+									setTargetGate(null)
+								}}
+							/>
+						)}
+					</View>
+
+					<View className="flex-row items-center justify-between gap-4">
+						<TouchableOpacity
+							className="h-32 flex-1 items-center justify-center rounded-xl border border-ui bg-ui p-4"
+							onPress={() => setSelectingMode('source')}
+						>
+							{sourceGate ? (
+								<>
+									<Text className="mb-2 text-3xl font-bold text-primary">
+										{sourceGate.code}
+									</Text>
+									<Text
+										className="text-center text-sm text-foreground-muted"
+										numberOfLines={1}
+									>
+										{sourceGate.name}
+									</Text>
+								</>
+							) : (
+								<>
+									<Ionicons
+										name="planet-outline"
+										size={32}
+										color={Colors.foreground.muted}
+									/>
+									<Text className="mt-2 text-foreground-muted">
+										Select Start
+									</Text>
+								</>
+							)}
+						</TouchableOpacity>
+
+						<Ionicons
+							name="arrow-forward"
+							size={24}
+							color={Colors.foreground.muted}
 						/>
+
+						<TouchableOpacity
+							className="h-32 flex-1 items-center justify-center rounded-xl border border-ui bg-ui p-4"
+							onPress={() => setSelectingMode('target')}
+						>
+							{targetGate ? (
+								<>
+									<Text className="mb-2 text-3xl font-bold text-primary">
+										{targetGate.code}
+									</Text>
+									<Text
+										className="text-center text-sm text-foreground-muted"
+										numberOfLines={1}
+									>
+										{targetGate.name}
+									</Text>
+								</>
+							) : (
+								<>
+									<Ionicons
+										name="flag-outline"
+										size={32}
+										color={Colors.foreground.muted}
+									/>
+									<Text className="mt-2 text-foreground-muted">Select End</Text>
+								</>
+							)}
+						</TouchableOpacity>
+					</View>
+
+					{(isLoading || sourceGate || targetGate) && (
+						<View>
+							<JourneyVisualizer
+								sourceGate={sourceGate}
+								targetGate={targetGate}
+								route={route}
+								isLoading={isLoading}
+								height={150}
+								gates={gates}
+							/>
+						</View>
+					)}
+
+					{route && !isLoading && (
+						<View className="animate-in fade-in slide-in-from-bottom-4 rounded-2xl border border-ui bg-panel p-6">
+							<Text className="mb-4 text-sm tracking-widest uppercase text-foreground-muted">
+								Cheapest Route
+							</Text>
+
+							<View className="mb-6 flex-row items-center gap-4">
+								<View className="rounded-full bg-primary-muted p-3">
+									<Ionicons
+										name="cash-outline"
+										size={32}
+										color={Colors.primary}
+									/>
+								</View>
+								<View>
+									<Text className="text-2xl font-bold text-foreground">
+										£{route.totalCost.toFixed(2)}
+									</Text>
+									<Text className="text-sm text-foreground-muted">
+										Total Journey Cost
+									</Text>
+								</View>
+							</View>
+
+							<View className="gap-2 rounded-xl bg-background p-4">
+								<Text className="mb-2 text-xs text-foreground-dim">
+									ROUTE PATH & BREAKDOWN
+								</Text>
+								{route.route.map((code, index) => {
+									if (index === route.route.length - 1) return null
+
+									const nextCode = route.route[index + 1]
+									const currentGate = gates?.find((g) => g.code === code)
+									const link = currentGate?.links.find(
+										(l) => l.code === nextCode
+									)
+									const cost = link ? parseFloat(link.hu) : 0 // Assuming 1 HU = £1 based on API observation
+
+									return (
+										<View
+											key={index}
+											className="flex-row items-center justify-between border-b border-dashed border-ui py-2 last:border-0"
+										>
+											<View className="flex-row items-center gap-2">
+												<View className="rounded bg-background px-2 py-1 border border-ui">
+													<Text className="font-mono font-bold text-primary">
+														{code}
+													</Text>
+												</View>
+												<Ionicons
+													name="arrow-forward"
+													size={14}
+													color={Colors.foreground.muted}
+												/>
+												<View className="rounded bg-background px-2 py-1 border border-ui">
+													<Text className="font-mono font-bold text-primary">
+														{nextCode}
+													</Text>
+												</View>
+											</View>
+											<View>
+												<Text className="font-mono text-foreground">
+													£{cost.toFixed(2)}
+												</Text>
+												<Text className="text-right text-[10px] text-foreground-dim mb-1">
+													{link?.hu} AU
+												</Text>
+											</View>
+										</View>
+									)
+								})}
+							</View>
+						</View>
 					)}
 				</View>
-
-				<View className="mb-8 flex-row items-center justify-between gap-4 p-1">
-					<TouchableOpacity
-						className="h-32 flex-1 items-center justify-center rounded-xl border border-ui bg-ui p-4"
-						onPress={() => setSelectingMode('source')}
-					>
-						{sourceGate ? (
-							<>
-								<Text className="mb-2 text-3xl font-bold text-primary">
-									{sourceGate.code}
-								</Text>
-								<Text
-									className="text-center text-sm text-foreground-muted"
-									numberOfLines={1}
-								>
-									{sourceGate.name}
-								</Text>
-							</>
-						) : (
-							<>
-								<Ionicons
-									name="planet-outline"
-									size={32}
-									color={Colors.foreground.muted}
-								/>
-								<Text className="mt-2 text-foreground-muted">Select Start</Text>
-							</>
-						)}
-					</TouchableOpacity>
-
-					<Ionicons
-						name="arrow-forward"
-						size={24}
-						color={Colors.foreground.muted}
-					/>
-
-					<TouchableOpacity
-						className="h-32 flex-1 items-center justify-center rounded-xl border border-ui bg-ui p-4"
-						onPress={() => setSelectingMode('target')}
-					>
-						{targetGate ? (
-							<>
-								<Text className="mb-2 text-3xl font-bold text-primary">
-									{targetGate.code}
-								</Text>
-								<Text
-									className="text-center text-sm text-foreground-muted"
-									numberOfLines={1}
-								>
-									{targetGate.name}
-								</Text>
-							</>
-						) : (
-							<>
-								<Ionicons
-									name="flag-outline"
-									size={32}
-									color={Colors.foreground.muted}
-								/>
-								<Text className="mt-2 text-foreground-muted">Select End</Text>
-							</>
-						)}
-					</TouchableOpacity>
-				</View>
-
-				{(isLoading || route) && (
-					<View className="mb-4">
-						<JourneyVisualizer route={route} isLoading={isLoading} />
-					</View>
-				)}
-
-				{route && !isLoading && (
-					<View className="animate-in fade-in slide-in-from-bottom-4 rounded-2xl border border-ui bg-panel p-6 m-1">
-						<Text className="mb-4 text-sm tracking-widest uppercase text-foreground-muted">
-							Cheapest Route
-						</Text>
-
-						<View className="mb-6 flex-row items-center gap-4">
-							<View className="rounded-full bg-primary-muted p-3">
-								<Ionicons
-									name="cash-outline"
-									size={32}
-									color={Colors.primary}
-								/>
-							</View>
-							<View>
-								<Text className="text-2xl font-bold text-foreground">
-									£{route.totalCost.toFixed(2)}
-								</Text>
-								<Text className="text-sm text-foreground-muted">
-									Total Journey Cost
-								</Text>
-							</View>
-						</View>
-
-						<View className="gap-2 rounded-xl bg-background p-4">
-							<Text className="mb-2 text-xs text-foreground-dim">
-								ROUTE PATH & BREAKDOWN
-							</Text>
-							{route.route.map((code, index) => {
-								if (index === route.route.length - 1) return null
-
-								const nextCode = route.route[index + 1]
-								const currentGate = gates?.find((g) => g.code === code)
-								const link = currentGate?.links.find((l) => l.code === nextCode)
-								const cost = link ? parseFloat(link.hu) : 0 // Assuming 1 HU = £1 based on API observation
-
-								return (
-									<View
-										key={index}
-										className="flex-row items-center justify-between border-b border-dashed border-ui py-2 last:border-0"
-									>
-										<View className="flex-row items-center gap-2">
-											<View className="rounded bg-background px-2 py-1 border border-ui">
-												<Text className="font-mono font-bold text-primary">
-													{code}
-												</Text>
-											</View>
-											<Ionicons
-												name="arrow-forward"
-												size={14}
-												color={Colors.foreground.muted}
-											/>
-											<View className="rounded bg-background px-2 py-1 border border-ui">
-												<Text className="font-mono font-bold text-primary">
-													{nextCode}
-												</Text>
-											</View>
-										</View>
-										<View>
-											<Text className="font-mono text-foreground">
-												£{cost.toFixed(2)}
-											</Text>
-											<Text className="text-right text-[10px] text-foreground-dim mb-1">
-												{link?.hu} HU
-											</Text>
-										</View>
-									</View>
-								)
-							})}
-						</View>
-					</View>
-				)}
 
 				<GateSelector />
 			</ScrollView>

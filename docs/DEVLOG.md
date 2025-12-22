@@ -1,5 +1,60 @@
 # Development Log (Newest to Oldest)
 
+## feat: implement balanced proportional spacing in JourneyVisualizer
+
+- **LAYOUT**: Enforced a 10% minimum horizontal width for all journey segments. This prevents overcrowding for short jumps (like 8 AU) while maintaining relative scale for major interstellar leaps.
+- **ALGORITHM**: Implemented a redistribution algorithm that floors small segments and apportions remaining width to large segments proportionally.
+
+## refactor: standardize layout spacing with gap strategy
+
+- **LAYOUT**: Replaced ad-hoc `mb-` classes with centralized `gap-6`/`gap-8` spacing inside `ScrollView` wrapper Views for `RoutesScreen` and `CalculatorScreen`. Removed extra bottom padding for a tighter fit.
+
+## fix: refine rocket vertical offset in JourneyVisualizer
+
+- **ANIMATION**: Increased rocket vertical offset from 15px to 19px for better visual clearance from star gate nodes.
+
+## fix: implement asymmetrical padding for JourneyVisualizer
+
+- **LAYOUT**: Refined map spacing with 24px horizontal (`px-6`) and 32px vertical (`py-8`) padding for better label and node distribution.
+
+## fix: refine JourneyVisualizer layout padding for better node spacing
+
+- **LAYOUT**: Reduced internal map padding from 60px to 16px to allow nodes more horizontal space, especially for routes with 3+ gates.
+
+## fix: standardize distance units to AU across the application
+
+- **UI**: Changed segment distance display from "HU" to "AU" in Route Finder breakdown for consistency.
+- **DOCS**: Updated `API.md` to reflect that Hyper Units (HU) should be presented as Astronomical Units (AU) in the user interface.
+
+## feat: add customization and distance labels to JourneyVisualizer
+
+- **PROPS**: Added support for custom icons (`NodeIcon`, `RocketIcon`) and colors (`nodeColor`, `rocketColor`, `lineColor`).
+- **UI**: Set default line color to brighter green (`#4ade80`) as per prototype.
+- **FEATURE**: Implemented real-time distance labels (e.g., "120 AU") on the navigational map.
+- **REFACTOR**: Updated `RoutesScreen` to pass `gates` data for distance calculations.
+
+## feat: make JourneyVisualizer height dynamic
+
+- **PROPS**: Added `height` prop to `JourneyVisualizer` to allow vertical resizing.
+- **UI**: Reduced visualizer height in `Route Finder` by 25% (to 150px) for a more compact layout.
+
+## feat: add decelerating entry animation for rocket
+
+- **ANIMATION**: Implemented "sliding arrival" effect with exponential deceleration for the rocket's first appearance at the source gate.
+
+## fix: resolve JourneyVisualizer bugs and logic errors
+
+- **BUG**: Fixed `setInterval` type mismatch and `View` style type errors.
+- **LAYOUT**: Locked starting gate to center-left for better navigational balance.
+- **LOGIC**: Improved path progression logic to flow from the fixed starting point.
+
+## feat: refine JourneyVisualizer with Tailwind and reactive logic
+
+- **UI**: Refactored `JourneyVisualizer.tsx` to use NativeWind (Tailwind) classes.
+- **LOGIC**: Implemented reactive positioning for `sourceGate` selection.
+- **UI**: Added cycling status messages ("Transmitting Journey Request", etc.) during loading.
+- **ASSETS**: Saved rocket SVG to `assets/images/rocket.svg` and unified icon usage.
+
 ## feat: add Reset button and reusable HeaderButton component
 
 - **UI**: Created `components/ui/HeaderButton.tsx` for standardized header actions.

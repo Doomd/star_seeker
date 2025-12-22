@@ -179,10 +179,10 @@ Get transport cost information for a specific distance.
 
 ### GateLink
 
-| Field  | Type   | Description                 |
-| :----- | :----- | :-------------------------- |
-| `code` | string | Code of the connected gate. |
-| `hu`   | string | Distance in Hyper Units.    |
+| Field  | Type   | Description                                      |
+| :----- | :----- | :----------------------------------------------- |
+| `code` | string | Code of the connected gate.                      |
+| `hu`   | string | Distance in Hyper Units (displayed as AU in UI). |
 
 ### Journey
 
