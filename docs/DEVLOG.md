@@ -1,11 +1,24 @@
 # Development Log (Newest to Oldest)
 
-# [v0.3.1] Layout Fixes & Stability
+# [v0.3.3] Cinematic Rocket Animation & Transition Stability
 
-## fix: resolve TabPage reference errors and ScrollView style issues
+## feat: high-inertia rocket acceleration
 
-- **BUG**: Fixed `TabPage` reference errors by standardizing the default export and correctly mapping imports across all screens.
-- **CHORE**: Bumped version to `0.3.1` to track layout stability improvements.
+- **FEAT**: Implemented a cinematic high-inertia S-curve `bezier(0.8, 0, 0.2, 1)` for the first leg of journeys (1200ms) to simulate mass and improve transitions.
+- **BUG**: Fixed animation race conditions by adding a cancellation tracker to the animation loop.
+
+# [v0.3.2] Navigation System Edge Cases
+
+## fix: same-gate destination handling
+
+- **BUG**: Resolved edge case where selecting the same source and target gate left a stale path; visualizer now correctly resets to a "docked" state.
+
+# [v0.3.1] Layout Stability Fixes
+
+## fix: TabPage export and ScrollView styles
+
+- **BUG**: Fixed `TabPage` reference errors by standardizing to default export.
+- **CHORE**: Cleaned up invalid `justifyContent` properties on `ScrollView` components.
 
 # [v0.3.0] Chart Refinements & Layout Standardization
 

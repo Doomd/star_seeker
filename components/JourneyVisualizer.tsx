@@ -121,8 +121,8 @@ export function JourneyVisualizer({
 			const paddingY = 40 // py-10
 			const usableWidth = dimensions.width - paddingX * 2
 
-			if (route?.route && route.route.length > 0) {
-				// Full route display
+			if (route?.route && route.route.length > 1) {
+				// Full route display (multi-node)
 				const newPositions: Position[] = []
 
 				// 1. Calculate Raw Leg Distances
@@ -142,7 +142,6 @@ export function JourneyVisualizer({
 				const MIN_RATIO = 0.1 // 10% minimum
 				const totalRawDist = rawLegs.reduce((a, b) => a + b, 0) || 1
 
-				// Identifiy which legs are "small" (need padding) and which are "large"
 				const rawRatios = rawLegs.map((d) => d / totalRawDist)
 				const smallLegIndices = rawRatios
 					.map((r, i) => (r < MIN_RATIO ? i : -1))
@@ -158,7 +157,6 @@ export function JourneyVisualizer({
 
 				const balancedRatios = rawLegs.map((d, i) => {
 					if (rawRatios[i] < MIN_RATIO) return MIN_RATIO
-					// Distribute remaining space among large legs proportionally
 					return (d / (largeLegTotalRawDist || 1)) * remainingForLarge
 				})
 
@@ -168,7 +166,6 @@ export function JourneyVisualizer({
 
 				route.route.forEach((code, i) => {
 					const x = paddingX + cumulativeRatio * usableWidth
-
 					let y
 					if (i === 0) {
 						y = paddingY + Math.random() * (dimensions.height - paddingY * 2)
@@ -178,7 +175,6 @@ export function JourneyVisualizer({
 						y = lastY + (Math.random() * maxDY * 2 - maxDY)
 						y = Math.max(paddingY, Math.min(dimensions.height - paddingY, y))
 					}
-
 					newPositions.push({ code, x, y })
 					lastY = y
 					if (i < balancedRatios.length) {
@@ -186,8 +182,8 @@ export function JourneyVisualizer({
 					}
 				})
 				setPositions(newPositions)
-			} else if (sourceGate && !targetGate) {
-				// Start node only - positioned at center-left
+			} else if (sourceGate) {
+				// Single node case: source selected (with no target OR same target)
 				setPositions([
 					{
 						code: sourceGate.code,
@@ -195,7 +191,7 @@ export function JourneyVisualizer({
 						y: dimensions.height / 2,
 					},
 				])
-			} else if (!sourceGate) {
+			} else {
 				setPositions([])
 			}
 		}
@@ -208,33 +204,44 @@ export function JourneyVisualizer({
 
 	// Rocket Animation Logic
 	useEffect(() => {
+		let isCancelled = false
 		const VERTICAL_OFFSET = 18
 
-		if (positions.length === 1 && !isLoading) {
-			// Arriving at source from the left
+		if (positions.length === 0 || isLoading) {
+			rocketOpacity.value = withTiming(0, { duration: 300 })
+			return () => {
+				isCancelled = true
+			}
+		}
+
+		// Immediate Reset: Snap to the current start node if we're changing routes
+		// This prevents "ghost flights" from old routes
+		const startX = positions[0].x
+		const startY = positions[0].y + VERTICAL_OFFSET
+
+		if (positions.length === 1) {
+			// Arriving at source gate
 			if (rocketOpacity.value === 0) {
 				rocketX.value = -50
-				rocketY.value = positions[0].y + VERTICAL_OFFSET
+				rocketY.value = startY
 				rocketRotate.value = 45
-				rocketX.value = withTiming(positions[0].x, {
+				rocketX.value = withTiming(startX, {
 					duration: 1000,
 					easing: Easing.out(Easing.exp),
 				})
 				rocketOpacity.value = withTiming(1, { duration: 600 })
 			} else {
-				// Stay at source
-				rocketX.value = withTiming(positions[0].x, { duration: 500 })
-				rocketY.value = withTiming(positions[0].y + VERTICAL_OFFSET, {
-					duration: 500,
-				})
+				rocketX.value = withTiming(startX, { duration: 500 })
+				rocketY.value = withTiming(startY, { duration: 500 })
 				rocketRotate.value = withTiming(45, { duration: 500 })
 				rocketOpacity.value = withTiming(1, { duration: 500 })
 			}
-		} else if (positions.length > 1 && !isLoading) {
-			// Executing flight
+		} else if (positions.length > 1) {
+			// Executing multi-node flight
 			const animateStep = async () => {
-				rocketX.value = positions[0].x
-				rocketY.value = positions[0].y + VERTICAL_OFFSET
+				// Snap to start position immediately
+				rocketX.value = startX
+				rocketY.value = startY
 
 				const next = positions[1]
 				const initialAngle =
@@ -245,17 +252,24 @@ export function JourneyVisualizer({
 				rocketOpacity.value = 1
 
 				for (let i = 1; i < positions.length; i++) {
+					if (isCancelled) return
+
 					const pos = positions[i]
-					rocketX.value = withTiming(pos.x, {
-						duration: 800,
-						easing: Easing.bezier(0.4, 0, 0.2, 1),
-					})
+					const isFirstLeg = i === 1
+					const duration = isFirstLeg ? 1200 : 800
+					// Balanced S-curve for first leg: heavy inertia start + smooth approach approach
+					const easing = isFirstLeg
+						? Easing.bezier(0.8, 0, 0.2, 1)
+						: Easing.bezier(0.4, 0, 0.2, 1)
+
+					rocketX.value = withTiming(pos.x, { duration, easing })
 					rocketY.value = withTiming(pos.y + VERTICAL_OFFSET, {
-						duration: 800,
-						easing: Easing.bezier(0.4, 0, 0.2, 1),
+						duration,
+						easing,
 					})
 
-					await new Promise((r) => setTimeout(r, 850))
+					await new Promise((r) => setTimeout(r, duration + 50))
+					if (isCancelled) return
 
 					if (i < positions.length - 1) {
 						const next = positions[i + 1]
@@ -267,10 +281,10 @@ export function JourneyVisualizer({
 				}
 			}
 			animateStep()
-		} else if (isLoading) {
-			rocketOpacity.value = withTiming(0, { duration: 300 })
-		} else {
-			rocketOpacity.value = withTiming(0, { duration: 300 })
+		}
+
+		return () => {
+			isCancelled = true
 		}
 	}, [positions, isLoading])
 

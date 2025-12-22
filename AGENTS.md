@@ -74,6 +74,15 @@ This file contains critical context, rules, and architectural decisions for any 
 - **Atomic Commits**: Ensure git commits are as atomic as possible (one logical change per commit).
 - **DevLog Updates**: Record all significant changes in `docs/DEVLOG.md` (newest at the top).
 
+#### 5. Versioning & Documentation Sync
+
+Agents MUST maintain strict synchronization between code, documentation, and Git tags:
+
+- **Version Bumping**: Always update `version` in `package.json` and `app.json` simultaneously.
+- **DEVLOG Sync**: Update `docs/DEVLOG.md` with a matching version header (e.g., `# [vX.Y.Z]`) BEFORE committing. Delineate patch versions if they represent distinct logical updates.
+- **Commit & Tag**: Commit releases as `chore: release vX.Y.Z` and immediately tag as `vX.Y.Z`.
+- **Branch Sync**: Mirror changes to `main` via fast-forward merges for every stable tag.
+
 ## � Common Commands
 
 - **Start Dev Server**: `pnpm start --clear`
