@@ -1,5 +1,17 @@
 # Development Log (Newest to Oldest)
 
+# [v0.3.4] Navigation & Layout Consolidation
+
+## feat: make Route Finder the default landing page
+
+- **UX**: Updated the entry redirect to point to `/(tabs)/routes`, making the Route Finder the primary screen.
+- **UI**: Reordered the tab bar to place "Route Finder" at the first position for better navigational hierarchy.
+
+## feat: sub-page layout standardization
+
+- **UI**: Added `onBack` prop to `TabPage` to support consistent header styles on sub-pages.
+- **REFACTOR**: Migrated `GateDetailsScreen` to use `TabPage`, resolving the "gap" inconsistency and standardizing the connections list.
+
 # [v0.3.3] Cinematic Rocket Animation & Transition Stability
 
 ## feat: high-inertia rocket acceleration

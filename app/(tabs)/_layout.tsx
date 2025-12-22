@@ -30,6 +30,15 @@ export default function TabLayout() {
 			}}
 		>
 			<Tabs.Screen
+				name="routes"
+				options={{
+					title: 'Route Finder',
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="map-marker-path" color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
 				name="gates"
 				options={{
 					title: 'Gates',
@@ -49,15 +58,6 @@ export default function TabLayout() {
 					title: 'Cost',
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="calculator-variant-outline" color={color} />
-					),
-				}}
-			/>
-			<Tabs.Screen
-				name="routes"
-				options={{
-					title: 'Route Finder',
-					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="map-marker-path" color={color} />
 					),
 				}}
 			/>

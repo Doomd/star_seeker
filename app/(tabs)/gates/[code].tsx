@@ -1,4 +1,5 @@
 import { FavoriteButton } from '@/components/FavoriteButton'
+import TabPage from '@/components/ui/TabPage'
 import { useGateDetails } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
@@ -66,24 +67,15 @@ export default function GateDetailsScreen() {
 	}
 
 	return (
-		<SafeAreaView className="flex-1 bg-background">
-			{/* Dynamic Header */}
-			<Stack.Screen
-				options={{
-					headerTitle: gate.name,
-					headerStyle: { backgroundColor: Colors.panel },
-					headerTintColor: Colors.foreground.DEFAULT,
-				}}
-			/>
-
-			<ScrollView className="flex-1 p-4">
+		<TabPage title={gate.name} onBack={() => router.back()}>
+			<ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
 				<View className="mb-6 rounded-2xl border border-ui bg-panel p-6">
 					<View className="flex-row items-center justify-between">
 						<View className="flex-row items-center justify-start gap-4">
 							<MaterialCommunityIcons
 								name="orbit"
 								size={48}
-								color="#22d3ee"
+								color={Colors.primary}
 								style={{ opacity: 0.8 }}
 							/>
 							<View>
@@ -118,22 +110,24 @@ export default function GateDetailsScreen() {
 									<Ionicons
 										name="arrow-forward-circle"
 										size={24}
-										color="#94a3b8"
+										color={Colors.foreground.dim}
 									/>
 									<View>
 										<Text className="font-mono text-lg text-foreground">
 											{link.code}
 										</Text>
-										<Text className="text-xs text-foreground-dim">
-											HYPER JUMP
-										</Text>
+										<Text className="text-xs text-foreground-dim">AU JUMP</Text>
 									</View>
 								</View>
 								<View className="flex-row items-center gap-2">
 									<Text className="text-xs text-foreground-dim">
-										{link.hu} HU
+										{link.hu} AU
 									</Text>
-									<Ionicons name="chevron-forward" size={20} color="#64748b" />
+									<Ionicons
+										name="chevron-forward"
+										size={20}
+										color={Colors.foreground.dim}
+									/>
 								</View>
 							</TouchableOpacity>
 						))
@@ -144,6 +138,6 @@ export default function GateDetailsScreen() {
 					)}
 				</View>
 			</ScrollView>
-		</SafeAreaView>
+		</TabPage>
 	)
 }
