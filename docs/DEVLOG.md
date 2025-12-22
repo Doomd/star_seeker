@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## chore: implement OneFlow branching model
+
+- **GIT**: Created `dev` branch as the new primary development branch.
+- **DOCS**: Created `docs/WORKFLOW.md` detailing the "Variation - develop + master" model.
+- **DOCS**: Updated `AGENTS.md` and `DEVLOG.md` to reflect the new workflow requirements.
+- **POLICY**: `main` is now reserved for stable releases, updated via `--ff-only` merges from `dev`.
+
 ## docs: refine agent guidelines and project context
 
 - **DOCS**: Updated `AGENTS.md` with the latest technical context (SDK 54, Jest testing suite, centralized color management).

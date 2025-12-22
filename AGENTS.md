@@ -58,8 +58,14 @@ This file contains critical context, rules, and architectural decisions for any 
 - Environment is configured via `jest.config.js` and `jest.setup.js` (using `react-native` preset).
 - Always include unit tests for new logic in `/utils` or `/store`.
 
-### 4. Workflow (Agent Guidelines)
+#### 4. Workflow (OneFlow)
 
+- **OneFlow Model**:
+  - `main`: Stable pointer (Production).
+  - `dev`: Active development integration.
+  - **Fast-Forward**: `dev` is fast-forwarded into `main` for releases.
+  - **Feature Branches**: Always branch from `dev`, merged back to `dev`.
+- **Documentation**: Always consult [WORKFLOW.md](file:///Users/bc/Github/star_seeker/docs/WORKFLOW.md) for detailed git commands.
 - **Context Preservation**: Always keep `docs/DEVLOG.md` in your context to understand the project's evolution.
 - **Task Tracking**: Update `docs/TODO.md` when starting or completing tasks.
 - **Atomic Commits**: Ensure git commits are as atomic as possible (one logical change per commit).
