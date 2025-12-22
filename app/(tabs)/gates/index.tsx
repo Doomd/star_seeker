@@ -1,6 +1,5 @@
 import { GateCard } from '@/components/GateCard'
 import { HeaderButton } from '@/components/ui/HeaderButton'
-import TabPage from '@/components/ui/TabPage'
 import { useGates } from '@/hooks/useQueries'
 import { useIsDark, useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
@@ -12,7 +11,7 @@ import {
 	Text,
 	View,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import TabPage from '@/components/ui/TabPage'
 
 export default function HomeScreen() {
 	const { favorites } = useUserStore()

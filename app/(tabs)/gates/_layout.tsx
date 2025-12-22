@@ -21,7 +21,7 @@ export default function GatesLayout() {
 				name="index"
 				options={{ headerShown: false, title: 'Gates' }}
 			/>
-			<Stack.Screen name="[code]" options={{ headerShown: false }} />
+			<Stack.Screen name="[code]" />
 		</Stack>
 	)
 }

@@ -1,48 +1,48 @@
 # Development Log (Newest to Oldest)
 
+# [v0.3.5] Stability & Dependency Alignment
+
+## fix: align react-native-svg and resolve TabPage reference
+
+- **CHORE**: Aligned `react-native-svg` to `15.12.1` for Expo compatibility.
+- **BUG**: Fixed `ReferenceError` in `GateDetailsScreen` by resolving component import issues.
+- **DOCS**: Established "Git-Truth" versioning rules in `AGENTS.md` and `WORKFLOW.md` to prevent version drift.
+
 # [v0.3.4] Navigation & Layout Consolidation
 
 ## feat: make Route Finder the default landing page
 
 - **UX**: Updated the entry redirect to point to `/(tabs)/routes`, making the Route Finder the primary screen.
-- **UI**: Reordered the tab bar to place "Route Finder" at the first position for better navigational hierarchy.
-
-## feat: sub-page layout standardization
-
-- **UI**: Added `onBack` prop to `TabPage` to support consistent header styles on sub-pages.
-- **REFACTOR**: Migrated `GateDetailsScreen` to use `TabPage`, resolving the "gap" inconsistency and standardizing the connections list.
+- **UI**: Reordered the tab bar to place "Route Finder" at the first position.
+- **REFACTOR**: Migrated `GateDetailsScreen` to use `TabPage`, resolving the "gap" inconsistency.
 
 # [v0.3.3] Cinematic Rocket Animation & Transition Stability
 
 ## feat: high-inertia rocket acceleration
 
-- **FEAT**: Implemented a cinematic high-inertia S-curve `bezier(0.8, 0, 0.2, 1)` for the first leg of journeys (1200ms) to simulate mass and improve transitions.
-- **BUG**: Fixed animation race conditions by adding a cancellation tracker to the animation loop.
+- **FEAT**: Implemented a cinematic high-inertia S-curve `bezier(0.8, 0, 0.2, 1)` for the first leg of journeys (1200ms).
+- **BUG**: Fixed animation race conditions by adding a cancellation tracker.
 
 # [v0.3.2] Navigation System Edge Cases
 
 ## fix: same-gate destination handling
 
-- **BUG**: Resolved edge case where selecting the same source and target gate left a stale path; visualizer now correctly resets to a "docked" state.
+- **BUG**: Resolved edge case where selecting the same source and target gate left a stale path.
 
 # [v0.3.1] Layout Stability Fixes
 
 ## fix: TabPage export and ScrollView styles
 
-- **BUG**: Fixed `TabPage` reference errors by standardizing to default export.
-- **CHORE**: Cleaned up invalid `justifyContent` properties on `ScrollView` components.
+- **BUG**: Fixed `TabPage` reference errors and invalid `justifyContent` on ScrollViews.
 
-# [v0.3.0] Chart Refinements & Layout Standardization
+# [v0.3.0] Layout Standardization
 
-- **LAYOUT**: Created a reusable `TabPage` component to ensure fixed headers and consistent vertical spacing across all application tabs.
-- **REFACTOR**: Migrated `Gates`, `Routes`, and `Calculator` screens to the new layout architecture, resolving scrolling and spacing inconsistencies.
-
-- **LAYOUT**: Enforced a 10% minimum horizontal width for all journey segments. This prevents overcrowding for short jumps (like 8 AU) while maintaining relative scale for major interstellar leaps.
-- **ALGORITHM**: Implemented a redistribution algorithm that floors small segments and apportions remaining width to large segments proportionally.
+- **LAYOUT**: Created a reusable `TabPage` component to ensure fixed headers.
+- **REFACTOR**: Migrated `Gates`, `Routes`, and `Calculator` screens to the new layout.
 
 ## refactor: standardize layout spacing with gap strategy
 
-- **LAYOUT**: Replaced ad-hoc `mb-` classes with centralized `gap-6`/`gap-8` spacing inside `ScrollView` wrapper Views for `RoutesScreen` and `CalculatorScreen`. Removed extra bottom padding for a tighter fit.
+- **LAYOUT**: Replaced ad-hoc `mb-` classes with centralized `gap-6`/`gap-8` spacing inside `ScrollView` wrapper Views for `RoutesScreen` and `CalculatorScreen`.
 
 ## fix: refine rocket vertical offset in JourneyVisualizer
 

@@ -1,7 +1,6 @@
 import { FavoriteButton } from '@/components/FavoriteButton'
 import { JourneyVisualizer } from '@/components/JourneyVisualizer'
 import { HeaderButton } from '@/components/ui/HeaderButton'
-import TabPage from '@/components/ui/TabPage'
 import { useCheapestRoute, useGates } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { Gate } from '@/types'
@@ -16,7 +15,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import TabPage from '@/components/ui/TabPage'
 
 export default function RoutesScreen() {
 	const [sourceGate, setSourceGate] = useState<Gate | null>(null)
@@ -80,7 +79,7 @@ export default function RoutesScreen() {
 		<TabPage
 			title="Route Finder"
 			headerRight={
-				sourceGate || targetGate ? (
+				(sourceGate || targetGate) && (
 					<HeaderButton
 						label="Reset"
 						onPress={() => {
@@ -88,11 +87,11 @@ export default function RoutesScreen() {
 							setTargetGate(null)
 						}}
 					/>
-				) : null
+				)
 			}
 		>
 			<ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-				<View className="gap-6">
+
 					<View className="flex-row items-center justify-between gap-4">
 						<TouchableOpacity
 							className="h-32 flex-1 items-center justify-center rounded-xl border border-ui bg-ui p-4"

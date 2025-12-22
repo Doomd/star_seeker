@@ -30,7 +30,7 @@ This file contains critical context, rules, and architectural decisions for any 
   - `global.css`: Global styles and theme definitions.
 - **`/components`**: Reusable UI components.
   - `FavoriteButton.tsx`: Centralized favorite star logic.
-  - `JourneyVisualizer.tsx`: SVG + Reanimated galactic route map. Implements balanced proportional scaling (minimum 10% width per leg) and randomized entry points for high-fidelity navigation.
+  - `JourneyVisualizer.tsx`: SVG + Reanimated galactic route map.
   - **`/ui`**: Atomic UI parts (e.g., `HeaderButton.tsx`).
 - **`/hooks`**: Custom hooks (e.g., `useQueries.ts` for data fetching).
 - **`/store`**: Zustand stores (e.g., `useUserStore.ts`).
@@ -74,14 +74,15 @@ This file contains critical context, rules, and architectural decisions for any 
 - **Atomic Commits**: Ensure git commits are as atomic as possible (one logical change per commit).
 - **DevLog Updates**: Record all significant changes in `docs/DEVLOG.md` (newest at the top).
 
-#### 5. Versioning & Documentation Sync
+#### 5. Versioning & Documentation Sync (The "Git-Truth" Rule)
 
 Agents MUST maintain strict synchronization between code, documentation, and Git tags:
 
+- **Verifying the "Git-Truth"**: ALWAYS run `git tag --sort=-v:refname | head -n 1` to find the LATEST COMMITTED VERSION before suggesting a bump. NEVER rely on conversation history or uncommitted local files (e.g., `package.json`) as the source of truth for the next version number.
 - **Version Bumping**: Always update `version` in `package.json` and `app.json` simultaneously.
 - **DEVLOG Sync**: Update `docs/DEVLOG.md` with a matching version header (e.g., `# [vX.Y.Z]`) BEFORE committing. Delineate patch versions if they represent distinct logical updates.
 - **Commit & Tag**: Commit releases as `chore: release vX.Y.Z` and immediately tag as `vX.Y.Z`.
-- **Branch Sync**: Mirror changes to `main` via fast-forward merges for every stable tag.
+- **Branch Sync**: After pushing to `dev`, ensure `main` is fast-forwarded and tagged correctly.
 
 ## � Common Commands
 

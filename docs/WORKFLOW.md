@@ -69,6 +69,14 @@ This project follows [Semantic Versioning (SemVer)](https://semver.org/) formatt
 
 Versions should be bumped on the `dev` branch just before a fast-forward merge into `main`.
 
+### AI Version Discovery (The "Git-Truth" Rule)
+
+To prevent version drift (especially after rejected commits), AI agents MUST discover the current version from the repository's git state, not from potentially stale local files or chat history:
+
+1.  **Check Latest Tag**: `git tag --sort=-v:refname | head -n 1`
+2.  **Check Commit Log**: `git log -n 1 --oneline`
+3.  **The Next Version**: Bases the next version (PATCH/MINOR) on the results of step 1, ensuring no gaps or duplicates.
+
 ### Bumping Steps
 
 1.  **Update Files**: Change the `version` field in both `package.json` and `app.json`.

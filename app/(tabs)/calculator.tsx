@@ -2,7 +2,6 @@ import { useTransportCost } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
 import { Ionicons } from '@expo/vector-icons'
-import TabPage from '@/components/ui/TabPage'
 import {
 	ActivityIndicator,
 	ScrollView,
@@ -12,7 +11,7 @@ import {
 	View,
 	useWindowDimensions,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import TabPage from '@/components/ui/TabPage'
 import { calculateFleetSize, formatCurrency } from '@/utils/journey'
 
 export default function CalculatorScreen() {

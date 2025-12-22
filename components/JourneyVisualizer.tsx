@@ -256,10 +256,10 @@ export function JourneyVisualizer({
 
 					const pos = positions[i]
 					const isFirstLeg = i === 1
-					const duration = isFirstLeg ? 1200 : 800
-					// Balanced S-curve for first leg: heavy inertia start + smooth approach approach
+					const duration = isFirstLeg ? 1400 : 800
+					// Sharp easing for isFirstLeg to simulate overcoming mass/inertia
 					const easing = isFirstLeg
-						? Easing.bezier(0.8, 0, 0.2, 1)
+						? Easing.bezier(0.7, 0, 1, 0.5)
 						: Easing.bezier(0.4, 0, 0.2, 1)
 
 					rocketX.value = withTiming(pos.x, { duration, easing })
