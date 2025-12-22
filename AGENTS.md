@@ -30,8 +30,12 @@ This file contains critical context, rules, and architectural decisions for any 
   - `global.css`: Global styles and theme definitions.
 - **`/components`**: Reusable UI components.
   - `FavoriteButton.tsx`: Centralized favorite star logic.
-  - `JourneyVisualizer.tsx`: SVG + Reanimated galactic route map.
-  - **`/ui`**: Atomic UI parts (e.g., `HeaderButton.tsx`).
+  - `JourneyVisualizer.tsx`: SVG + Reanimated cinematic galactic route map.
+  - **`/ui`**: Atomic UI parts.
+    - `TabPage.tsx`: Standardized layout wrapper (handles ScrollView & gap).
+    - `FavoriteButton.tsx`: Centralized favorite star logic.
+    - `DualActionButton.tsx`: Consistent side-by-side action layout.
+    - `HeaderButton.tsx`: Standardized header actions.
 - **`/hooks`**: Custom hooks (e.g., `useQueries.ts` for data fetching).
 - **`/store`**: Zustand stores (e.g., `useUserStore.ts`).
 - **`/api`**: Axios client and API functions.
@@ -53,6 +57,7 @@ This file contains critical context, rules, and architectural decisions for any 
 - **`tailwind.config.ts`** imports and extends the `palette` from `Colors.ts`.
 - **`app/global.css`** maps semantic classes (e.g., `.bg-background`) to these palette colors via `@apply`.
 - **Convention**: Use semantic classes in JSX (e.g., `className="text-foreground"`) to ensure theme reactivity.
+- **Layout Management**: Always wrap top-level tab screens in `<TabPage>`. Set `scrollable={false}` ONLY if the children manage their own scrolling (e.g., `FlatList`).
 
 ### 3. Testing
 
@@ -78,9 +83,9 @@ This file contains critical context, rules, and architectural decisions for any 
 
 Agents MUST maintain strict synchronization between code, documentation, and Git tags:
 
-- **Verifying the "Git-Truth"**: ALWAYS run `git tag --sort=-v:refname | head -n 1` to find the LATEST COMMITTED VERSION before suggesting a bump. NEVER rely on conversation history or uncommitted local files (e.g., `package.json`) as the source of truth for the next version number.
-- **Version Bumping**: Always update `version` in `package.json` and `app.json` simultaneously.
-- **DEVLOG Sync**: Update `docs/DEVLOG.md` with a matching version header (e.g., `# [vX.Y.Z]`) BEFORE committing. Delineate patch versions if they represent distinct logical updates.
+- **Version Bumping**: Always update `version` in `package.json`, `app.json`, and `docs/DEVLOG.md` simultaneously.
+- **Git History Verification**: BEFORE proposing a bump, always check `git tag --sort=-v:refname` to ensure the new version is incremental relative to the existing history.
+- **DEVLOG Sync**: Update `docs/DEVLOG.md` with a matching version header (e.g., `# [vX.Y.Z]`) BEFORE committing.
 - **Commit & Tag**: Commit releases as `chore: release vX.Y.Z` and immediately tag as `vX.Y.Z`.
 - **Branch Sync**: After pushing to `dev`, ensure `main` is fast-forwarded and tagged correctly.
 

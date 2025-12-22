@@ -1,5 +1,20 @@
 # Development Log (Newest to Oldest)
 
+# [v0.3.7] Cinematic Restoration & Layout Standardization
+
+## feat: restore cinematic "heavy inertia" navigation
+
+- **ANIMATION**: Reverted `JourneyVisualizer` logic to the v0.3.3 specs: 1200ms duration for the first leg with a high-inertia `bezier(0.8, 0, 0.2, 1)` easing.
+- **UX**: Reordered bottom tabs to make "Route Finder" the first tab and the default landing page of the application.
+
+## refactor: standardize tab page architecture
+
+- **LAYOUT**: Refactored `TabPage.tsx` to handle internal `ScrollView` logic and standardized `gap-4` spacing.
+- **REFACTOR**: Migrated all tab pages (`Routes`, `Gates`, `Cost`, `Profile`) and `GateDetails` to the unified `TabPage` component.
+- **UI**: Created `DualActionButton.tsx` to provide consistent side-by-side action buttons.
+- **CLEANUP**: Moved `FavoriteButton` to `components/ui/` and resolved all module resolution errors.
+- **FIX**: Resolved redundant navigation bars in the `Gates` tab by disabling native headers in the nested stack.
+
 # [v0.3.6] Post-Refactor Layout Fixes
 
 ## fix: resolve JSX nesting in Route Finder

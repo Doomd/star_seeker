@@ -1,7 +1,13 @@
 import { useIsDark } from '@/hooks/useThemeColor'
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
-import { StatusBar, Text, TouchableOpacity, View } from 'react-native'
+import {
+	ScrollView,
+	StatusBar,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface TabPageProps {
@@ -10,6 +16,7 @@ interface TabPageProps {
 	children: React.ReactNode
 	className?: string
 	onBack?: () => void
+	scrollable?: boolean
 }
 
 export default function TabPage({
@@ -18,6 +25,7 @@ export default function TabPage({
 	children,
 	className = '',
 	onBack,
+	scrollable = true,
 }: TabPageProps) {
 	const isDark = useIsDark()
 
@@ -48,7 +56,17 @@ export default function TabPage({
 					</View>
 					{headerRight && <View>{headerRight}</View>}
 				</View>
-				<View className="flex-1">{children}</View>
+				{scrollable ? (
+					<ScrollView
+						className="flex-1"
+						contentContainerClassName="gap-4"
+						showsVerticalScrollIndicator={false}
+					>
+						{children}
+					</ScrollView>
+				) : (
+					<View className="flex-1 gap-4">{children}</View>
+				)}
 			</View>
 		</SafeAreaView>
 	)

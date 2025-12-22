@@ -49,6 +49,7 @@ export default function HomeScreen() {
 	return (
 		<TabPage
 			title="Star Gates"
+			scrollable={false}
 			headerRight={
 				favorites.length > 0 ? (
 					<HeaderButton
@@ -63,7 +64,6 @@ export default function HomeScreen() {
 				data={filteredGates}
 				keyExtractor={(item) => item.code}
 				renderItem={({ item }) => <GateCard gate={item} />}
-				className="p-1"
 				showsVerticalScrollIndicator={false}
 				ListEmptyComponent={
 					<Text className="mt-10 text-center text-foreground-muted">

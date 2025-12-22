@@ -7,14 +7,7 @@ export default function GatesLayout() {
 	return (
 		<Stack
 			screenOptions={{
-				headerStyle: {
-					backgroundColor: Colors.panel,
-				},
-				headerTintColor: Colors.foreground.DEFAULT,
-				headerTitleStyle: {
-					fontWeight: 'bold',
-				},
-				headerBackVisible: true,
+				headerShown: false,
 			}}
 		>
 			<Stack.Screen

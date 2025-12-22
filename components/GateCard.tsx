@@ -1,4 +1,4 @@
-import { FavoriteButton } from '@/components/FavoriteButton'
+import { FavoriteButton } from '@/components/ui/FavoriteButton'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
 import { Gate } from '@/types'
