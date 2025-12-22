@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## refactor: extract reusable FavoriteButton component
+
+- **REFACTOR**: Created `components/FavoriteButton.tsx` to centralize favorite toggle logic and styling.
+- **UI**: Integrated `FavoriteButton` into `GateCard` and `GateDetails` screen.
+- **FEATURE**: Added the ability to toggle favorites directly from the `GateSelector` in the Route Finder.
+- **DX**: Reduced code duplication and ensured consistent favorite button behavior across the app.
+
 ## chore: implement OneFlow branching model
 
 - **GIT**: Created `dev` branch as the new primary development branch.

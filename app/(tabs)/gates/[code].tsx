@@ -1,3 +1,4 @@
+import { FavoriteButton } from '@/components/FavoriteButton'
 import { useGateDetails } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
@@ -18,7 +19,7 @@ export default function GateDetailsScreen() {
 	const { code } = useLocalSearchParams<{ code: string }>()
 	const router = useRouter()
 	const { data: gate, isLoading, error, refetch } = useGateDetails(code || '')
-	const { favorites, toggleFavorite } = useUserStore()
+	const { favorites } = useUserStore()
 	const isFavorite = gate ? favorites.includes(gate.code) : false
 
 	if (isLoading) {
@@ -98,16 +99,7 @@ export default function GateDetailsScreen() {
 								</Text>
 							</View>
 						</View>
-						<Pressable
-							onPress={() => toggleFavorite(gate.code)}
-							className="rounded-full p-3 active:bg-ui-active"
-						>
-							<Ionicons
-								name={isFavorite ? 'star' : 'star-outline'}
-								size={32}
-								color={isFavorite ? Colors.favorite : Colors.foreground.dim}
-							/>
-						</Pressable>
+						<FavoriteButton gateCode={gate.code} className="p-3" size={32} />
 					</View>
 				</View>
 

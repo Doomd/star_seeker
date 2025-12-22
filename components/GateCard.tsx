@@ -1,7 +1,7 @@
+import { FavoriteButton } from '@/components/FavoriteButton'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
 import { Gate } from '@/types'
-import { Ionicons } from '@expo/vector-icons'
 import { Link } from 'expo-router'
 import { Platform, Pressable, Text, View } from 'react-native'
 
@@ -11,7 +11,7 @@ interface GateCardProps {
 
 export function GateCard({ gate }: GateCardProps) {
 	const Colors = useThemeColor()
-	const { favorites, toggleFavorite } = useUserStore()
+	const { favorites } = useUserStore()
 	const isFavorite = favorites.includes(gate.code)
 
 	return (
@@ -42,20 +42,7 @@ export function GateCard({ gate }: GateCardProps) {
 				</Pressable>
 			</Link>
 
-			<Pressable
-				onPress={(e) => {
-					if (Platform.OS === 'web') e.preventDefault()
-					e.stopPropagation()
-					toggleFavorite(gate.code)
-				}}
-				className="p-2 m-2 justify-center active:bg-ui-active rounded-lg"
-			>
-				<Ionicons
-					name={isFavorite ? 'star' : 'star-outline'}
-					size={24}
-					color={isFavorite ? Colors.favorite : Colors.foreground.dim}
-				/>
-			</Pressable>
+			<FavoriteButton gateCode={gate.code} className="p-2 m-2" size={24} />
 		</View>
 	)
 }

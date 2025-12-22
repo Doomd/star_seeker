@@ -1,3 +1,4 @@
+import { FavoriteButton } from '@/components/FavoriteButton'
 import { useCheapestRoute, useGates } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { Gate } from '@/types'
@@ -59,9 +60,12 @@ export default function RoutesScreen() {
 							<Text className="text-lg font-bold text-foreground">
 								{item.name}
 							</Text>
-							<Text className="font-mono text-foreground-muted">
-								{item.code}
-							</Text>
+							<View className="flex-row items-center gap-4">
+								<Text className="font-mono text-foreground-muted">
+									{item.code}
+								</Text>
+								<FavoriteButton gateCode={item.code} className="p-2" />
+							</View>
 						</TouchableOpacity>
 					)}
 				/>
