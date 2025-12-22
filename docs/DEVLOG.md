@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+# [v0.3.6] Post-Refactor Layout Fixes
+
+## fix: resolve JSX nesting in Route Finder
+
+- **BUG**: Removed an orphaned `</View>` tag in `routes.tsx` that broke the build after the `TabPage` migration.
+- **CHORE**: Confirmed version synchronization via "Git-Truth" verification.
+
 # [v0.3.5] Stability & Dependency Alignment
 
 ## fix: align react-native-svg and resolve TabPage reference
