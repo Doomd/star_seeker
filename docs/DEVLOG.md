@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## chore: implement formal versioning and UI display
+
+- **UI**: Added app version footer to the `Profile` tab using `expo-constants`.
+- **CONFIG**: Bumped app version to `0.1.0` in `package.json` and `app.json`.
+- **DOCS**: Updated `WORKFLOW.md` with SemVer guidelines and release steps.
+- **GIT**: Established git tagging protocol for stable releases.
+
 ## refactor: extract reusable FavoriteButton component
 
 - **REFACTOR**: Created `components/FavoriteButton.tsx` to centralize favorite toggle logic and styling.

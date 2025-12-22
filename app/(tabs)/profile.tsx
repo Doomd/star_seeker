@@ -1,6 +1,7 @@
 import { Theme as Colors } from '@/constants/Colors'
 import { useUserStore } from '@/store/useUserStore'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import Constants from 'expo-constants'
 import { StatusBar } from 'expo-status-bar'
 import { Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -67,6 +68,14 @@ export default function ProfileScreen() {
 							))}
 						</View>
 					</View>
+				</View>
+
+				<View className="mt-auto py-6 items-center">
+					<Text className="text-foreground-dim text-xs tracking-widest uppercase">
+						Star Seeker{' '}
+						{Constants.expoConfig?.version &&
+							`v${Constants.expoConfig?.version}`}
+					</Text>
 				</View>
 			</View>
 		</SafeAreaView>

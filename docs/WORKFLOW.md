@@ -50,6 +50,40 @@ git merge --ff-only dev
 git push origin main
 ```
 
+## Release Versioning
+
+This project follows [Semantic Versioning (SemVer)](https://semver.org/) formatted as **MAJOR.MINOR.PATCH** (e.g., `0.1.0`).
+
+### When to increment which number?
+
+1.  **MAJOR**: (the first number)
+    - Increment when you make **breaking changes** or a total project overhaul.
+    - _Note: While in the 0.y.z phase (initial development), major changes typically stay as minor bumps until the first public release (v1.0.0)._
+2.  **MINOR**: (the middle number)
+    - Increment when you add **new features** in a backward-compatible manner (e.g., adding a new "Calculator" tab or a "Favorite" button).
+    - Increments for significant refactors that improve the project structure.
+3.  **PATCH**: (the last number)
+    - Increment when you make **bug fixes** or minor tweaks (e.g., fixing a typo, adjusting a color, or updating a dependency).
+
+### When to bump?
+
+Versions should be bumped on the `dev` branch just before a fast-forward merge into `main`.
+
+### Bumping Steps
+
+1.  **Update Files**: Change the `version` field in both `package.json` and `app.json`.
+2.  **Commit**: `git add . && git commit -m "chore: bump version to 0.x.x"`
+3.  **Fast-Forward**:
+    ```bash
+    git checkout main
+    git merge --ff-only dev
+    ```
+4.  **Tag**:
+    ```bash
+    git tag v0.x.x
+    git push origin main --tags
+    ```
+
 ## Why this model?
 
 As a solo developer, this provides a professional structure without the complexity of maintenance branches, while still keeping a "stable" pointer (`main`) and a "work-in-progress" zone (`dev`).
