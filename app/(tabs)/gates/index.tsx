@@ -1,4 +1,5 @@
 import { GateCard } from '@/components/GateCard'
+import { HeaderButton } from '@/components/ui/HeaderButton'
 import { useGates } from '@/hooks/useQueries'
 import { useIsDark, useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
@@ -6,7 +7,6 @@ import { useState } from 'react'
 import {
 	ActivityIndicator,
 	FlatList,
-	Pressable,
 	StatusBar,
 	Text,
 	View,
@@ -53,20 +53,11 @@ export default function HomeScreen() {
 				<View className="mb-6 flex-row items-center justify-between">
 					<Text className="text-3xl font-bold text-foreground">Star Gates</Text>
 					{favorites.length > 0 && (
-						<Pressable
+						<HeaderButton
+							label={showFavorites ? 'All Gates' : 'Favorites'}
 							onPress={() => setShowFavorites(!showFavorites)}
-							className={`rounded-full px-4 py-2 ${
-								showFavorites ? 'bg-primary' : 'bg-ui'
-							}`}
-						>
-							<Text
-								className={`font-bold ${
-									showFavorites ? 'text-background' : 'text-foreground'
-								}`}
-							>
-								{showFavorites ? 'All Gates' : 'Favorites'}
-							</Text>
-						</Pressable>
+							isActive={showFavorites}
+						/>
 					)}
 				</View>
 				<FlatList

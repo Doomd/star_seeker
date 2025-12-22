@@ -1,11 +1,13 @@
 import { FavoriteButton } from '@/components/FavoriteButton'
+import { JourneyVisualizer } from '@/components/JourneyVisualizer'
+import { HeaderButton } from '@/components/ui/HeaderButton'
 import { useCheapestRoute, useGates } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { Gate } from '@/types'
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
 import {
-	ActivityIndicator,
+	// ActivityIndicator,
 	FlatList,
 	Modal,
 	ScrollView,
@@ -76,9 +78,20 @@ export default function RoutesScreen() {
 	return (
 		<SafeAreaView className="flex-1 bg-background" edges={['top']}>
 			<ScrollView className="flex-1 p-4" showsVerticalScrollIndicator={false}>
-				<Text className="mb-6 text-3xl font-bold text-foreground">
-					Route Finder
-				</Text>
+				<View className="mb-6 flex-row items-center justify-between">
+					<Text className="text-3xl font-bold text-foreground">
+						Route Finder
+					</Text>
+					{(sourceGate || targetGate) && (
+						<HeaderButton
+							label="Reset"
+							onPress={() => {
+								setSourceGate(null)
+								setTargetGate(null)
+							}}
+						/>
+					)}
+				</View>
 
 				<View className="mb-8 flex-row items-center justify-between gap-4 p-1">
 					<TouchableOpacity
@@ -144,12 +157,10 @@ export default function RoutesScreen() {
 					</TouchableOpacity>
 				</View>
 
-				{isLoading && (
-					<ActivityIndicator
-						size="large"
-						color={Colors.primary}
-						className="mt-8"
-					/>
+				{(isLoading || route) && (
+					<View className="mb-4">
+						<JourneyVisualizer route={route} isLoading={isLoading} />
+					</View>
 				)}
 
 				{route && !isLoading && (

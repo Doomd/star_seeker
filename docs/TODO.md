@@ -11,7 +11,7 @@
 ## 2. Animations (Bonus Requirement)
 
 - [ ] **Gate List**: Add entry animations (fade-in/slide-up) for the `FlatList` items on the Home screen.
-- [ ] **Route Results**: Animate the cost calculation result (e.g., counting up numbers).
+- [x] **Route Results**: High-fidelity `JourneyVisualizer` added (SVG map + Reanimated rocket).
 - [ ] **Transitions**: Ensure screen transitions (stack push/pop) feel native and smooth.
 
 ## 3. Accessibility & Polish (Mobile Focus)

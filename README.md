@@ -13,6 +13,7 @@ This project was built as a solution to the **Star Seeker Technical Challenge**.
 - **Journey Cost Calculator**: Estimate travel costs based on distance, passengers, and parking duration.
 - **Route Finder**: Calculate the cheapest route between two gates using the hyperspace network.
 - **Favorites System (Bonus)**: Save frequently visited gates for quick access (persisted locally).
+- **Journey Visualizer (Bonus)**: Interactive SVG map with Reanimated rocket flight path.
 - **Offline Mode (Bonus)**: Gracefully handles network loss with a visual banner and cached data access.
 - **Dark/Light Mode (Bonus)**: Fully dynamic theming system respecting user preference.
 

@@ -1,5 +1,18 @@
 # Development Log (Newest to Oldest)
 
+## feat: add Reset button and reusable HeaderButton component
+
+- **UI**: Created `components/ui/HeaderButton.tsx` for standardized header actions.
+- **REFACTOR**: Updated `Gates` screen to use the new `HeaderButton`.
+- **FEATURE**: Added a dynamic "Reset" button to the `Route Finder` screen to clear selections.
+
+## feat: implement high-fidelity JourneyVisualizer component
+
+- **UI**: Created `components/JourneyVisualizer.tsx` using `react-native-svg` and `react-native-reanimated`.
+- **ANIMATION**: Implemented dynamic starfield (static + warp) and SVG-based route mapping.
+- **ANIMATION**: Added Reanimated-driven rocket flight that follows the calculated path.
+- **FEATURE**: Integrated visualizer into the Route Finder, replacing the standard loader with an interactive map.
+
 ## chore: implement formal versioning and UI display
 
 - **UI**: Added app version footer to the `Profile` tab using `expo-constants`.

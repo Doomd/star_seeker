@@ -29,6 +29,9 @@ This file contains critical context, rules, and architectural decisions for any 
   - `_layout.tsx`: Root layout (Providers + Theme).
   - `global.css`: Global styles and theme definitions.
 - **`/components`**: Reusable UI components.
+  - `FavoriteButton.tsx`: Centralized favorite star logic.
+  - `JourneyVisualizer.tsx`: SVG + Reanimated galactic route map.
+  - **`/ui`**: Atomic UI parts (e.g., `HeaderButton.tsx`).
 - **`/hooks`**: Custom hooks (e.g., `useQueries.ts` for data fetching).
 - **`/store`**: Zustand stores (e.g., `useUserStore.ts`).
 - **`/api`**: Axios client and API functions.

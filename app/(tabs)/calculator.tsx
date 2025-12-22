@@ -36,7 +36,7 @@ export default function CalculatorScreen() {
 		<SafeAreaView className="flex-1 bg-background" edges={['top']}>
 			<View className="flex-1 px-4 py-4">
 				<Text className="mb-6 text-3xl font-bold text-foreground">
-					Journey Cost
+					Estimate Journey Cost
 				</Text>
 
 				<ScrollView className="flex-1" showsVerticalScrollIndicator={false}>

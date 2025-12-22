@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Star Seeker - Galactic Navigation</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&display=swap');
+
+			body {
+				font-family: 'Space Grotesk', sans-serif;
+				background-color: #020617;
+				color: #f8fafc;
+				overflow: hidden;
+			}
+
+			.star-field {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 0;
+			}
+
+			.star {
+				position: absolute;
+				background: white;
+				border-radius: 50%;
+				opacity: 0.3;
+			}
+
+			.warp-star {
+				position: absolute;
+				background: linear-gradient(
+					to bottom,
+					rgba(255, 255, 255, 0),
+					rgba(255, 255, 255, 0.8)
+				);
+				width: 1px;
+				z-index: 1;
+			}
+
+			.ship-container {
+				/* Centering the 32px (w-8) container on the coordinate */
+				margin-left: -16px;
+				margin-top: -16px;
+				z-index: 5; /* Placed exactly below the SVG nodes/labels */
+				transition:
+					left 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+					top 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+					transform 0.4s ease-out,
+					opacity 0.3s ease;
+			}
+
+			.system-node {
+				transition: opacity 0.5s ease;
+			}
+
+			.hidden {
+				display: none;
+			}
+
+			#map-svg {
+				z-index: 10;
+			}
+
+			.glow-button {
+				box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+				transition: all 0.2s ease;
+			}
+
+			.glow-button:hover:not(:disabled) {
+				box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+				transform: translateY(-1px);
+			}
+
+			.glow-button:active:not(:disabled) {
+				transform: translateY(1px);
+			}
+
+			/* Loading Text Animation */
+			.terminal-text {
+				text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+				animation: text-flicker 2s infinite;
+			}
+
+			@keyframes text-flicker {
+				0%,
+				100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.7;
+				}
+			}
+		</style>
+	</head>
+	<body class="flex flex-col h-screen p-6">
+		<div id="starfield" class="star-field"></div>
+
+		<!-- Header -->
+		<header class="relative z-10 text-center mb-6">
+			<h1 class="text-3xl font-black tracking-widest text-white uppercase">
+				Star Seeker
+			</h1>
+			<p class="text-slate-400 text-sm mt-1">Relative Distance Nav-Computer</p>
+		</header>
+
+		<!-- Visualizer Area -->
+		<main
+			class="relative flex-1 bg-slate-900/50 rounded-3xl border border-slate-800 overflow-hidden mb-6"
+		>
+			<svg id="map-svg" class="w-full h-full absolute inset-0">
+				<defs>
+					<filter id="glow">
+						<feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+						<feMerge>
+							<feMergeNode in="coloredBlur" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+				</defs>
+				<g id="paths-group"></g>
+				<g id="nodes-group"></g>
+			</svg>
+
+			<!-- Centered Loading Overlay -->
+			<div
+				id="loading-overlay"
+				class="absolute inset-0 flex flex-col items-center justify-center z-30 hidden pointer-events-none"
+			>
+				<div
+					class="px-6 py-3 bg-slate-950/80 backdrop-blur-sm border border-blue-500/30 rounded-full flex items-center gap-4"
+				>
+					<div class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></div>
+					<span
+						id="terminal-message"
+						class="terminal-text text-blue-100 font-bold tracking-tight text-lg min-w-[280px] text-center"
+					>
+						Contacting Hyper Gate Terminal
+					</span>
+				</div>
+			</div>
+
+			<div
+				id="rocket"
+				class="ship-container absolute w-8 h-8 flex items-center justify-center pointer-events-none opacity-0"
+			>
+				<svg
+					viewBox="0 0 24 24"
+					width="24"
+					height="24"
+					stroke="currentColor"
+					stroke-width="2"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="text-blue-400 drop-shadow-[0_0_12px_rgba(96,165,250,0.9)]"
+				>
+					<path
+						d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"
+					></path>
+					<path
+						d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"
+					></path>
+					<path d="M9 12H4s.55-3.03 2-5c1.62-2.2 5-3 5-3"></path>
+					<path d="M12 15v5s3.03-.55 5-2c2.2-1.62 3-5 3-5"></path>
+				</svg>
+			</div>
+		</main>
+
+		<!-- Info Box -->
+		<section
+			class="relative z-10 bg-slate-800/80 backdrop-blur-md p-5 rounded-2xl border border-slate-700 min-h-[90px] flex flex-col justify-center mb-6"
+		>
+			<div id="status-idle" class="flex items-center gap-3">
+				<div class="w-2 h-2 rounded-full bg-slate-500 animate-pulse"></div>
+				<p class="text-slate-400">
+					Select a jump destination to begin navigation...
+				</p>
+			</div>
+
+			<div id="status-searching" class="hidden flex items-center gap-3">
+				<svg
+					class="animate-spin h-5 w-5 text-blue-400"
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+				>
+					<circle
+						class="opacity-25"
+						cx="12"
+						cy="12"
+						r="10"
+						stroke="currentColor"
+						stroke-width="4"
+					></circle>
+					<path
+						class="opacity-75"
+						fill="currentColor"
+						d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+					></path>
+				</svg>
+				<p class="text-blue-100 font-medium">Processing request...</p>
+			</div>
+
+			<div id="status-result" class="hidden">
+				<div class="flex justify-between items-center mb-2">
+					<h3
+						class="text-green-400 font-bold uppercase tracking-tighter text-sm"
+					>
+						Optimal Route Calculated
+					</h3>
+					<span
+						id="total-dist"
+						class="text-xs text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-700"
+					></span>
+				</div>
+				<div id="route-display" class="flex items-center flex-wrap gap-2"></div>
+			</div>
+		</section>
+
+		<!-- Controls -->
+		<footer class="relative z-10 grid grid-cols-3 gap-4 pb-4">
+			<button
+				onclick="handleJump('SOL', 'PRX')"
+				class="jump-btn glow-button bg-blue-900/40 hover:bg-blue-600 border border-blue-500/50 text-white font-bold py-3 rounded-xl text-xs tracking-wider uppercase transition-all"
+			>
+				SOL → PRX
+			</button>
+			<button
+				onclick="handleJump('SOL', 'CAS')"
+				class="jump-btn glow-button bg-blue-900/40 hover:bg-blue-600 border border-blue-500/50 text-white font-bold py-3 rounded-xl text-xs tracking-wider uppercase transition-all"
+			>
+				SOL → CAS
+			</button>
+			<button
+				onclick="handleJump('SOL', 'ALS')"
+				class="jump-btn glow-button bg-blue-900/40 hover:bg-blue-600 border border-blue-500/50 text-white font-bold py-3 rounded-xl text-xs tracking-wider uppercase transition-all"
+			>
+				SOL → ALS
+			</button>
+		</footer>
+
+		<script>
+			const API_KEY = ''
+			const BASE_URL = 'https://hstc-api.testing.keyholding.com'
+
+			const starfield = document.getElementById('starfield')
+			const rocket = document.getElementById('rocket')
+			const mapSvg = document.getElementById('map-svg')
+			const nodesGroup = document.getElementById('nodes-group')
+			const pathsGroup = document.getElementById('paths-group')
+
+			const statusIdle = document.getElementById('status-idle')
+			const statusSearching = document.getElementById('status-searching')
+			const statusResult = document.getElementById('status-result')
+			const routeDisplay = document.getElementById('route-display')
+			const totalDistText = document.getElementById('total-dist')
+			const loadingOverlay = document.getElementById('loading-overlay')
+			const terminalMessage = document.getElementById('terminal-message')
+
+			const LOADING_MESSAGES = [
+				'Contacting Hyper Gate Terminal',
+				'Transmitting Journey Request',
+				'Receiving Starversal Route',
+				'Calculating He3 requirements',
+			]
+
+			let isAnimating = false
+			let warpInterval
+
+			function createStaticStars() {
+				for (let i = 0; i < 100; i++) {
+					const star = document.createElement('div')
+					star.className = 'star'
+					star.style.left = `${Math.random() * 100}%`
+					star.style.top = `${Math.random() * 100}%`
+					const size = Math.random() * 2.5
+					star.style.width = `${size}px`
+					star.style.height = `${size}px`
+					starfield.appendChild(star)
+				}
+			}
+
+			function startWarp() {
+				warpInterval = setInterval(() => {
+					const star = document.createElement('div')
+					star.className = 'warp-star'
+					star.style.left = `${Math.random() * 100}%`
+					star.style.top = `-10%`
+					star.style.height = `${20 + Math.random() * 50}px`
+					starfield.appendChild(star)
+					const anim = star.animate(
+						[
+							{ transform: `translateY(0vh)`, opacity: 0 },
+							{ transform: `translateY(110vh)`, opacity: 0 },
+						],
+						{ duration: 800 + Math.random() * 400 }
+					)
+					anim.onfinish = () => star.remove()
+				}, 40)
+			}
+
+			function stopWarp() {
+				clearInterval(warpInterval)
+			}
+
+			async function cycleLoadingMessages(isActive) {
+				if (!isActive) {
+					loadingOverlay.classList.add('hidden')
+					return
+				}
+				loadingOverlay.classList.remove('hidden')
+
+				for (let msg of LOADING_MESSAGES) {
+					if (!isAnimating) break
+					terminalMessage.textContent = msg
+					terminalMessage.animate(
+						[
+							{ opacity: 0, transform: 'translateY(5px)' },
+							{ opacity: 1, transform: 'translateY(0)' },
+						],
+						{ duration: 300, easing: 'ease-out' }
+					)
+
+					await new Promise((r) => setTimeout(r, 700))
+				}
+			}
+
+			function getMockData(from, to) {
+				const routes = {
+					'SOL-PRX': { route: ['SOL', 'PRX'], dists: [90], total: 90 },
+					'SOL-CAS': {
+						route: ['SOL', 'RAN', 'CAS'],
+						dists: [100, 150],
+						total: 250,
+					},
+					'SOL-ALS': {
+						route: ['SOL', 'PRX', 'SIR', 'ALS'],
+						dists: [90, 120, 80],
+						total: 290,
+					},
+				}
+				return routes[`${from}-${to}`]
+			}
+
+			async function fetchRealRoute(from, to) {
+				if (!API_KEY) return null
+				try {
+					const journeyRes = await fetch(`${BASE_URL}/gates/${from}/to/${to}`, {
+						headers: { 'x-api-key': API_KEY },
+					})
+					const journey = await journeyRes.json()
+
+					const dists = []
+					for (let i = 0; i < journey.route.length - 1; i++) {
+						const current = journey.route[i]
+						const next = journey.route[i + 1]
+						const gateRes = await fetch(`${BASE_URL}/gates/${current}`, {
+							headers: { 'x-api-key': API_KEY },
+						})
+						const gate = await gateRes.json()
+						const link = gate.links.find((l) => l.code === next)
+						dists.push(parseInt(link.hu))
+					}
+
+					return {
+						route: journey.route,
+						dists: dists,
+						total: journey.totalCost,
+					}
+				} catch (e) {
+					console.error('API Error:', e)
+					return null
+				}
+			}
+
+			async function handleJump(from, to) {
+				if (isAnimating) return
+				isAnimating = true
+
+				document
+					.querySelectorAll('.jump-btn')
+					.forEach((b) => (b.disabled = true))
+				statusIdle.classList.add('hidden')
+				statusResult.classList.add('hidden')
+				statusSearching.classList.remove('hidden')
+
+				nodesGroup.innerHTML = ''
+				pathsGroup.innerHTML = ''
+				routeDisplay.innerHTML = ''
+				rocket.style.opacity = '0'
+
+				startWarp()
+				cycleLoadingMessages(true)
+
+				let data = await fetchRealRoute(from, to)
+				if (!data) {
+					await new Promise((r) => setTimeout(r, 2800))
+					data = getMockData(from, to)
+				}
+
+				stopWarp()
+				loadingOverlay.classList.add('hidden')
+				statusSearching.classList.add('hidden')
+				statusResult.classList.remove('hidden')
+				totalDistText.textContent = `Total: ${data.total} AU`
+
+				await animateRoute(data)
+
+				document
+					.querySelectorAll('.jump-btn')
+					.forEach((b) => (b.disabled = false))
+				isAnimating = false
+			}
+
+			async function animateRoute(data) {
+				const { route, dists } = data
+				const rect = mapSvg.getBoundingClientRect()
+				const padding = 80
+				const usableWidth = rect.width - padding * 2
+				const totalAU = dists.reduce((a, b) => a + b, 0)
+				const positions = []
+
+				// Visual tweak constants
+				const VERTICAL_OFFSET = 25
+
+				let lastY = rect.height / 2
+				let currentAU = 0
+
+				route.forEach((code, i) => {
+					const x = padding + (currentAU / totalAU) * usableWidth
+					let y
+					if (i === 0) {
+						y = padding + Math.random() * (rect.height - padding * 2)
+					} else {
+						const dx = x - positions[i - 1].x
+						const maxDY = dx * 0.95
+						y = lastY + (Math.random() * maxDY * 2 - maxDY)
+						y = Math.max(padding, Math.min(rect.height - padding, y))
+					}
+					positions.push({ code, x, y })
+					lastY = y
+					if (i < dists.length) currentAU += dists[i]
+				})
+
+				// Draw Map Elements
+				for (let i = 0; i < positions.length; i++) {
+					const pos = positions[i]
+					const g = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+					g.setAttribute('class', 'system-node opacity-0')
+					const circle = document.createElementNS(
+						'http://www.w3.org/2000/svg',
+						'circle'
+					)
+					circle.setAttribute('cx', pos.x)
+					circle.setAttribute('cy', pos.y)
+					circle.setAttribute('r', '5')
+					circle.setAttribute('fill', '#60a5fa')
+					circle.setAttribute('filter', 'url(#glow)')
+
+					const label = document.createElementNS(
+						'http://www.w3.org/2000/svg',
+						'text'
+					)
+					label.setAttribute('x', pos.x)
+					label.setAttribute('y', pos.y - 15)
+					label.setAttribute('fill', '#94a3b8')
+					label.setAttribute('text-anchor', 'middle')
+					label.setAttribute('font-size', '11')
+					label.setAttribute('font-weight', 'bold')
+					label.textContent = pos.code
+
+					g.appendChild(circle)
+					g.appendChild(label)
+					nodesGroup.appendChild(g)
+					setTimeout(() => g.classList.remove('opacity-0'), i * 150)
+
+					if (i > 0) {
+						const prev = positions[i - 1]
+						const segmentDist = dists[i - 1]
+						const line = document.createElementNS(
+							'http://www.w3.org/2000/svg',
+							'line'
+						)
+						line.setAttribute('x1', prev.x)
+						line.setAttribute('y1', prev.y)
+						line.setAttribute('x2', pos.x)
+						line.setAttribute('y2', pos.y)
+						line.setAttribute('stroke', '#4ade80')
+						line.setAttribute('stroke-width', '1.5')
+						line.setAttribute('stroke-dasharray', '4,4')
+						line.setAttribute(
+							'class',
+							'opacity-0 transition-opacity duration-500'
+						)
+						pathsGroup.appendChild(line)
+
+						const distLabel = document.createElementNS(
+							'http://www.w3.org/2000/svg',
+							'text'
+						)
+						distLabel.setAttribute('x', (prev.x + pos.x) / 2)
+						distLabel.setAttribute('y', (prev.y + pos.y) / 2 - 12)
+						distLabel.setAttribute('fill', '#4ade80')
+						distLabel.setAttribute('text-anchor', 'middle')
+						distLabel.setAttribute('font-size', '10')
+						distLabel.setAttribute('font-weight', '600')
+						distLabel.textContent = `${segmentDist} AU`
+						distLabel.setAttribute(
+							'class',
+							'opacity-0 transition-opacity duration-500'
+						)
+						pathsGroup.appendChild(distLabel)
+
+						setTimeout(() => {
+							line.classList.remove('opacity-0')
+							distLabel.classList.remove('opacity-0')
+						}, i * 150)
+					}
+
+					const pill = document.createElement('div')
+					pill.className = 'flex items-center'
+					pill.innerHTML = `<span class="bg-blue-900/50 text-blue-200 px-2 py-0.5 rounded text-[10px] font-bold border border-blue-500/30">${pos.code}</span>
+                                 ${i < route.length - 1 ? '<span class="mx-1 text-slate-600 text-[10px]">>></span>' : ''}`
+					routeDisplay.appendChild(pill)
+				}
+
+				// Rocket Flight Logic with Vertical Offset
+				for (let i = 0; i < positions.length; i++) {
+					const pos = positions[i]
+
+					if (i === 0) {
+						// Teleport to first star immediately with offset
+						rocket.style.transition = 'none'
+						rocket.style.left = `${pos.x}px`
+						rocket.style.top = `${pos.y + VERTICAL_OFFSET}px`
+
+						// Match angle of the first embarking trajectory immediately
+						const next = positions[1]
+						const initialAngle =
+							Math.atan2(next.y - pos.y, next.x - pos.x) * (180 / Math.PI) + 45
+						rocket.style.transform = `rotate(${initialAngle}deg)`
+
+						await new Promise((r) => setTimeout(r, 50))
+						rocket.style.opacity = '1'
+						rocket.style.transition =
+							'left 0.8s cubic-bezier(0.4, 0, 0.2, 1), top 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease-out'
+						continue
+					}
+
+					// Carry out the movement to current node with offset
+					rocket.style.left = `${pos.x}px`
+					rocket.style.top = `${pos.y + VERTICAL_OFFSET}px`
+
+					// Wait for the move to finish
+					await new Promise((r) => setTimeout(r, 850))
+
+					// If not at the very end, rotate to face the NEXT star system
+					if (i < positions.length - 1) {
+						const current = pos
+						const next = positions[i + 1]
+						const nextAngle =
+							Math.atan2(next.y - current.y, next.x - current.x) *
+								(180 / Math.PI) +
+							45
+						rocket.style.transform = `rotate(${nextAngle}deg)`
+						await new Promise((r) => setTimeout(r, 300))
+					}
+				}
+			}
+
+			createStaticStars()
+			window.addEventListener('resize', () => {
+				if (!isAnimating) {
+					nodesGroup.innerHTML = ''
+					pathsGroup.innerHTML = ''
+					rocket.style.opacity = '0'
+				}
+			})
+		</script>
+	</body>
+</html>
