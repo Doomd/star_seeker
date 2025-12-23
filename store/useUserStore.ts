@@ -25,7 +25,7 @@ export const useUserStore = create<UserState>()(
 			favorites: [],
 			colorMode: 'dark',
 			calculatorSettings: {
-				distance: '',
+				distance: '150',
 				passengers: '2',
 				parking: '3',
 			},

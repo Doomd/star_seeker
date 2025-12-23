@@ -1,5 +1,9 @@
 # Development Log (Newest to Oldest)
 
+## ux: set default distance value for calculator
+
+- **UX**: Calculator now shows results immediately on first load with default distance of 150 AU.
+
 ## test: fix ProfileScreen tests for new cache hooks
 
 - **FIX**: Added `QueryClientProvider` and `DataPrefetcher` wrappers to ProfileScreen tests.
