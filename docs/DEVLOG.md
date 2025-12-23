@@ -1,11 +1,17 @@
 # Development Log (Newest to Oldest)
 
-## refactor: React best practices
+# [v0.4.4] ESLint & React Best Practices
 
-- **REFACTOR**: `routes.tsx` - extracted `GateSelector` as memoized component, added `useCallback` for handlers, fixed key prop.
-- **REFACTOR**: `_layout.tsx` - moved `onlineManager` setup to `useEffect` with cleanup, memoized `screenOptions`, fixed dependency array.
-- **REFACTOR**: `OfflineBanner.tsx` - added `memo`, `useCallback`, reset dismissed state on reconnect, use theme colors.
-- **CONFIG**: Added `scratch/` to Jest ignore patterns.
+## config: ESLint with eslint-react
+
+- **CONFIG**: Added ESLint with `@eslint-react/eslint-plugin` and `typescript-eslint` for React/TypeScript best practices linting.
+- **CONFIG**: Added `pnpm lint` and `pnpm lint:fix` scripts to package.json.
+
+## refactor: React best practices cleanup
+
+- **REFACTOR**: `DataPrefetcher.tsx` - memoized context value with `useMemo` to prevent re-renders.
+- **REFACTOR**: `DualActionButton.tsx` - extracted `ActionButton` to top-level to fix nested component definition.
+- **FIX**: Removed unused imports across `HeaderButton`, `GateCard`, `gates/_layout`, `gates/index`, `gates/[code]`, `profile`.
 
 # [v0.4.3] Documentation & Cleanup
 
