@@ -1,5 +1,13 @@
 # Development Log (Newest to Oldest)
 
+# [v0.4.2] Documentation & Cleanup
+
+## docs: comprehensive design documentation
+
+- **DOCS**: Created `docs/DESIGN.md` with architecture overview, design decisions, and code walkthrough.
+- **DOCS**: Added links between all documentation files.
+- **FIX**: Simplified `isDark` check in `_layout.tsx`.
+
 # [v0.4.1] Web & Polish Improvements
 
 ## feat: browser tab titles for web
@@ -253,3 +261,9 @@
 - **UI**: Added visual feedback (active state) to the star button on the Gate list.
 
 ## refactor: centralize favorite color constant
+
+---
+
+### Links
+
+- [README.md](README.md)

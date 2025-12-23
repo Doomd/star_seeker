@@ -36,7 +36,7 @@
 ## 4. Documentation & Submission
 
 - [x] **README.md**: Update with clear instructions on how to run, test, and build.
-- [ ] **Design Decisions**: Create `docs/DESIGN.md` (or append to README) covering:
+- [x] **Design Decisions**: Create `docs/DESIGN.md` (or append to README) covering:
   - Architecture (Expo Router, React Query, Zustand).
   - State Management choices.
   - Trade-offs (e.g., caching strategy, NativeWind v4 adoption).

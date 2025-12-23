@@ -85,10 +85,7 @@ function RootLayoutNav() {
 		<QueryProvider>
 			<DataPrefetcher>
 				<ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
-					<RNView
-						className={`flex-1 ${colorMode === 'dark' ? 'dark' : ''}`}
-						key={colorMode}
-					>
+					<RNView className={`flex-1 ${isDark ? 'dark' : ''}`} key={colorMode}>
 						<Stack
 							screenOptions={{
 								headerStyle: { backgroundColor: Colors.panel },

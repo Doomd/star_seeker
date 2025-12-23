@@ -118,11 +118,13 @@ For global client-state (like Theme preference and Favorites), **Zustand** offer
 ## 📝 WORKFLOW
 
 - Work so far: [DEVLOG.md](docs/DEVLOG.md)
+- Workflow: [WORKFLOW.md](docs/WORKFLOW.md)
 - Remaining work: [TODO.md](docs/TODO.md)
 
 ## Reference Docs
 
 - [CHALLENGE.md](docs/CHALLENGE.md)
+- [DESIGN.md](docs/DESIGN.md)
 - [API.md](docs/API.md)
 
 ---

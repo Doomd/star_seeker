@@ -94,4 +94,8 @@ To prevent version drift (especially after rejected commits), AI agents MUST dis
 
 ## Why this model?
 
-As a solo developer, this provides a professional structure without the complexity of maintenance branches, while still keeping a "stable" pointer (`main`) and a "work-in-progress" zone (`dev`).
+## As a solo developer, this provides a professional structure without the complexity of maintenance branches, while still keeping a "stable" pointer (`main`) and a "work-in-progress" zone (`dev`).
+
+### Links
+
+- [README.md](README.md)
