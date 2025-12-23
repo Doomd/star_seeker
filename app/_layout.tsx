@@ -8,7 +8,7 @@ import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import 'react-native-reanimated'
 import './global.css'
 
@@ -21,12 +21,6 @@ import { onlineManager } from '@tanstack/react-query'
 import NetInfo from '@react-native-community/netinfo'
 import { LogBox, View as RNView } from 'react-native'
 import { useColorScheme } from 'nativewind'
-
-onlineManager.setEventListener((setOnline) => {
-	return NetInfo.addEventListener((state) => {
-		setOnline(!!state.isConnected)
-	})
-})
 
 LogBox.ignoreLogs(['props.pointerEvents is deprecated'])
 
@@ -70,31 +64,45 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-	// Use our new hook to get the active theme colors based on store/system
 	const Colors = useThemeColor()
 	const isDark = useIsDark()
-	const { colorMode } = useUserStore()
-	const { colorScheme, setColorScheme } = useColorScheme()
+	const colorMode = useUserStore((state) => state.colorMode)
+	const { setColorScheme } = useColorScheme()
 
-	// Sync NativeWind with our store
+	// Setup network listener once on mount - moved from module scope to avoid side effects on import
+	useEffect(() => {
+		const unsubscribe = onlineManager.setEventListener((setOnline) => {
+			return NetInfo.addEventListener((state) => {
+				setOnline(!!state.isConnected)
+			})
+		})
+		// Cleanup on unmount
+		return unsubscribe
+	}, [])
+
+	// Sync NativeWind with our store - removed colorScheme from deps to prevent infinite loop
 	useEffect(() => {
 		setColorScheme(colorMode)
-	}, [colorMode, setColorScheme, colorScheme])
+	}, [colorMode, setColorScheme])
+
+	// Memoize screen options - prevents new object creation on every render
+	const screenOptions = useMemo(
+		() => ({
+			headerStyle: { backgroundColor: Colors.panel },
+			headerTintColor: Colors.foreground.DEFAULT,
+			headerShown: false,
+		}),
+		[Colors.panel, Colors.foreground.DEFAULT]
+	)
 
 	return (
 		<QueryProvider>
 			<DataPrefetcher>
 				<ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
+					{/* key={colorMode} forces re-render on theme change for NativeWind */}
 					<RNView className={`flex-1 ${isDark ? 'dark' : ''}`} key={colorMode}>
-						<Stack
-							screenOptions={{
-								headerStyle: { backgroundColor: Colors.panel },
-								headerTintColor: Colors.foreground.DEFAULT,
-								headerShown: false,
-							}}
-						>
+						<Stack screenOptions={screenOptions}>
 							<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-							{/* <Stack.Screen name="modal" options={{ presentation: 'modal' }} /> */}
 						</Stack>
 						<StatusBar style={isDark ? 'light' : 'dark'} />
 						<OfflineBanner />

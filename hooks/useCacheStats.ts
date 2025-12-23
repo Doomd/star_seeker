@@ -38,7 +38,7 @@ export function useCacheStats(): CacheStats {
 
 			if (key[0] === 'gates' && key.length === 1) {
 				// The main gates list - count how many gates are in it
-				const data = query.state.data as unknown[]
+				const data = query.state.data
 				gates = Array.isArray(data) ? data.length : 0
 			} else if (key[0] === 'gate' && key.length === 2) {
 				// Individual gate detail

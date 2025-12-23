@@ -7,7 +7,7 @@ import { useThemeColor } from '@/hooks/useThemeColor'
 import { Gate } from '@/types'
 import { Ionicons } from '@expo/vector-icons'
 import { useLocalSearchParams } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import {
 	FlatList,
 	Modal,
@@ -17,6 +17,77 @@ import {
 	View,
 } from 'react-native'
 import TabPage from '@/components/ui/TabPage'
+
+// Props interface for GateSelector - extracted for type safety
+interface GateSelectorProps {
+	visible: boolean
+	mode: 'source' | 'target' | null
+	gates: Gate[] | undefined
+	onSelect: (gate: Gate) => void
+	onClose: () => void
+}
+
+// Extracted component - thanks for suggestion Sam!
+const GateSelector = memo(function GateSelector({
+	visible,
+	mode,
+	gates,
+	onSelect,
+	onClose,
+}: GateSelectorProps) {
+	// useCallback for item press - prevents new function on each render
+	const handleItemPress = useCallback(
+		(item: Gate) => {
+			onSelect(item)
+			onClose()
+		},
+		[onSelect, onClose]
+	)
+
+	// Memoized renderItem - prevents unnecessary re-renders of list items
+	const renderItem = useCallback(
+		({ item }: { item: Gate }) => (
+			<TouchableOpacity
+				className="flex-row items-center justify-between border-b border-ui p-4 bg-background"
+				onPress={() => handleItemPress(item)}
+			>
+				<Text className="text-lg font-bold text-foreground">{item.name}</Text>
+				<View className="flex-row items-center gap-4">
+					<Text className="font-mono text-foreground-muted">{item.code}</Text>
+					<FavoriteButton gateCode={item.code} className="p-2" />
+				</View>
+			</TouchableOpacity>
+		),
+		[handleItemPress]
+	)
+
+	// Stable keyExtractor - avoids inline function recreation
+	const keyExtractor = useCallback((item: Gate) => item.code, [])
+
+	return (
+		<Modal
+			visible={visible}
+			animationType="slide"
+			presentationStyle="pageSheet"
+		>
+			<View className="flex-1 bg-panel">
+				<View className="flex-row items-center justify-between border-b border-ui bg-panel p-4">
+					<Text className="text-xl font-bold text-foreground">
+						Select {mode === 'source' ? 'Start' : 'Destination'}
+					</Text>
+					<TouchableOpacity onPress={onClose}>
+						<Text className="font-bold text-primary">Close</Text>
+					</TouchableOpacity>
+				</View>
+				<FlatList
+					data={gates}
+					keyExtractor={keyExtractor}
+					renderItem={renderItem}
+				/>
+			</View>
+		</Modal>
+	)
+})
 
 export default function RoutesScreen() {
 	const { from, to } = useLocalSearchParams<{ from?: string; to?: string }>()
@@ -55,47 +126,34 @@ export default function RoutesScreen() {
 		// error,
 	} = useCheapestRoute(sourceGate?.code || '', targetGate?.code || '')
 
-	const GateSelector = () => (
-		<Modal
-			visible={!!selectingMode}
-			animationType="slide"
-			presentationStyle="pageSheet"
-		>
-			<View className="flex-1 bg-panel">
-				<View className="flex-row items-center justify-between border-b border-ui bg-panel p-4">
-					<Text className="text-xl font-bold text-foreground">
-						Select {selectingMode === 'source' ? 'Start' : 'Destination'}
-					</Text>
-					<TouchableOpacity onPress={() => setSelectingMode(null)}>
-						<Text className="font-bold text-primary">Close</Text>
-					</TouchableOpacity>
-				</View>
-				<FlatList
-					data={gates}
-					keyExtractor={(item) => item.code}
-					renderItem={({ item }) => (
-						<TouchableOpacity
-							className="flex-row items-center justify-between border-b border-ui p-4 bg-background"
-							onPress={() => {
-								if (selectingMode === 'source') setSourceGate(item)
-								else setTargetGate(item)
-								setSelectingMode(null)
-							}}
-						>
-							<Text className="text-lg font-bold text-foreground">
-								{item.name}
-							</Text>
-							<View className="flex-row items-center gap-4">
-								<Text className="font-mono text-foreground-muted">
-									{item.code}
-								</Text>
-								<FavoriteButton gateCode={item.code} className="p-2" />
-							</View>
-						</TouchableOpacity>
-					)}
-				/>
-			</View>
-		</Modal>
+	// useCallback for handlers - provides stable reference for memoized children
+	const handleReset = useCallback(() => {
+		setSourceGate(null)
+		setTargetGate(null)
+	}, [])
+
+	const handleSelectSource = useCallback(() => {
+		setSelectingMode('source')
+	}, [])
+
+	const handleSelectTarget = useCallback(() => {
+		setSelectingMode('target')
+	}, [])
+
+	const handleCloseSelector = useCallback(() => {
+		setSelectingMode(null)
+	}, [])
+
+	// useCallback for gate selection - stable reference for GateSelector
+	const handleGateSelect = useCallback(
+		(gate: Gate) => {
+			if (selectingMode === 'source') {
+				setSourceGate(gate)
+			} else {
+				setTargetGate(gate)
+			}
+		},
+		[selectingMode]
 	)
 
 	return (
@@ -103,13 +161,7 @@ export default function RoutesScreen() {
 			title="Route Finder"
 			headerRight={
 				(sourceGate || targetGate) && (
-					<HeaderButton
-						label="Reset"
-						onPress={() => {
-							setSourceGate(null)
-							setTargetGate(null)
-						}}
-					/>
+					<HeaderButton label="Reset" onPress={handleReset} />
 				)
 			}
 		>
@@ -117,13 +169,13 @@ export default function RoutesScreen() {
 				left={{
 					label: sourceGate?.name || 'Select Start',
 					icon: 'planet-outline',
-					onPress: () => setSelectingMode('source'),
+					onPress: handleSelectSource,
 					highlight: sourceGate?.code,
 				}}
 				right={{
 					label: targetGate?.name || 'Select End',
 					icon: 'flag-outline',
-					onPress: () => setSelectingMode('target'),
+					onPress: handleSelectTarget,
 					highlight: targetGate?.code,
 				}}
 				separator={
@@ -178,11 +230,12 @@ export default function RoutesScreen() {
 							const nextCode = route.route[index + 1]
 							const currentGate = gates?.find((g) => g.code === code)
 							const link = currentGate?.links.find((l) => l.code === nextCode)
-							const cost = link ? parseFloat(link.hu) : 0 // Assuming 1 HU = £1 based on API observation
+							const cost = link ? parseFloat(link.hu) : 0
 
 							return (
 								<View
-									key={index}
+									// Stable key using unique route segment - index keys cause reconciliation issues
+									key={`${code}-${nextCode}`}
 									className="flex-row items-center justify-between border-b border-dashed border-ui py-2 last:border-0"
 								>
 									<View className="flex-row items-center gap-2">
@@ -216,7 +269,13 @@ export default function RoutesScreen() {
 					</View>
 				</View>
 			)}
-			<GateSelector />
+			<GateSelector
+				visible={!!selectingMode}
+				mode={selectingMode}
+				gates={gates}
+				onSelect={handleGateSelect}
+				onClose={handleCloseSelector}
+			/>
 		</TabPage>
 	)
 }

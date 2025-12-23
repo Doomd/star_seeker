@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## refactor: React best practices
+
+- **REFACTOR**: `routes.tsx` - extracted `GateSelector` as memoized component, added `useCallback` for handlers, fixed key prop.
+- **REFACTOR**: `_layout.tsx` - moved `onlineManager` setup to `useEffect` with cleanup, memoized `screenOptions`, fixed dependency array.
+- **REFACTOR**: `OfflineBanner.tsx` - added `memo`, `useCallback`, reset dismissed state on reconnect, use theme colors.
+- **CONFIG**: Added `scratch/` to Jest ignore patterns.
+
 # [v0.4.3] Documentation & Cleanup
 
 ## docs: comprehensive design documentation
