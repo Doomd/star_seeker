@@ -1,5 +1,7 @@
 # Development Log (Newest to Oldest)
 
+# [v0.4.0] Offline Data Pre-caching
+
 ## feat: background API data pre-caching for offline support
 
 - **FEAT**: Created `usePrefetchData` hook to cache all API data in background after app loads.
