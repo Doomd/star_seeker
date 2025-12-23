@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## fix: reposition OfflineBanner and refine visualizer styling
+
+- **FIX**: Moved `OfflineBanner` from bottom to top of screen to prevent it from covering the tab bar navigation.
+- **UX**: Added a dismiss (X) button allowing users to close the offline notification.
+- **A11Y**: Added proper accessibility labels and roles to the dismiss button.
+- **UI**: Refined `JourneyVisualizer` styling to match app design system (`rounded-xl`, Tailwind opacity class).
+
 # [v0.3.8] Global Cache Control & 7-Day Memory
 
 ## chore: release v0.3.8 - global 7-day cache, maintenance tools, default route finder, and UI polish

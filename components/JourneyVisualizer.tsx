@@ -303,7 +303,7 @@ export function JourneyVisualizer({
 		<View
 			style={{ backgroundColor: Colors.panel, height }}
 			onLayout={onLayout}
-			className="w-full relative overflow-hidden rounded-3xl border border-ui"
+			className="w-full relative overflow-hidden rounded-xl border border-ui"
 		>
 			{/* Background stars */}
 			{stars.map((star) => (
@@ -424,10 +424,7 @@ export function JourneyVisualizer({
 			{isLoading && (
 				<View className="absolute inset-0 items-center justify-center p-6 bg-slate-950/20">
 					<View className="bg-slate-950/90 rounded-full px-6 py-3 border border-primary/30 flex-row items-center">
-						<Animated.View
-							className="w-2 h-2 rounded-full bg-primary mr-3"
-							style={{ opacity: 0.8 }}
-						/>
+						<Animated.View className="w-2 h-2 rounded-full bg-primary mr-3 opacity-80" />
 						<Text className="text-white font-bold tracking-tight">
 							{currentMessage.toUpperCase()}
 						</Text>
