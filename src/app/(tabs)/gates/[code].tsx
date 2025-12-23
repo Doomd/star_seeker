@@ -20,13 +20,6 @@ export default function GateDetailsScreen() {
 	const router = useRouter()
 	const { data: gate, isLoading, error, refetch } = useGateDetails(code || '')
 
-	// Set browser tab title for web
-	useEffect(() => {
-		if (Platform.OS === 'web' && gate?.name) {
-			document.title = `${gate.name} | Star Seeker`
-		}
-	}, [gate?.name])
-
 	if (isLoading) {
 		return (
 			<TabPage title={code || 'Loading...'} onBack={() => router.back()}>

@@ -13,13 +13,6 @@ export default function HomeScreen() {
 	const Colors = useThemeColor()
 	const { data: gates, isLoading, error } = useGates()
 
-	// Set browser tab title for web
-	useEffect(() => {
-		if (Platform.OS === 'web') {
-			document.title = 'Star Gates | Star Seeker'
-		}
-	}, [])
-
 	const filteredGates =
 		showFavorites && gates
 			? gates.filter((gate) => favorites.includes(gate.code))

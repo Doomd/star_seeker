@@ -20,13 +20,6 @@ export default function ProfileScreen() {
 	const { data: gates } = useGates()
 	const router = useRouter()
 
-	// Set browser tab title for web
-	useEffect(() => {
-		if (Platform.OS === 'web') {
-			document.title = 'Profile | Star Seeker'
-		}
-	}, [])
-
 	// Get actual gate objects for favorites
 	const favoriteGates = gates?.filter((g) => favorites.includes(g.code)) || []
 

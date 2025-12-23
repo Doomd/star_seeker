@@ -21,13 +21,6 @@ export default function CalculatorScreen() {
 	const { width } = useWindowDimensions()
 	const Colors = useThemeColor()
 
-	// Set browser tab title for web
-	useEffect(() => {
-		if (Platform.OS === 'web') {
-			document.title = 'Cost Calculator | Star Seeker'
-		}
-	}, [])
-
 	const {
 		data: costData,
 		isLoading,
@@ -41,7 +34,7 @@ export default function CalculatorScreen() {
 	const showEach = width >= 500
 
 	return (
-		<TabPage title="Estimate Journey Cost">
+		<TabPage title="Estimate Journey Cost" webTitle="Cost Calculator">
 			<View className="gap-8">
 				<View className="gap-4 px-1">
 					<View>

@@ -1,17 +1,22 @@
 import { useIsDark } from '@/hooks/useThemeColor'
 import { Ionicons } from '@expo/vector-icons'
+import { useIsFocused } from '@react-navigation/native'
+import { Stack } from 'expo-router'
 import React from 'react'
 import {
+	Platform,
 	ScrollView,
 	StatusBar,
 	Text,
 	TouchableOpacity,
 	View,
 } from 'react-native'
+
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface TabPageProps {
 	title: string
+	webTitle?: string // Optional browser tab title
 	headerRight?: React.ReactNode
 	children: React.ReactNode
 	className?: string
@@ -21,6 +26,7 @@ interface TabPageProps {
 
 export default function TabPage({
 	title,
+	webTitle,
 	headerRight,
 	children,
 	className = '',
@@ -28,9 +34,14 @@ export default function TabPage({
 	scrollable = true,
 }: TabPageProps) {
 	const isDark = useIsDark()
+	const isFocused = useIsFocused()
 
 	return (
 		<SafeAreaView className="flex-1 bg-background" edges={['top']}>
+			{Platform.OS === 'web' && isFocused && (
+				<title>{`${webTitle || title} | Star Seeker`}</title>
+			)}
+			<Stack.Screen options={{ title: webTitle || title }} />
 			<StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
 			<View className={`flex-1 px-4 py-4 ${className}`}>
 				<View className="mb-6 flex-row items-center justify-between">

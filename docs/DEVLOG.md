@@ -1,5 +1,16 @@
 # Development Log (Newest to Oldest)
 
+## fix: focus-aware hybrid resilient browser titles (React 19)
+
+- **FIX**: Centralized browser tab title management in `TabPage.tsx` using a focus-aware hybrid approach: React 19 native `<title>` tags for web hoisting and `Stack.Screen` to sync with Expo Router navigation state.
+- **FIX**: Added `useIsFocused` check to ensure only the active tab/screen renders its `<title>` tag, preventing title "fighting" when multiple screens are mounted in the browser's React tree.
+- **DOCS**: Added "subhead per commit" rule to `AGENTS.md` and `docs/WORKFLOW.md` to ensure a strict mapping between Git history and the development log.
+
+## chore: fix test module resolution and sync documentation for src migration
+
+- **FIX**: Included `__tests__` directory in `tsconfig.json` to resolve module mapping for tests in the IDE.
+- **DOCS**: Updated `README.md`, `AGENTS.md`, and `docs/DESIGN.md` to reflect the new `src/` directory structure.
+
 # [v0.5.0] Project Restructure & Vercel Deployment
 
 ## chore: restructure codebase to src/ directory
@@ -7,8 +18,6 @@
 - **REFACTOR**: Moved 9 source directories into `src/`: `api`, `app`, `assets`, `components`, `constants`, `hooks`, `store`, `types`, `utils`.
 - **CONFIG**: Updated all config files for new paths: `tsconfig.json`, `app.json`, `metro.config.js`, `tailwind.config.ts`, `jest.config.js`, `eslint.config.mjs`.
 - **CONFIG**: Updated test files to use `@/` alias instead of relative imports.
-- **FIX**: Included `__tests__` directory in `tsconfig.json` to resolve module mapping for tests in the IDE.
-- **DOCS**: Updated `README.md`, `AGENTS.md`, and `docs/DESIGN.md` to reflect the new `src/` directory structure.
 
 ## feat: Vercel deployment configuration
 

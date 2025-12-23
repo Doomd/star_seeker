@@ -77,7 +77,7 @@ This file contains critical context, rules, and architectural decisions for any 
 - **Context Preservation**: Always keep `docs/DEVLOG.md` in your context to understand the project's evolution.
 - **Task Tracking**: Update `docs/TODO.md` when starting or completing tasks.
 - **Atomic Commits**: Ensure git commits are as atomic as possible (one logical change per commit).
-- **DevLog Updates**: Record all significant changes in `docs/DEVLOG.md` (newest at the top).
+- **DevLog Updates**: Record all significant changes in `docs/DEVLOG.md` (newest at the top). **CRITICAL**: Every commit MUST have its own `##` subheading that exactly matches the commit message. NEVER append bullet points to an existing subheading.
 
 #### 5. Versioning & Documentation Sync (The "Git-Truth" Rule)
 

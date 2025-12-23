@@ -98,13 +98,6 @@ export default function RoutesScreen() {
 	>(null)
 	const Colors = useThemeColor()
 
-	// Set browser tab title for web
-	useEffect(() => {
-		if (Platform.OS === 'web') {
-			document.title = 'Route Finder | Star Seeker'
-		}
-	}, [])
-
 	const { data: gates } = useGates()
 
 	useEffect(() => {

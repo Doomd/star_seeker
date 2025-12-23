@@ -77,6 +77,16 @@ To prevent version drift (especially after rejected commits), AI agents MUST dis
 2.  **Check Commit Log**: `git log -n 1 --oneline`
 3.  **The Next Version**: Bases the next version (PATCH/MINOR) on the results of step 1, ensuring no gaps or duplicates.
 
+## Development Logging
+
+### The `docs/DEVLOG.md` Rule
+
+To maintain a clear and traceable project history, we follow a strict mapping between Git commits and the development log:
+
+1.  **Subhead per Commit**: Every single Git commit must result in a new `##` subheading in `docs/DEVLOG.md`.
+2.  **Match the Message**: The subheading text must exactly match the Git commit message.
+3.  **No Appending**: Never add new bullet points to a previous commit's subheading. If you are making a new commit, create a new subheading.
+
 ### Bumping Steps
 
 1.  **Update Files**: Change the `version` field in both `package.json` and `app.json`.
