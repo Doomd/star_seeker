@@ -1,4 +1,4 @@
-import { useUserStore } from '../store/useUserStore'
+import { useUserStore } from '@/store/useUserStore'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // Since we're using a persisted store, we might want to clear it before each test

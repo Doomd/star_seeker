@@ -2,7 +2,7 @@ module.exports = {
 	preset: 'react-native',
 	setupFilesAfterEnv: ['./jest.setup.js'],
 	moduleNameMapper: {
-		'^@/(.*)$': '<rootDir>/$1',
+		'^@/(.*)$': '<rootDir>/src/$1',
 	},
 	testPathIgnorePatterns: ['/node_modules/', '/scratch/'],
 	transformIgnorePatterns: [

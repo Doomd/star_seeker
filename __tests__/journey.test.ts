@@ -1,4 +1,4 @@
-import { calculateFleetSize, formatCurrency } from '../utils/journey'
+import { calculateFleetSize, formatCurrency } from '@/utils/journey'
 
 describe('journey utils', () => {
 	describe('calculateFleetSize', () => {

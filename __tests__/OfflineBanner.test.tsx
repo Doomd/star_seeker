@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
-import { OfflineBanner } from '../components/OfflineBanner'
+import { OfflineBanner } from '@/components/OfflineBanner'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 

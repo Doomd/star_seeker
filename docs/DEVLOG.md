@@ -1,5 +1,19 @@
 # Development Log (Newest to Oldest)
 
+# [v0.5.0] Project Restructure & Vercel Deployment
+
+## chore: restructure codebase to src/ directory
+
+- **REFACTOR**: Moved 9 source directories into `src/`: `api`, `app`, `assets`, `components`, `constants`, `hooks`, `store`, `types`, `utils`.
+- **CONFIG**: Updated all config files for new paths: `tsconfig.json`, `app.json`, `metro.config.js`, `tailwind.config.ts`, `jest.config.js`, `eslint.config.mjs`.
+- **CONFIG**: Updated test files to use `@/` alias instead of relative imports.
+
+## feat: Vercel deployment configuration
+
+- **CONFIG**: Added `vercel.json` with build command, output directory, and SPA routing rewrites.
+- **CONFIG**: Added `pnpm build:web` script that exports to `web/` directory.
+- **CONFIG**: Added `web/` to `.gitignore` and ESLint ignores.
+
 # [v0.4.4] ESLint & React Best Practices
 
 ## config: ESLint with eslint-react

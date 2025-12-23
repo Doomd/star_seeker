@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import ProfileScreen from '../app/(tabs)/profile'
-import { useUserStore } from '../store/useUserStore'
-import { DataPrefetcher } from '../components/DataPrefetcher'
+import ProfileScreen from '@/app/(tabs)/profile'
+import { useUserStore } from '@/store/useUserStore'
+import { DataPrefetcher } from '@/components/DataPrefetcher'
 
 // Create a fresh QueryClient for each test
 const createTestQueryClient = () =>
