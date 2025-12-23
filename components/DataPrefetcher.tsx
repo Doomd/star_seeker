@@ -1,5 +1,5 @@
 import { usePrefetchData } from '@/hooks/usePrefetchData'
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 
 interface PrefetchContextValue {
 	forceRefresh: () => Promise<void>
@@ -25,8 +25,11 @@ export function usePrefetch() {
 export function DataPrefetcher({ children }: { children?: React.ReactNode }) {
 	const { forceRefresh } = usePrefetchData()
 
+	// Memoize context value to prevent re-renders in consumers
+	const contextValue = useMemo(() => ({ forceRefresh }), [forceRefresh])
+
 	return (
-		<PrefetchContext.Provider value={{ forceRefresh }}>
+		<PrefetchContext.Provider value={contextValue}>
 			{children}
 		</PrefetchContext.Provider>
 	)
