@@ -1,16 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { View, Text, LayoutChangeEvent, StyleSheet } from 'react-native'
-import Svg, {
-	Line,
-	Circle,
-	Text as SvgText,
-	G,
-	Defs,
-	Filter,
-	FeGaussianBlur,
-	FeMerge,
-	FeMergeNode,
-} from 'react-native-svg'
+import {
+	View,
+	Text,
+	LayoutChangeEvent,
+	StyleSheet,
+	Platform,
+} from 'react-native'
+import Svg, { Line, Circle, Text as SvgText, G, Path } from 'react-native-svg'
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
@@ -22,7 +18,6 @@ import Animated, {
 	interpolate,
 	Extrapolate,
 } from 'react-native-reanimated'
-import { Rocket, LucideIcon } from 'lucide-react-native'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { Gate } from '@/types'
 
@@ -36,8 +31,6 @@ interface JourneyVisualizerProps {
 	isLoading: boolean
 	height?: number
 	gates?: Gate[]
-	NodeIcon?: LucideIcon
-	RocketIcon?: LucideIcon
 	nodeColor?: string
 	rocketColor?: string
 	lineColor?: string
@@ -58,6 +51,10 @@ const LOADING_MESSAGES = [
 	'Calculating He3 requirements',
 ]
 
+// Embedded rocket SVG path (from Lucide rocket icon)
+const ROCKET_PATH =
+	'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z M9 12H4s.55-3.03 2-5c1.62-2.2 5-3 5-3 M12 15v5s3.03-.55 5-2c2.2-1.62 3-5 3-5'
+
 export function JourneyVisualizer({
 	sourceGate,
 	targetGate,
@@ -65,14 +62,12 @@ export function JourneyVisualizer({
 	isLoading,
 	height = 200,
 	gates,
-	NodeIcon,
-	RocketIcon,
 	nodeColor,
 	rocketColor,
 	lineColor = '#4ade80', // Prototype Green
 }: JourneyVisualizerProps) {
 	const Colors = useThemeColor()
-	const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+	const [dimensions, setDimensions] = useState({ width: 300, height: height })
 	const [positions, setPositions] = useState<Position[]>([])
 	const [currentMessage, setCurrentMessage] = useState(LOADING_MESSAGES[0])
 
@@ -89,16 +84,18 @@ export function JourneyVisualizer({
 	const stars = useMemo(() => {
 		return Array.from({ length: STAR_COUNT }).map((_, i) => ({
 			id: i,
-			left: `${Math.random() * 100}%`,
-			top: `${Math.random() * 100}%`,
+			left: Math.random() * 100,
+			top: Math.random() * 100,
 			size: Math.random() * 2 + 1,
 			opacity: Math.random() * 0.5 + 0.2,
 		}))
 	}, [])
 
 	const onLayout = (event: LayoutChangeEvent) => {
-		const { width, height } = event.nativeEvent.layout
-		setDimensions({ width, height })
+		const { width, height: layoutHeight } = event.nativeEvent.layout
+		if (width > 0 && layoutHeight > 0) {
+			setDimensions({ width, height: layoutHeight })
+		}
 	}
 
 	// Cycle Loading Messages
@@ -116,86 +113,93 @@ export function JourneyVisualizer({
 
 	// Calculate Map Positions
 	useEffect(() => {
-		if (dimensions.width > 0 && dimensions.height > 0) {
-			const paddingX = 24 // px-6
-			const paddingY = 40 // py-10
-			const usableWidth = dimensions.width - paddingX * 2
+		if (dimensions.width <= 0 || dimensions.height <= 0) return
 
-			if (route?.route && route.route.length > 1) {
-				// Full route display (multi-node)
-				const newPositions: Position[] = []
+		const paddingX = 40
+		const paddingY = 35
+		const usableWidth = dimensions.width - paddingX * 2
+		const usableHeight = dimensions.height - paddingY * 2
 
-				// 1. Calculate Raw Leg Distances
-				const rawLegs: number[] = []
-				for (let i = 0; i < route.route.length - 1; i++) {
-					let dist = 1
-					if (gates) {
-						const g = gates.find((gate) => gate.code === route.route[i])
-						const link = g?.links.find((l) => l.code === route.route[i + 1])
-						if (link) dist = parseFloat(link.hu) || 1
-					}
-					rawLegs.push(dist)
+		if (route?.route && route.route.length > 1) {
+			// Full route display (multi-node)
+			const newPositions: Position[] = []
+
+			// 1. Calculate Raw Leg Distances
+			const rawLegs: number[] = []
+			for (let i = 0; i < route.route.length - 1; i++) {
+				let dist = 1
+				if (gates) {
+					const g = gates.find((gate) => gate.code === route.route[i])
+					const link = g?.links.find((l) => l.code === route.route[i + 1])
+					if (link) dist = parseFloat(link.hu) || 1
+				}
+				rawLegs.push(dist)
+			}
+
+			// 2. Calculate Balanced Ratios (Min 10% per leg)
+			const MIN_RATIO = 0.1
+			const totalRawDist = rawLegs.reduce((a, b) => a + b, 0) || 1
+
+			const rawRatios = rawLegs.map((d) => d / totalRawDist)
+			const smallLegIndices = rawRatios
+				.map((r, i) => (r < MIN_RATIO ? i : -1))
+				.filter((i) => i !== -1)
+
+			const totalSmallPadding = smallLegIndices.length * MIN_RATIO
+			const remainingForLarge = 1 - totalSmallPadding
+
+			const largeLegTotalRawDist = rawLegs.reduce(
+				(acc, d, i) => (rawRatios[i] >= MIN_RATIO ? acc + d : acc),
+				0
+			)
+
+			const balancedRatios = rawLegs.map((d, i) => {
+				if (rawRatios[i] < MIN_RATIO) return MIN_RATIO
+				return (d / (largeLegTotalRawDist || 1)) * remainingForLarge
+			})
+
+			// 3. Position Nodes
+			let cumulativeRatio = 0
+			const centerY = dimensions.height / 2
+
+			route.route.forEach((code, i) => {
+				const x = paddingX + cumulativeRatio * usableWidth
+				let y: number
+
+				if (i === 0) {
+					// First node: center with slight random offset
+					y = centerY + (Math.random() - 0.5) * usableHeight * 0.3
+				} else {
+					// Subsequent nodes: gentle wave pattern
+					const prev = newPositions[i - 1]
+					const dx = x - prev.x
+					const maxDY = Math.min(dx * 0.6, usableHeight * 0.3)
+					y = prev.y + (Math.random() - 0.5) * maxDY * 2
+					// Clamp to bounds
+					y = Math.max(paddingY, Math.min(dimensions.height - paddingY, y))
 				}
 
-				// 2. Calculate Balanced Ratios (Min 10% per leg)
-				const legCount = rawLegs.length
-				const MIN_RATIO = 0.1 // 10% minimum
-				const totalRawDist = rawLegs.reduce((a, b) => a + b, 0) || 1
+				newPositions.push({ code, x, y })
 
-				const rawRatios = rawLegs.map((d) => d / totalRawDist)
-				const smallLegIndices = rawRatios
-					.map((r, i) => (r < MIN_RATIO ? i : -1))
-					.filter((i) => i !== -1)
+				if (i < balancedRatios.length) {
+					cumulativeRatio += balancedRatios[i]
+				}
+			})
 
-				const totalSmallPadding = smallLegIndices.length * MIN_RATIO
-				const remainingForLarge = 1 - totalSmallPadding
-
-				const largeLegTotalRawDist = rawLegs.reduce(
-					(acc, d, i) => (rawRatios[i] >= MIN_RATIO ? acc + d : acc),
-					0
-				)
-
-				const balancedRatios = rawLegs.map((d, i) => {
-					if (rawRatios[i] < MIN_RATIO) return MIN_RATIO
-					return (d / (largeLegTotalRawDist || 1)) * remainingForLarge
-				})
-
-				// 3. Position Nodes
-				let cumulativeRatio = 0
-				let lastY = dimensions.height / 2
-
-				route.route.forEach((code, i) => {
-					const x = paddingX + cumulativeRatio * usableWidth
-					let y
-					if (i === 0) {
-						y = paddingY + Math.random() * (dimensions.height - paddingY * 2)
-					} else {
-						const dx = x - newPositions[i - 1].x
-						const maxDY = dx * 0.95
-						y = lastY + (Math.random() * maxDY * 2 - maxDY)
-						y = Math.max(paddingY, Math.min(dimensions.height - paddingY, y))
-					}
-					newPositions.push({ code, x, y })
-					lastY = y
-					if (i < balancedRatios.length) {
-						cumulativeRatio += balancedRatios[i]
-					}
-				})
-				setPositions(newPositions)
-			} else if (sourceGate) {
-				// Single node case: source selected (with no target OR same target)
-				setPositions([
-					{
-						code: sourceGate.code,
-						x: paddingX,
-						y: dimensions.height / 2,
-					},
-				])
-			} else {
-				setPositions([])
-			}
+			setPositions(newPositions)
+		} else if (sourceGate) {
+			// Single node case
+			setPositions([
+				{
+					code: sourceGate.code,
+					x: paddingX,
+					y: dimensions.height / 2,
+				},
+			])
+		} else {
+			setPositions([])
 		}
-	}, [route, dimensions, sourceGate, targetGate])
+	}, [route, dimensions, sourceGate, targetGate, gates])
 
 	// Warp effect sync
 	useEffect(() => {
@@ -214,8 +218,6 @@ export function JourneyVisualizer({
 			}
 		}
 
-		// Immediate Reset: Snap to the current start node if we're changing routes
-		// This prevents "ghost flights" from old routes
 		const startX = positions[0].x
 		const startY = positions[0].y + VERTICAL_OFFSET
 
@@ -239,7 +241,6 @@ export function JourneyVisualizer({
 		} else if (positions.length > 1) {
 			// Executing multi-node flight
 			const animateStep = async () => {
-				// Snap to start position immediately
 				rocketX.value = startX
 				rocketY.value = startY
 
@@ -257,7 +258,6 @@ export function JourneyVisualizer({
 					const pos = positions[i]
 					const isFirstLeg = i === 1
 					const duration = isFirstLeg ? 1200 : 800
-					// Balanced S-curve for first leg: heavy inertia start + smooth approach approach
 					const easing = isFirstLeg
 						? Easing.bezier(0.8, 0, 0.2, 1)
 						: Easing.bezier(0.4, 0, 0.2, 1)
@@ -272,9 +272,11 @@ export function JourneyVisualizer({
 					if (isCancelled) return
 
 					if (i < positions.length - 1) {
-						const next = positions[i + 1]
+						const nextPos = positions[i + 1]
 						const nextAngle =
-							Math.atan2(next.y - pos.y, next.x - pos.x) * (180 / Math.PI) + 45
+							Math.atan2(nextPos.y - pos.y, nextPos.x - pos.x) *
+								(180 / Math.PI) +
+							45
 						rocketRotate.value = withTiming(nextAngle, { duration: 300 })
 						await new Promise((r) => setTimeout(r, 350))
 					}
@@ -289,8 +291,11 @@ export function JourneyVisualizer({
 	}, [positions, isLoading])
 
 	const animatedRocketStyle = useAnimatedStyle(() => ({
-		left: rocketX.value - 16,
-		top: rocketY.value - 16,
+		position: 'absolute' as const,
+		left: rocketX.value - 12,
+		top: rocketY.value - 12,
+		width: 24,
+		height: 24,
 		transform: [{ rotate: `${rocketRotate.value}deg` }],
 		opacity: rocketOpacity.value,
 	}))
@@ -311,8 +316,8 @@ export function JourneyVisualizer({
 					key={star.id}
 					className="absolute bg-white rounded-full"
 					style={{
-						left: star.left as any,
-						top: star.top as any,
+						left: `${star.left}%`,
+						top: `${star.top}%`,
 						width: star.size,
 						height: star.size,
 						opacity: star.opacity,
@@ -331,93 +336,86 @@ export function JourneyVisualizer({
 			</Animated.View>
 
 			{/* Map SVG */}
-			<Svg style={StyleSheet.absoluteFill}>
-				<Defs>
-					<Filter id="glow">
-						<FeGaussianBlur stdDeviation="2" result="blur" />
-						<FeMerge>
-							<FeMergeNode in="blur" />
-							<FeMergeNode in="SourceGraphic" />
-						</FeMerge>
-					</Filter>
-				</Defs>
+			{dimensions.width > 0 && (
+				<Svg
+					width={dimensions.width}
+					height={dimensions.height}
+					style={StyleSheet.absoluteFill}
+					viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+				>
+					{/* Paths & Distances */}
+					{positions.map((pos, i) => {
+						if (i === 0) return null
+						const prev = positions[i - 1]
 
-				{/* Paths & Distances */}
-				{positions.map((pos, i) => {
-					if (i === 0) return null
-					const prev = positions[i - 1]
+						// Distance lookup
+						let distance = ''
+						if (gates) {
+							const prevGate = gates.find((g) => g.code === prev.code)
+							const link = prevGate?.links.find((l) => l.code === pos.code)
+							if (link) distance = `${link.hu} AU`
+						}
 
-					// Distance lookup
-					let distance = ''
-					if (gates) {
-						const prevGate = gates.find((g) => g.code === prev.code)
-						const link = prevGate?.links.find((l) => l.code === pos.code)
-						if (link) distance = `${link.hu} AU`
-					}
-
-					return (
-						<G key={`path-${i}`}>
-							<Line
-								x1={prev.x}
-								y1={prev.y}
-								x2={pos.x}
-								y2={pos.y}
-								stroke={lineColor}
-								strokeWidth="1.5"
-								strokeDasharray="4,4"
-								opacity={0.6}
-							/>
-							{distance && (
-								<SvgText
-									x={(prev.x + pos.x) / 2}
-									y={(prev.y + pos.y) / 2 - 10}
-									fill={lineColor}
-									fontSize="10"
-									fontWeight="600"
-									textAnchor="middle"
-									opacity={0.8}
-								>
-									{distance}
-								</SvgText>
-							)}
-						</G>
-					)
-				})}
-
-				{/* Nodes */}
-				{positions.map((pos, i) => (
-					<G key={`node-${i}`}>
-						{NodeIcon ? (
-							<G transform={`translate(${pos.x - 8}, ${pos.y - 8})`}>
-								<NodeIcon size={16} color={finalNodeColor} />
+						return (
+							<G key={`path-${i}`}>
+								<Line
+									x1={prev.x}
+									y1={prev.y}
+									x2={pos.x}
+									y2={pos.y}
+									stroke={lineColor}
+									strokeWidth="1.5"
+									strokeDasharray="4,4"
+									opacity={0.6}
+								/>
+								{distance && (
+									<SvgText
+										x={(prev.x + pos.x) / 2}
+										y={(prev.y + pos.y) / 2 - 10}
+										fill={lineColor}
+										fontSize="10"
+										fontWeight="600"
+										textAnchor="middle"
+										opacity={0.8}
+									>
+										{distance}
+									</SvgText>
+								)}
 							</G>
-						) : (
-							<Circle cx={pos.x} cy={pos.y} r="4" fill={finalNodeColor} />
-						)}
-						<SvgText
-							x={pos.x}
-							y={pos.y - 12}
-							fill={Colors.foreground.dim}
-							fontSize="10"
-							fontWeight="bold"
-							textAnchor="middle"
-						>
-							{pos.code}
-						</SvgText>
-					</G>
-				))}
-			</Svg>
+						)
+					})}
 
-			{/* Rocket */}
-			<Animated.View
-				className="absolute w-8 h-8 items-center justify-center"
-				style={animatedRocketStyle}
-			>
-				{RocketIcon ? (
-					<RocketIcon size={24} color={finalRocketColor} />
-				) : (
-					<Rocket size={24} color={finalRocketColor} />
-				)}
+					{/* Nodes */}
+					{positions.map((pos, i) => (
+						<G key={`node-${i}`}>
+							<Circle cx={pos.x} cy={pos.y} r="4" fill={finalNodeColor} />
+							<SvgText
+								x={pos.x}
+								y={pos.y - 12}
+								fill={Colors.foreground.dim}
+								fontSize="10"
+								fontWeight="bold"
+								textAnchor="middle"
+							>
+								{pos.code}
+							</SvgText>
+						</G>
+					))}
+				</Svg>
+			)}
+
+			{/* Rocket (using Animated.View with embedded SVG) */}
+			<Animated.View style={animatedRocketStyle}>
+				<Svg width={24} height={24} viewBox="0 0 24 24">
+					<Path
+						d={ROCKET_PATH}
+						stroke={finalRocketColor}
+						strokeWidth="2"
+						fill="none"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</Svg>
 			</Animated.View>
 
 			{/* Loading Overlay */}
@@ -471,7 +469,7 @@ function WarpStar({
 	}, [dimensions])
 
 	const animatedStyle = useAnimatedStyle(() => ({
-		position: 'absolute',
+		position: 'absolute' as const,
 		left: left,
 		top: interpolate(
 			swim.value,

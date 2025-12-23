@@ -1,5 +1,12 @@
 # Development Log (Newest to Oldest)
 
+## fix: Journey Visualizer web compatibility
+
+- **FIX**: Replaced `lucide-react-native` Rocket with embedded SVG path for cross-platform support.
+- **FIX**: Added explicit SVG `width`, `height`, and `viewBox` to fix web rendering.
+- **FIX**: Improved node positioning with proper bounds calculation.
+- **CLEANUP**: Removed unused LucideIcon imports.
+
 ## feat: display favorite gates as navigable list
 
 - **FEAT**: Profile page now shows actual favorite gates with name, code, and navigation to gate details.
