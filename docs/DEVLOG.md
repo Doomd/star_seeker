@@ -7,6 +7,7 @@
 - **DOCS**: Created `docs/DESIGN.md` with architecture overview, design decisions, and code walkthrough.
 - **DOCS**: Added links between all documentation files.
 - **FIX**: Simplified `isDark` check in `_layout.tsx`.
+- **FIX**: Removed local file:// paths from DESIGN.md, replaced with backtick code format.
 
 # [v0.4.1] Web & Polish Improvements
 

@@ -119,7 +119,7 @@ app/
 
 ### Provider Layer
 
-#### [app/\_layout.tsx](file:///Users/bc/Github/star_seeker/app/_layout.tsx)
+#### `app/_layout.tsx`
 
 **Purpose**: Root layout that wraps the entire app with providers.
 
@@ -146,7 +146,7 @@ This tells TanStack Query when the device is offline, so it can pause retries an
 
 ### State Management
 
-#### [store/useUserStore.ts](file:///Users/bc/Github/star_seeker/store/useUserStore.ts)
+#### `store/useUserStore.ts`
 
 **Purpose**: Global client state persisted to AsyncStorage.
 
@@ -178,7 +178,7 @@ Zustand's `persist` middleware loads data asynchronously. We need to wait before
 
 ### API & Data Fetching
 
-#### [api/client.ts](file:///Users/bc/Github/star_seeker/api/client.ts)
+#### `api/client.ts`
 
 **Purpose**: Axios instance with base URL and API key.
 
@@ -194,7 +194,7 @@ const client = axios.create({
 
 ---
 
-#### [hooks/useQueries.ts](file:///Users/bc/Github/star_seeker/hooks/useQueries.ts)
+#### `hooks/useQueries.ts`
 
 **Purpose**: Custom hooks wrapping TanStack Query for each API endpoint.
 
@@ -216,7 +216,7 @@ This prevents unnecessary API calls when the user hasn't selected both gates yet
 
 ---
 
-#### [components/QueryProvider.tsx](file:///Users/bc/Github/star_seeker/components/QueryProvider.tsx)
+#### `components/QueryProvider.tsx`
 
 **Purpose**: Configures TanStack Query's global settings.
 
@@ -242,7 +242,7 @@ const queryClient = new QueryClient({
 
 ### Offline Pre-Caching System
 
-#### [hooks/usePrefetchData.ts](file:///Users/bc/Github/star_seeker/hooks/usePrefetchData.ts)
+#### `hooks/usePrefetchData.ts`
 
 **Purpose**: Background pre-fetches all API data for offline use.
 
@@ -270,7 +270,7 @@ if (!options.skipCacheCheck && isCacheComplete(queryClient)) {
 
 ---
 
-#### [hooks/useCacheStats.ts](file:///Users/bc/Github/star_seeker/hooks/useCacheStats.ts)
+#### `hooks/useCacheStats.ts`
 
 **Purpose**: Returns live counts of cached data for the Profile screen.
 
@@ -280,7 +280,7 @@ Uses `useSyncExternalStore` to subscribe to TanStack Query's cache and reactivel
 
 ### Screens
 
-#### [app/(tabs)/routes.tsx](<file:///Users/bc/Github/star_seeker/app/(tabs)/routes.tsx>) — Route Finder
+#### `app/(tabs)/routes.tsx` — Route Finder
 
 **Purpose**: Find the cheapest route between two gates.
 
@@ -305,7 +305,7 @@ const [selectingMode, setSelectingMode] = useState<'source' | 'target' | null>(
 
 ---
 
-#### [app/(tabs)/calculator.tsx](<file:///Users/bc/Github/star_seeker/app/(tabs)/calculator.tsx>) — Cost Calculator
+#### `app/(tabs)/calculator.tsx` — Cost Calculator
 
 **Purpose**: Calculate transport costs for a given distance, passengers, and parking days.
 
@@ -319,7 +319,7 @@ const [selectingMode, setSelectingMode] = useState<'source' | 'target' | null>(
 
 ---
 
-#### [app/(tabs)/gates/index.tsx](<file:///Users/bc/Github/star_seeker/app/(tabs)/gates/index.tsx>) — Gates Directory
+#### `app/(tabs)/gates/index.tsx` — Gates Directory
 
 **Purpose**: Display a scrollable list of all hyperspace gates.
 
@@ -327,7 +327,7 @@ const [selectingMode, setSelectingMode] = useState<'source' | 'target' | null>(
 
 ---
 
-#### [app/(tabs)/gates/[code].tsx](<file:///Users/bc/Github/star_seeker/app/(tabs)/gates/%5Bcode%5D.tsx>) — Gate Details
+#### `app/(tabs)/gates/[code].tsx` — Gate Details
 
 **Purpose**: Dynamic route showing detailed info for a specific gate.
 
@@ -335,7 +335,7 @@ Uses `useLocalSearchParams()` to get the gate code from the URL.
 
 ---
 
-#### [app/(tabs)/profile.tsx](<file:///Users/bc/Github/star_seeker/app/(tabs)/profile.tsx>) — Profile & Settings
+#### `app/(tabs)/profile.tsx` — Profile & Settings
 
 **Purpose**: User preferences and maintenance.
 
@@ -350,7 +350,7 @@ Uses `useLocalSearchParams()` to get the gate code from the URL.
 
 ### Key Components
 
-#### [components/JourneyVisualizer.tsx](file:///Users/bc/Github/star_seeker/components/JourneyVisualizer.tsx)
+#### `components/JourneyVisualizer.tsx`
 
 **Purpose**: Cinematic SVG map with animated rocket flight path.
 
@@ -368,7 +368,7 @@ Uses `useLocalSearchParams()` to get the gate code from the URL.
 
 ---
 
-#### [components/OfflineBanner.tsx](file:///Users/bc/Github/star_seeker/components/OfflineBanner.tsx)
+#### `components/OfflineBanner.tsx`
 
 **Purpose**: Dismissable banner at the top of the screen when offline.
 
@@ -376,7 +376,7 @@ Uses `@react-native-community/netinfo` to detect connectivity. User can tap X to
 
 ---
 
-#### [components/DataPrefetcher.tsx](file:///Users/bc/Github/star_seeker/components/DataPrefetcher.tsx)
+#### `components/DataPrefetcher.tsx`
 
 **Purpose**: Invisible component that triggers background prefetching and provides context for manual refresh.
 
@@ -386,7 +386,7 @@ Exposes `usePrefetch()` hook for child components to access `forceRefresh()`.
 
 ### Utilities
 
-#### [utils/journey.ts](file:///Users/bc/Github/star_seeker/utils/journey.ts)
+#### `utils/journey.ts`
 
 **Purpose**: Shared business logic for journey calculations.
 
@@ -402,7 +402,7 @@ formatCurrency(value: number): string
 
 ### Theming
 
-#### [constants/Colors.ts](file:///Users/bc/Github/star_seeker/constants/Colors.ts)
+#### `constants/Colors.ts`
 
 **Purpose**: Single source of truth for all colors.
 
@@ -418,7 +418,7 @@ This is imported by:
 - `tailwind.config.ts` for Tailwind classes
 - `useThemeColor.ts` for React Native inline styles
 
-#### [constants/version.ts](file:///Users/bc/Github/star_seeker/constants/version.ts)
+#### `constants/version.ts`
 
 **Purpose**: Centralized version constant for web compatibility.
 
