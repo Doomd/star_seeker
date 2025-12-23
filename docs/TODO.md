@@ -5,7 +5,7 @@
 - [x] Profile Page favorites should list actual favorite gates, and provide a links to each Gate to view them
 - [x] Investigate why Journey Visualizer doesn't display on web properly and fix it
 - [x] Profile page on web doesn't display version number correctly, need a web only workaround
-- [ ] Web version is not displaying page titles in the browser window/tab (these should correspond with the page titles of each tabs screen)
+- [x] Web version is not displaying page titles in the browser window/tab (these should correspond with the page titles of each tabs screen)
 - [ ] Journey Visualizer should tweak the distance labels so they are parallel to the line segments they are labeling (perhaps a little higher than the Startgate node labels)
 - [ ] On profiles page, perhaps each section should be collapsible, with only one uncollapsed section visible at a time (so we can fit most of the sections on the screen)
 - [ ] Investigate inconsistant Network State detection (especially when simulator comes back online from an offline state) & fix it

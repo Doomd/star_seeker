@@ -5,7 +5,14 @@ import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
+import { useEffect } from 'react'
+import {
+	ActivityIndicator,
+	Platform,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native'
 import TabPage from '@/components/ui/TabPage'
 
 export default function GateDetailsScreen() {
@@ -14,6 +21,13 @@ export default function GateDetailsScreen() {
 	const router = useRouter()
 	const { data: gate, isLoading, error, refetch } = useGateDetails(code || '')
 	const { favorites } = useUserStore()
+
+	// Set browser tab title for web
+	useEffect(() => {
+		if (Platform.OS === 'web' && gate?.name) {
+			document.title = `${gate.name} | Star Seeker`
+		}
+	}, [gate?.name])
 
 	if (isLoading) {
 		return (

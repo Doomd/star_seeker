@@ -3,6 +3,7 @@ import { APP_VERSION } from '@/constants/version'
 import { useUserStore } from '@/store/useUserStore'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
+import { useEffect } from 'react'
 import { Platform, Pressable, Text, View, TouchableOpacity } from 'react-native'
 import TabPage from '@/components/ui/TabPage'
 import { useThemeColor } from '@/hooks/useThemeColor'
@@ -19,6 +20,13 @@ export default function ProfileScreen() {
 	const { forceRefresh } = usePrefetch()
 	const { data: gates } = useGates()
 	const router = useRouter()
+
+	// Set browser tab title for web
+	useEffect(() => {
+		if (Platform.OS === 'web') {
+			document.title = 'Profile | Star Seeker'
+		}
+	}, [])
 
 	// Get actual gate objects for favorites
 	const favoriteGates = gates?.filter((g) => favorites.includes(g.code)) || []

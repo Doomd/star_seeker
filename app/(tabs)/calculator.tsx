@@ -2,8 +2,10 @@ import { useTransportCost } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
 import { Ionicons } from '@expo/vector-icons'
+import { useEffect } from 'react'
 import {
 	ActivityIndicator,
+	Platform,
 	Text,
 	TextInput,
 	TouchableOpacity,
@@ -18,6 +20,13 @@ export default function CalculatorScreen() {
 	const { distance, passengers, parking } = calculatorSettings
 	const { width } = useWindowDimensions()
 	const Colors = useThemeColor()
+
+	// Set browser tab title for web
+	useEffect(() => {
+		if (Platform.OS === 'web') {
+			document.title = 'Cost Calculator | Star Seeker'
+		}
+	}, [])
 
 	const {
 		data: costData,

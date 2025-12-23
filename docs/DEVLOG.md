@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## feat: browser tab titles for web
+
+- **FEAT**: Added `document.title` updates for all tab screens on web platform.
+- **UX**: Tab titles now show "[Page Name] | Star Seeker" format.
+- **UX**: Gate details page shows "[Gate Name] | Star Seeker" dynamically.
+
 ## fix: version number display on web
 
 - **FIX**: Created `constants/version.ts` with `APP_VERSION` constant for web display.

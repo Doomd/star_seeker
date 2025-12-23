@@ -3,10 +3,11 @@ import { HeaderButton } from '@/components/ui/HeaderButton'
 import { useGates } from '@/hooks/useQueries'
 import { useIsDark, useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
 	ActivityIndicator,
 	FlatList,
+	Platform,
 	StatusBar,
 	Text,
 	View,
@@ -19,6 +20,13 @@ export default function HomeScreen() {
 	const isDark = useIsDark()
 	const Colors = useThemeColor()
 	const { data: gates, isLoading, error } = useGates()
+
+	// Set browser tab title for web
+	useEffect(() => {
+		if (Platform.OS === 'web') {
+			document.title = 'Star Gates | Star Seeker'
+		}
+	}, [])
 
 	const filteredGates =
 		showFavorites && gates

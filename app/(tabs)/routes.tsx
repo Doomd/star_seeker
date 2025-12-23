@@ -8,7 +8,14 @@ import { Gate } from '@/types'
 import { Ionicons } from '@expo/vector-icons'
 import { useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native'
+import {
+	FlatList,
+	Modal,
+	Platform,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native'
 import TabPage from '@/components/ui/TabPage'
 
 export default function RoutesScreen() {
@@ -19,6 +26,13 @@ export default function RoutesScreen() {
 		'source' | 'target' | null
 	>(null)
 	const Colors = useThemeColor()
+
+	// Set browser tab title for web
+	useEffect(() => {
+		if (Platform.OS === 'web') {
+			document.title = 'Route Finder | Star Seeker'
+		}
+	}, [])
 
 	const { data: gates } = useGates()
 
