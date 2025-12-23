@@ -1,4 +1,15 @@
-# Remaining Tasks & Polish
+# BC's Remaining Tasks & Polish
+
+- [x] Update unit tests
+- [ ] Calculator Page should have a default value for the distance (eg: 150)
+- [ ] Profile Page favorites should list actual favorite gates, and provide a links to each Gate to view them
+- [ ] Journey Visualizer should tweak the distance labels so they are parallel to the line segments they are labeling (perhaps a little higher than the Startgate node labels)
+- [ ] Investigate why Journey Visualizer doesn't display on web properly and fix it
+- [ ] Profile page on web doesn't display version number correctlu, need a web only workaround
+- [ ] Investigate inconsistant Network State detection (especially when simulator comes back online from an offline state) & fix it
+- [ ] Improve code readability with better comments where necessary
+
+# AI Generated TODO Suggestions:
 
 ## 1. Quality Assurance (Bonus Requirement)
 

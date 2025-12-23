@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## test: fix ProfileScreen tests for new cache hooks
+
+- **FIX**: Added `QueryClientProvider` and `DataPrefetcher` wrappers to ProfileScreen tests.
+- **TEST**: New test case for cache statistics display ("No data cached", "Force Data Refresh").
+- All 15 tests now passing.
+
 # [v0.4.0] Offline Data Pre-caching
 
 ## feat: background API data pre-caching for offline support
