@@ -1,6 +1,4 @@
 import { FavoriteButton } from '@/components/ui/FavoriteButton'
-import { useThemeColor } from '@/hooks/useThemeColor'
-import { useUserStore } from '@/store/useUserStore'
 import { Gate } from '@/types'
 import { Link } from 'expo-router'
 import { Platform, Pressable, Text, View } from 'react-native'
@@ -10,10 +8,6 @@ interface GateCardProps {
 }
 
 export function GateCard({ gate }: GateCardProps) {
-	const Colors = useThemeColor()
-	const { favorites } = useUserStore()
-	const isFavorite = favorites.includes(gate.code)
-
 	return (
 		<View className="mb-3 flex-row rounded-xl bg-ui overflow-hidden">
 			<Link href={`/gates/${gate.code}`} asChild>
