@@ -1,6 +1,6 @@
 # Development Log (Newest to Oldest)
 
-# [v0.4.2] Documentation & Cleanup
+# [v0.4.3] Documentation & Cleanup
 
 ## docs: comprehensive design documentation
 
