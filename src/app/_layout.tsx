@@ -37,6 +37,24 @@ export const unstable_settings = {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
+// 🌟 Easter egg: seasonal greetings for developers exploring the code
+const SEASONAL_MESSAGES: Record<string, string> = {
+	'12-25':
+		'🎄 Merry Christmas, Star Seeker! May your routes be merry and your He3 costs low.',
+	'12-31':
+		'🎆 Happy New Year! May your journeys through the gates bring you to wonderful destinations.',
+	'01-01': '✨ New year, new routes to explore! The galaxy awaits.',
+	'10-31':
+		'🎃 Happy Halloween! Even the spookiest gates have the best candy on the other side.',
+	'03-14':
+		'🥧 Happy Pi Day! The circumference of a Hyper Gate is approximately 2πr.',
+}
+const today = new Date()
+const dateKey = `${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+if (SEASONAL_MESSAGES[dateKey]) {
+	console.log(SEASONAL_MESSAGES[dateKey])
+}
+
 export default function RootLayout() {
 	const [loaded, error] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
