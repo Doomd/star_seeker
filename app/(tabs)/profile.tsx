@@ -4,15 +4,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
 import { Pressable, Text, View } from 'react-native'
 import TabPage from '@/components/ui/TabPage'
-import { useQueryClient } from '@tanstack/react-query'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useCacheStats } from '@/hooks/useCacheStats'
+import { usePrefetch } from '@/components/DataPrefetcher'
 
 export default function ProfileScreen() {
 	const { favorites, colorMode, setColorMode } = useUserStore()
-	const queryClient = useQueryClient()
 	const ColorsNative = useThemeColor()
 	const cacheStats = useCacheStats()
+	const { forceRefresh } = usePrefetch()
 
 	// Build cache description string
 	const cacheDescription =
@@ -88,20 +88,28 @@ export default function ProfileScreen() {
 					</Text>
 					<Text className="mb-3 text-xs text-primary">{cacheDescription}</Text>
 					<Pressable
-						onPress={() => queryClient.invalidateQueries()}
-						className="flex-row items-center justify-center rounded-lg border border-destructive/30 bg-destructive/10 p-4 active:bg-destructive/20"
+						onPress={forceRefresh}
+						className="flex-row items-center justify-center rounded-lg border border-[#00d9ff] p-4 active:bg-primary"
 					>
-						<MaterialCommunityIcons
-							name="database-refresh-outline"
-							size={20}
-							color={ColorsNative.destructive}
-						/>
-						<Text className="ml-2 font-bold text-destructive">
-							Clear Data Cache
-						</Text>
+						{({ pressed }) => (
+							<>
+								<MaterialCommunityIcons
+									name="database-sync-outline"
+									size={20}
+									color={
+										pressed ? ColorsNative.background : ColorsNative.primary
+									}
+								/>
+								<Text
+									className={`ml-2 font-bold ${pressed ? 'text-background' : 'text-primary'}`}
+								>
+									Force Data Refresh
+								</Text>
+							</>
+						)}
 					</Pressable>
 					<Text className="mt-2 text-center text-[10px] text-foreground-dim uppercase tracking-tighter">
-						Forces a fresh fetch of all gate and route data
+						Clears cache and re-downloads all gate and route data
 					</Text>
 				</View>
 			</View>

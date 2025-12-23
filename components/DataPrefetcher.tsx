@@ -1,10 +1,33 @@
 import { usePrefetchData } from '@/hooks/usePrefetchData'
+import React, { createContext, useContext } from 'react'
+
+interface PrefetchContextValue {
+	forceRefresh: () => Promise<void>
+}
+
+const PrefetchContext = createContext<PrefetchContextValue | null>(null)
 
 /**
- * Invisible component that triggers background data prefetching.
- * Place inside QueryProvider to enable offline caching of API data.
+ * Hook to access the prefetch functions from any component.
  */
-export function DataPrefetcher() {
-	usePrefetchData()
-	return null
+export function usePrefetch() {
+	const context = useContext(PrefetchContext)
+	if (!context) {
+		throw new Error('usePrefetch must be used within a DataPrefetcher')
+	}
+	return context
+}
+
+/**
+ * Component that triggers background data prefetching and provides
+ * a context for manual refresh. Place inside QueryProvider.
+ */
+export function DataPrefetcher({ children }: { children?: React.ReactNode }) {
+	const { forceRefresh } = usePrefetchData()
+
+	return (
+		<PrefetchContext.Provider value={{ forceRefresh }}>
+			{children}
+		</PrefetchContext.Provider>
+	)
 }

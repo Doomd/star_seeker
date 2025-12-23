@@ -83,26 +83,27 @@ function RootLayoutNav() {
 
 	return (
 		<QueryProvider>
-			<DataPrefetcher />
-			<ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
-				<RNView
-					className={`flex-1 ${colorMode === 'dark' ? 'dark' : ''}`}
-					key={colorMode}
-				>
-					<Stack
-						screenOptions={{
-							headerStyle: { backgroundColor: Colors.panel },
-							headerTintColor: Colors.foreground.DEFAULT,
-							headerShown: false,
-						}}
+			<DataPrefetcher>
+				<ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
+					<RNView
+						className={`flex-1 ${colorMode === 'dark' ? 'dark' : ''}`}
+						key={colorMode}
 					>
-						<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-						{/* <Stack.Screen name="modal" options={{ presentation: 'modal' }} /> */}
-					</Stack>
-					<StatusBar style={isDark ? 'light' : 'dark'} />
-					<OfflineBanner />
-				</RNView>
-			</ThemeProvider>
+						<Stack
+							screenOptions={{
+								headerStyle: { backgroundColor: Colors.panel },
+								headerTintColor: Colors.foreground.DEFAULT,
+								headerShown: false,
+							}}
+						>
+							<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+							{/* <Stack.Screen name="modal" options={{ presentation: 'modal' }} /> */}
+						</Stack>
+						<StatusBar style={isDark ? 'light' : 'dark'} />
+						<OfflineBanner />
+					</RNView>
+				</ThemeProvider>
+			</DataPrefetcher>
 		</QueryProvider>
 	)
 }
