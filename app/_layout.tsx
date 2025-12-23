@@ -12,6 +12,7 @@ import { useEffect } from 'react'
 import 'react-native-reanimated'
 import './global.css'
 
+import { DataPrefetcher } from '@/components/DataPrefetcher'
 import { QueryProvider } from '@/components/QueryProvider'
 import { OfflineBanner } from '@/components/OfflineBanner'
 import { useIsDark, useThemeColor } from '@/hooks/useThemeColor'
@@ -82,6 +83,7 @@ function RootLayoutNav() {
 
 	return (
 		<QueryProvider>
+			<DataPrefetcher />
 			<ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
 				<RNView
 					className={`flex-1 ${colorMode === 'dark' ? 'dark' : ''}`}

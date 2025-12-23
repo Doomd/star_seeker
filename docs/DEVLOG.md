@@ -1,5 +1,15 @@
 # Development Log (Newest to Oldest)
 
+## feat: background API data pre-caching for offline support
+
+- **FEAT**: Created `usePrefetchData` hook to cache all API data in background after app loads.
+- **OFFLINE**: Pre-fetches all gates, gate details (13), and route combinations (156 routes) for full offline capability.
+- **PERF**: Throttled requests (30-50ms delays) to avoid overwhelming the API.
+- **PERF**: Smart cache check skips prefetching entirely if cache already has complete data (within 7-day staleTime).
+- **DX**: Added `DataPrefetcher` component to root layout for seamless integration.
+- **UI**: Renamed Profile "Maintenance" section to "Offline Data" with live cache statistics display.
+- **UX**: Created `useCacheStats` hook to reactively show cached gates and route counts.
+
 # [v0.3.9] OfflineBanner & Visualizer Polish
 
 ## fix: reposition OfflineBanner and refine visualizer styling

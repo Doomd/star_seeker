@@ -6,11 +6,19 @@ import { Pressable, Text, View } from 'react-native'
 import TabPage from '@/components/ui/TabPage'
 import { useQueryClient } from '@tanstack/react-query'
 import { useThemeColor } from '@/hooks/useThemeColor'
+import { useCacheStats } from '@/hooks/useCacheStats'
 
 export default function ProfileScreen() {
 	const { favorites, colorMode, setColorMode } = useUserStore()
 	const queryClient = useQueryClient()
 	const ColorsNative = useThemeColor()
+	const cacheStats = useCacheStats()
+
+	// Build cache description string
+	const cacheDescription =
+		cacheStats.gates > 0 || cacheStats.routes > 0
+			? `${cacheStats.gates} Star Gates, ${cacheStats.routes} Route Combinations`
+			: 'No data cached'
 
 	return (
 		<TabPage title="Profile">
@@ -69,13 +77,16 @@ export default function ProfileScreen() {
 
 			<View className="rounded-2xl border border-ui bg-panel m-1 mt-6">
 				<View className="border-b border-ui p-4">
-					<Text className="text-lg font-bold text-foreground">Maintenance</Text>
+					<Text className="text-lg font-bold text-foreground">
+						Offline Data
+					</Text>
 				</View>
 
 				<View className="p-4">
-					<Text className="mb-3 text-sm font-medium text-foreground-muted">
+					<Text className="mb-1 text-sm font-medium text-foreground-muted">
 						API Cache
 					</Text>
+					<Text className="mb-3 text-xs text-primary">{cacheDescription}</Text>
 					<Pressable
 						onPress={() => queryClient.invalidateQueries()}
 						className="flex-row items-center justify-center rounded-lg border border-destructive/30 bg-destructive/10 p-4 active:bg-destructive/20"
