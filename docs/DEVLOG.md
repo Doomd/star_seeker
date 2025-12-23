@@ -1,5 +1,7 @@
 # Development Log (Newest to Oldest)
 
+# [v0.3.9] OfflineBanner & Visualizer Polish
+
 ## fix: reposition OfflineBanner and refine visualizer styling
 
 - **FIX**: Moved `OfflineBanner` from bottom to top of screen to prevent it from covering the tab bar navigation.
