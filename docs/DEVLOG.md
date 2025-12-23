@@ -1,5 +1,7 @@
 # Development Log (Newest to Oldest)
 
+# [v0.4.1] Web & Polish Improvements
+
 ## feat: browser tab titles for web
 
 - **FEAT**: Added `document.title` updates for all tab screens on web platform.
