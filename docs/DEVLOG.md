@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## fix: version number display on web
+
+- **FIX**: Created `constants/version.ts` with `APP_VERSION` constant for web display.
+- **FIX**: Used `Platform.OS === 'web'` to force `APP_VERSION` since expo-constants returns stale value.
+- **DX**: Updated `AGENTS.md` to document version bumping now requires 4 locations.
+
 ## fix: Journey Visualizer web compatibility
 
 - **FIX**: Replaced `lucide-react-native` Rocket with embedded SVG path for cross-platform support.

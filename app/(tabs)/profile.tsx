@@ -1,8 +1,9 @@
 import { Theme as Colors } from '@/constants/Colors'
+import { APP_VERSION } from '@/constants/version'
 import { useUserStore } from '@/store/useUserStore'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
-import { Pressable, Text, View, TouchableOpacity } from 'react-native'
+import { Platform, Pressable, Text, View, TouchableOpacity } from 'react-native'
 import TabPage from '@/components/ui/TabPage'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useCacheStats } from '@/hooks/useCacheStats'
@@ -161,8 +162,10 @@ export default function ProfileScreen() {
 
 			<View className="mt-8 mb-6 items-center">
 				<Text className="text-foreground-dim text-xs tracking-widest uppercase">
-					Star Seeker{' '}
-					{Constants.expoConfig?.version && `v${Constants.expoConfig?.version}`}
+					Star Seeker v
+					{Platform.OS === 'web'
+						? APP_VERSION
+						: Constants.expoConfig?.version || APP_VERSION}
 				</Text>
 			</View>
 		</TabPage>
