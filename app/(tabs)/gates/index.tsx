@@ -1,23 +1,15 @@
 import { GateCard } from '@/components/GateCard'
 import { HeaderButton } from '@/components/ui/HeaderButton'
 import { useGates } from '@/hooks/useQueries'
-import { useIsDark, useThemeColor } from '@/hooks/useThemeColor'
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { useUserStore } from '@/store/useUserStore'
 import { useEffect, useState } from 'react'
-import {
-	ActivityIndicator,
-	FlatList,
-	Platform,
-	StatusBar,
-	Text,
-	View,
-} from 'react-native'
+import { ActivityIndicator, FlatList, Platform, Text, View } from 'react-native'
 import TabPage from '@/components/ui/TabPage'
 
 export default function HomeScreen() {
 	const { favorites } = useUserStore()
 	const [showFavorites, setShowFavorites] = useState(false)
-	const isDark = useIsDark()
 	const Colors = useThemeColor()
 	const { data: gates, isLoading, error } = useGates()
 
