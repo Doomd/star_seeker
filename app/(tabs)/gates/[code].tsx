@@ -2,7 +2,6 @@ import { FavoriteButton } from '@/components/ui/FavoriteButton'
 import { DualActionButton } from '@/components/ui/DualActionButton'
 import { useGateDetails } from '@/hooks/useQueries'
 import { useThemeColor } from '@/hooks/useThemeColor'
-import { useUserStore } from '@/store/useUserStore'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useEffect } from 'react'
@@ -20,7 +19,6 @@ export default function GateDetailsScreen() {
 	const { code } = useLocalSearchParams<{ code: string }>()
 	const router = useRouter()
 	const { data: gate, isLoading, error, refetch } = useGateDetails(code || '')
-	const { favorites } = useUserStore()
 
 	// Set browser tab title for web
 	useEffect(() => {
