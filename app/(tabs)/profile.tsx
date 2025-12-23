@@ -1,4 +1,3 @@
-import { Theme as Colors } from '@/constants/Colors'
 import { APP_VERSION } from '@/constants/version'
 import { useUserStore } from '@/store/useUserStore'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
