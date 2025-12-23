@@ -7,6 +7,8 @@
 - **REFACTOR**: Moved 9 source directories into `src/`: `api`, `app`, `assets`, `components`, `constants`, `hooks`, `store`, `types`, `utils`.
 - **CONFIG**: Updated all config files for new paths: `tsconfig.json`, `app.json`, `metro.config.js`, `tailwind.config.ts`, `jest.config.js`, `eslint.config.mjs`.
 - **CONFIG**: Updated test files to use `@/` alias instead of relative imports.
+- **FIX**: Included `__tests__` directory in `tsconfig.json` to resolve module mapping for tests in the IDE.
+- **DOCS**: Updated `README.md`, `AGENTS.md`, and `docs/DESIGN.md` to reflect the new `src/` directory structure.
 
 ## feat: Vercel deployment configuration
 

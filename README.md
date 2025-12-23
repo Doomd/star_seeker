@@ -100,18 +100,18 @@ For global client-state (like Theme preference and Favorites), **Zustand** offer
 
 ## ✅ Challenge Requirements Checklist
 
-| Requirement                 | Status | Implementation Details                                                                         |
-| :-------------------------- | :----: | :--------------------------------------------------------------------------------------------- |
-| **Setup & Architecture**    |   ✅   | scalable folder structure (`/app`, `/components`, `/hooks`), Error boundaries, Loading states. |
-| **API Interaction**         |   ✅   | Centralized API client (`api/client.ts`), Custom Hooks (`useGates`, `useGateDetails`).         |
-| **Journey Cost Calculator** |   ✅   | dedicated tab, real-time calculation validation.                                               |
-| **Gate Details**            |   ✅   | Dynamic routing (`apple/[code].tsx`), connection listing.                                      |
-| **Cheapest Route Finder**   |   ✅   | dedicated tab, step-by-step route visualization.                                               |
-| **UX & Mobile Polish**      |   ✅   | `SafeAreaView`, intuitive navigation stack, loading skeletons.                                 |
-| **Testing**                 |   ✅   | Jest + RNTL. Coverage for stores, utilities, components, and integration flows.                |
-| **Bonus: Persistence**      |   ✅   | Favorites saved locally.                                                                       |
-| **Bonus: Offline Mode**     |   ✅   | Global Offline Banner, cached data display.                                                    |
-| **Bonus: Theming**          |   ✅   | Light/Dark toggle on Profile.                                                                  |
+| Requirement                 | Status | Implementation Details                                                                                  |
+| :-------------------------- | :----: | :------------------------------------------------------------------------------------------------------ |
+| **Setup & Architecture**    |   ✅   | scalable folder structure (`src/app`, `src/components`, `src/hooks`), Error boundaries, Loading states. |
+| **API Interaction**         |   ✅   | Centralized API client (`src/api/client.ts`), Custom Hooks (`useGates`, `useGateDetails`).              |
+| **Journey Cost Calculator** |   ✅   | dedicated tab, real-time calculation validation.                                                        |
+| **Gate Details**            |   ✅   | Dynamic routing (`apple/[code].tsx`), connection listing.                                               |
+| **Cheapest Route Finder**   |   ✅   | dedicated tab, step-by-step route visualization.                                                        |
+| **UX & Mobile Polish**      |   ✅   | `SafeAreaView`, intuitive navigation stack, loading skeletons.                                          |
+| **Testing**                 |   ✅   | Jest + RNTL. Coverage for stores, utilities, components, and integration flows.                         |
+| **Bonus: Persistence**      |   ✅   | Favorites saved locally.                                                                                |
+| **Bonus: Offline Mode**     |   ✅   | Global Offline Banner, cached data display.                                                             |
+| **Bonus: Theming**          |   ✅   | Light/Dark toggle on Profile.                                                                           |
 
 ---
 

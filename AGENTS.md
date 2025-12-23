@@ -24,23 +24,23 @@ This file contains critical context, rules, and architectural decisions for any 
 
 ## 📂 Project Structure
 
-- **`/app`**: Expo Router pages.
+- **`src/app`**: Expo Router pages.
   - `(tabs)`: Main tab navigation layout.
   - `_layout.tsx`: Root layout (Providers + Theme).
   - `global.css`: Global styles and theme definitions.
-- **`/components`**: Reusable UI components.
+- **`src/components`**: Reusable UI components.
   - `FavoriteButton.tsx`: Centralized favorite star logic.
   - `JourneyVisualizer.tsx`: SVG + Reanimated cinematic galactic route map.
-  - **`/ui`**: Atomic UI parts.
+  - **`src/components/ui/`**: Atomic UI parts.
     - `TabPage.tsx`: Standardized layout wrapper (handles ScrollView & gap).
     - `FavoriteButton.tsx`: Centralized favorite star logic.
     - `DualActionButton.tsx`: Consistent side-by-side action layout.
     - `HeaderButton.tsx`: Standardized header actions.
-- **`/hooks`**: Custom hooks (e.g., `useQueries.ts` for data fetching).
-- **`/store`**: Zustand stores (e.g., `useUserStore.ts`).
-- **`/api`**: Axios client and API functions.
-- **`/constants`**: Theme colors (`Colors.ts` is the single source of truth).
-- **`/utils`**: Shared business logic (e.g., `journey.ts` for calculations).
+- **`src/hooks`**: Custom hooks (e.g., `useQueries.ts` for data fetching).
+- **`src/store`**: Zustand stores (e.g., `useUserStore.ts`).
+- **`src/api`**: Axios client and API functions.
+- **`src/constants`**: Theme colors (`Colors.ts` is the single source of truth).
+- **`src/utils`**: Shared business logic (e.g., `journey.ts` for calculations).
 - **`/docs`**: Documentation (DEVLOG, TODO, CHALLENGE, API).
 - **`/__tests__`**: Unit and integration tests.
 

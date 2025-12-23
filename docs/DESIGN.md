@@ -36,7 +36,7 @@ The technical challenge asked you to build a **React Native mobile app** that:
 ```mermaid
 graph TB
     subgraph "App Entry"
-        A["app/_layout.tsx<br/>(Root Layout)"]
+        A["src/app/_layout.tsx<br/>(Root Layout)"]
     end
 
     subgraph "Provider Layer"
@@ -46,7 +46,7 @@ graph TB
     end
 
     subgraph "State Management"
-        E[Zustand Store<br/>useUserStore.ts]
+        E[Zustand Store<br/>src/store/useUserStore.ts]
         F[TanStack Query Cache<br/>Server State]
     end
 
@@ -59,8 +59,8 @@ graph TB
     end
 
     subgraph "API Layer"
-        L[api/client.ts<br/>Axios]
-        M[hooks/useQueries.ts<br/>Query Hooks]
+        L[src/api/client.ts<br/>Axios]
+        M[src/hooks/useQueries.ts<br/>Query Hooks]
     end
 
     A --> B --> C --> D
@@ -87,7 +87,7 @@ graph TB
 ### 2. **File-Based Routing (Expo Router)**
 
 ```
-app/
+src/app/
 ├── _layout.tsx          # Root layout (providers, theme)
 ├── index.tsx            # Redirect to (tabs)/routes
 └── (tabs)/
@@ -119,7 +119,7 @@ app/
 
 ### Provider Layer
 
-#### `app/_layout.tsx`
+#### `src/app/_layout.tsx`
 
 **Purpose**: Root layout that wraps the entire app with providers.
 
@@ -146,7 +146,7 @@ This tells TanStack Query when the device is offline, so it can pause retries an
 
 ### State Management
 
-#### `store/useUserStore.ts`
+#### `src/store/useUserStore.ts`
 
 **Purpose**: Global client state persisted to AsyncStorage.
 
@@ -178,7 +178,7 @@ Zustand's `persist` middleware loads data asynchronously. We need to wait before
 
 ### API & Data Fetching
 
-#### `api/client.ts`
+#### `src/api/client.ts`
 
 **Purpose**: Axios instance with base URL and API key.
 
@@ -194,7 +194,7 @@ const client = axios.create({
 
 ---
 
-#### `hooks/useQueries.ts`
+#### `src/hooks/useQueries.ts`
 
 **Purpose**: Custom hooks wrapping TanStack Query for each API endpoint.
 
@@ -242,7 +242,7 @@ const queryClient = new QueryClient({
 
 ### Offline Pre-Caching System
 
-#### `hooks/usePrefetchData.ts`
+#### `src/hooks/usePrefetchData.ts`
 
 **Purpose**: Background pre-fetches all API data for offline use.
 
@@ -270,7 +270,7 @@ if (!options.skipCacheCheck && isCacheComplete(queryClient)) {
 
 ---
 
-#### `hooks/useCacheStats.ts`
+#### `src/hooks/useCacheStats.ts`
 
 **Purpose**: Returns live counts of cached data for the Profile screen.
 
@@ -386,7 +386,7 @@ Exposes `usePrefetch()` hook for child components to access `forceRefresh()`.
 
 ### Utilities
 
-#### `utils/journey.ts`
+#### `src/utils/journey.ts`
 
 **Purpose**: Shared business logic for journey calculations.
 
