@@ -42,8 +42,8 @@ describe('ProfileScreen Integration', () => {
 				<ProfileScreen />
 			</TestWrapper>
 		)
-		expect(getByText('2')).toBeTruthy()
-		expect(getByText('Favorite Gates')).toBeTruthy()
+		expect(getByText('2 gates')).toBeTruthy()
+		expect(getByText('Favorites')).toBeTruthy()
 	})
 
 	it('should change color mode when buttons are pressed', () => {

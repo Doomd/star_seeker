@@ -2,17 +2,25 @@ import { Theme as Colors } from '@/constants/Colors'
 import { useUserStore } from '@/store/useUserStore'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, Text, View, TouchableOpacity } from 'react-native'
 import TabPage from '@/components/ui/TabPage'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { useCacheStats } from '@/hooks/useCacheStats'
 import { usePrefetch } from '@/components/DataPrefetcher'
+import { useGates } from '@/hooks/useQueries'
+import { useRouter } from 'expo-router'
+import { FavoriteButton } from '@/components/ui/FavoriteButton'
 
 export default function ProfileScreen() {
 	const { favorites, colorMode, setColorMode } = useUserStore()
 	const ColorsNative = useThemeColor()
 	const cacheStats = useCacheStats()
 	const { forceRefresh } = usePrefetch()
+	const { data: gates } = useGates()
+	const router = useRouter()
+
+	// Get actual gate objects for favorites
+	const favoriteGates = gates?.filter((g) => favorites.includes(g.code)) || []
 
 	// Build cache description string
 	const cacheDescription =
@@ -23,24 +31,61 @@ export default function ProfileScreen() {
 	return (
 		<TabPage title="Profile">
 			<View className="overflow-hidden rounded-2xl border border-ui bg-panel m-1 mb-8">
-				<View className="border-b border-ui p-4">
+				<View className="border-b border-ui p-4 flex-row items-center justify-between">
 					<Text className="text-lg font-bold text-foreground">Favorites</Text>
+					<Text className="text-foreground-muted">
+						{favorites.length} gates
+					</Text>
 				</View>
-				<View className="flex-row items-center p-6">
-					<View className="mr-4 rounded-full bg-ui p-3">
-						<MaterialCommunityIcons
-							name="star"
-							size={24}
-							color={Colors.favorite}
-						/>
-					</View>
+				{favoriteGates.length > 0 ? (
 					<View>
-						<Text className="text-3xl font-bold text-foreground">
-							{favorites.length}
-						</Text>
-						<Text className="text-foreground-muted">Favorite Gates</Text>
+						{favoriteGates.map((gate) => (
+							<TouchableOpacity
+								key={gate.code}
+								className="flex-row items-center justify-between border-b border-ui p-4 last:border-b-0 active:bg-ui"
+								onPress={() => router.push(`/gates/${gate.code}`)}
+							>
+								<View className="flex-row items-center gap-3">
+									<MaterialCommunityIcons
+										name="orbit"
+										size={20}
+										color={ColorsNative.primary}
+									/>
+									<View>
+										<Text className="font-bold text-foreground">
+											{gate.name}
+										</Text>
+										<Text className="text-xs text-foreground-muted">
+											{gate.code}
+										</Text>
+									</View>
+								</View>
+								<View className="flex-row items-center gap-2">
+									<FavoriteButton gateCode={gate.code} size={18} />
+									<MaterialCommunityIcons
+										name="chevron-right"
+										size={20}
+										color={ColorsNative.foreground.muted}
+									/>
+								</View>
+							</TouchableOpacity>
+						))}
 					</View>
-				</View>
+				) : (
+					<View className="p-6 items-center">
+						<MaterialCommunityIcons
+							name="star-outline"
+							size={32}
+							color={ColorsNative.foreground.dim}
+						/>
+						<Text className="mt-2 text-foreground-muted text-center">
+							No favorite gates yet
+						</Text>
+						<Text className="text-xs text-foreground-dim text-center mt-1">
+							Tap the star on any gate to add it here
+						</Text>
+					</View>
+				)}
 			</View>
 
 			<View className="rounded-2xl border border-ui bg-panel m-1">

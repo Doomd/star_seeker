@@ -1,5 +1,11 @@
 # Development Log (Newest to Oldest)
 
+## feat: display favorite gates as navigable list
+
+- **FEAT**: Profile page now shows actual favorite gates with name, code, and navigation to gate details.
+- **UX**: Empty state with helpful message when no favorites are saved.
+- **UI**: Each favorite row includes star icon, gate info, unfavorite button, and chevron for navigation.
+
 ## ux: set default distance value for calculator
 
 - **UX**: Calculator now shows results immediately on first load with default distance of 150 AU.
